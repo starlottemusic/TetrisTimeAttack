@@ -48,13 +48,13 @@ int main(int argc, char *argv[]) {
 
     switch (lastIn) {
       case KEY_LEFT:
-        x -= 1;
+        x -= 2;
         lastIn = ERR;
         redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_RIGHT:
-        x += 1;
+        x += 2;
         lastIn = ERR;
         redrawScreen(x, y);
         usleep(10000);
