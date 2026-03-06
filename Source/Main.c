@@ -60,13 +60,25 @@ int main(int argc, char *argv[]) {
         usleep(10000);
         break;
       case KEY_UP:
-        rotate(tetronimo, 'L', true);
+        y -= 1;
         lastIn = ERR;
         redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_DOWN:
+        y += 1;
+        lastIn = ERR;
+        redrawScreen(x, y);
+        usleep(10000);
+        break;
+      case 'a': case 'A':
         rotate(tetronimo, 'L', false);
+        lastIn = ERR;
+        redrawScreen(x, y);
+        usleep(10000);
+        break;
+      case 'd': case 'D':
+        rotate(tetronimo, 'L', true);
         lastIn = ERR;
         redrawScreen(x, y);
         usleep(10000);
