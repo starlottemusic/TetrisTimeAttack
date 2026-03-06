@@ -1,5 +1,4 @@
 #include "TetrisTimeAttack.h"
-extern char* tetronimo[4][4];
 
 void redrawScreen(int x, int y) {
     clear();

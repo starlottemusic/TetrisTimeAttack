@@ -1,5 +1,9 @@
 #include "TetrisTimeAttack.h"
 
+#include "Initialize.c"
+#include "Render.c"
+#include "FileManager.c"
+
 short int pieceSize(char type) {
   if (type == 'O' || type == 'I') return 4;
   else return 3;
@@ -30,12 +34,12 @@ int main(int argc, char *argv[]) {
   keypad(stdscr, TRUE); // set keypad mode to true (allow arrow keys to give inputs)
   timeout(0); // make user input timeout immediately
 
-  FILE* test = fopen("test.txt", "w");
-  fclose(test);
+  initGlobals();
+  redrawScreen(0, 03);
 
   int lastIn, temp;
   int x = 0, y = 0;
-
+        redrawScreen(x, y);
   while (1) {
     if ((temp = getch()) != ERR) {
       lastIn = temp;
@@ -45,24 +49,27 @@ int main(int argc, char *argv[]) {
       case KEY_LEFT:
         x -= 1;
         lastIn = ERR;
+        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_RIGHT:
         x += 1;
         lastIn = ERR;
+        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_UP:
         rotate(tetronimo, 'L', true);
         lastIn = ERR;
+        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_DOWN:
         rotate(tetronimo, 'L', false);
         lastIn = ERR;
+        redrawScreen(x, y);
         usleep(10000);
         break;
     }
-    redrawScreen(x, y);
   }
 }

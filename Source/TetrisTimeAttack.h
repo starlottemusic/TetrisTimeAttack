@@ -6,22 +6,17 @@
 #include <stdbool.h>
 #include <unistd.h> // not needed in prclab1
 
-void loadConfig();
 short int createOrOpenFile(FILE *filePtr, char *filePath);
+void loadConfig();
 void redrawScreen(int x, int y);
+void initGlobals();
 
 // Global Variables
-char* tetronimo[4][4] = {{" ","l"," "," "},
-                         {" ","l"," "," "},
-                         {" ","l","l"," "},
-                         {" "," "," "," "}};
+char* tetronimo[4][4];
 
 typedef struct leaderboard {
     char name[3];
     int score;
 } leaderboard;
-
-#include "Render.c"
-#include "FileManager.c"
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H
