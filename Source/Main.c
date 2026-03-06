@@ -9,9 +9,9 @@ short int pieceSize(char type) {
   else return 3;
 }
 
-void rotate(char* test[4][4], char type, bool clockwise) {
+void rotate(char test[4][4], char type, bool clockwise) {
   short int size = pieceSize(type);
-  char* temp[4][4];
+  char temp[4][4];
   short int i, j;
   for (i = 0; i < size; i++) {
     for (j = 0; j < size; j++) {
@@ -35,7 +35,8 @@ int main(int argc, char *argv[]) {
   timeout(0); // make user input timeout immediately
 
   initGlobals();
-  redrawScreen(0, 03);
+  initPalette();
+  redrawScreen(0, 0);
 
   int lastIn, temp;
   int x = 0, y = 0;

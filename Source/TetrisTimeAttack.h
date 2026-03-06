@@ -12,7 +12,7 @@ void redrawScreen(int x, int y);
 void initGlobals();
 
 // Global Variables
-char* tetronimo[4][4];
+char tetronimo[4][4];
 
 typedef struct leaderboard {
     char name[3];
