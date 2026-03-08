@@ -6,25 +6,52 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <unistd.h> // not needed in prclab1
 
 //Macros
 #define DELTA_TIME ((float) 1 / 60) // Length of one frame
+#define BOARD_WIDTH 20
+#define BOARD_HEIGHT 10
+
+// Structs & Datatype Aliases
+typedef char byte;
+
+typedef struct Leaderboard {
+    char name[3];
+    long score;
+} Leaderboard;
+
+typedef struct PlayerPiece {
+    byte x;
+    byte y;
+    byte tetronimoIndex;
+    char tetronimo[4][4];
+} PlayerPiece;
+
+typedef struct PastPiece {
+    byte x;
+    byte tetronimoIndex;
+    byte rotation;
+} PastPiece;
 
 // Function Headers
-short int createOrOpenFile(FILE *filePtr, char *filePath);
+byte createOrOpenFile(FILE *filePtr, char *filePath);
 void loadConfig();
-void redrawScreen(int x, int y);
+void redrawScreen();
 void initGlobals();
+byte pieceSize(byte index);
+void attemptMovement(int direction);
+void placePiece(PlayerPiece piece);
+void clearPiece(PlayerPiece piece);
+char pieceColor(byte index);
+bool safeMove();
 
 // Global Variables
-int currentPiece; // The index of the currently selected piece
 char tetronimos[7][4][4]; // Array of all tetronimos
-char screen[20][10]; // The current screen state
-
-typedef struct leaderboard {
-    char name[3];
-    int score;
-} leaderboard;
+char gameBoard[BOARD_WIDTH + 2][BOARD_HEIGHT + 2]; // Array of the current game board
+short openSpace;
+PlayerPiece activePiece;
+PlayerPiece lastActivePiece;
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

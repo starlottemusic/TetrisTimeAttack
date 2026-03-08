@@ -4,45 +4,12 @@
 #include "Render.c"
 #include "FileManager.c"
 #include "MovementHandler.c"
-
-/**
- * Returns the size of a piece from the Tetronimos array
- * @param index The index of the piece in the array
- * @return The size of the piece
- */
-short int pieceSize(short int index) {
-  if (index ==  0 || index ==  3) return 4; // I & O pieces
-  return 3; // other pieces
-}
-
-/**
- * Rotates a piece clockwise or counterclockwise
- * @param piece The array of the piece to be rotated
- * @param index The index of the piece from the Tetronimos global array
- * @param clockwise If true, rotate CW. If false, rotate CCW
- */
-void rotate(char piece[4][4], short int index, bool clockwise) {
-  short int size = pieceSize(index);
-  char temp[4][4];
-  short int i, j;
-  for (i = 0; i < size; i++) {
-    for (j = 0; j < size; j++) {
-      temp[i][j] = clockwise ? piece[j][(size - 1) - i] : piece[(size - 1) - j][i];
-    }
-  }
-
-  for (i = 0; i < size; i++) {
-    for (j = 0; j < size; j++) {
-      piece[i][j] = temp[i][j];
-    }
-  }
-}
+#include "PieceManager.c"
 
 /**
  * Called once per delta time, used for any time-dependent game functionality (ie. handling piece movement)
  */
 void tick() {
-
 }
 
 int main() {
@@ -55,13 +22,15 @@ int main() {
 
   initGlobals();
   initPalette();
-  redrawScreen(0, 0);
 
   int lastIn, temp;
   clock_t tickCounter = clock();
-  int x = 0, y = -1;
   long i = 0;
-        redrawScreen(x, y);
+
+  newTurnPlayerPiece(0);
+
+  placePiece(activePiece);
+  redrawScreen();
 
   while (1) {
     if ((temp = getch()) != ERR) {
@@ -75,52 +44,48 @@ int main() {
 
       if (i < -1) {
         endwin();
-        printf("You have been playing for 414 days consecutively. Frankly, this is for your own good.\n");
+        printf("You have been playing for 414 days consecutively. Frankly, this crash is for your own good.\n");
         exit(-1);
       }
     }
 
     switch (lastIn) {
       case KEY_LEFT:
-        x -= 2;
+        attemptMovement(KEY_LEFT);
         lastIn = ERR;
-        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_RIGHT:
-        x += 2;
+        attemptMovement(KEY_RIGHT);
         lastIn = ERR;
-        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_UP:
-        y -= 1;
+        attemptMovement(KEY_UP);
         lastIn = ERR;
-        redrawScreen(x, y);
         usleep(10000);
         break;
       case KEY_DOWN:
-        y += 1;
+        attemptMovement(KEY_DOWN);
         lastIn = ERR;
-        redrawScreen(x, y);
         usleep(10000);
         break;
       case 'a': case 'A':
-        rotate(tetronimos[currentPiece], currentPiece, false);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
         lastIn = ERR;
-        redrawScreen(x, y);
+        redrawScreen();
         usleep(10000);
         break;
       case 'd': case 'D':
-        rotate(tetronimos[currentPiece], currentPiece, true);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
         lastIn = ERR;
-        redrawScreen(x, y);
+        redrawScreen();
         usleep(10000);
         break;
       case ' ':
-        currentPiece = currentPiece >= 6 ? currentPiece - 6 : currentPiece + 1;
+        newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
         lastIn = ERR;
-        redrawScreen(x, y);
+        redrawScreen();
         usleep(10000);
         break;
     }

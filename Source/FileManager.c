@@ -4,7 +4,7 @@
  * Attempts to read a file to the input pointer. If it doesn't exist, attempt to create it.
  *  RETURN: 1 if file exists, 0 if created, -1 if could not be created
  **/
-short int createOrOpenFile(FILE *filePtr, char *filePath) {
+byte createOrOpenFile(FILE *filePtr, char *filePath) {
     filePtr = fopen(filePath, "r");
     if (filePtr == NULL) {
         filePtr = fopen(filePath, "w");

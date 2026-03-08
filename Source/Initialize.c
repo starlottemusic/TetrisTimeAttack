@@ -1,5 +1,3 @@
-#include <string.h>
-
 #include "TetrisTimeAttack.h"
 
 /**
@@ -19,10 +17,10 @@ void initPalette() {
 }
 
 /**
- * Draw all Tetronimos in a 4x4 array & write to the global set
+ * Draw all Tetronimos in a 4x4 array & write to the global array
  */
 void initTetronimos() {
-    int i, j, k;
+    byte i, j, k;
 
     char pieceDefinition[7][4][4] = {
         {
@@ -84,37 +82,39 @@ void initTetronimos() {
 void initGlobals() {
     initTetronimos();
 
-    int i, j;
+    byte i, j;
 
-    char tempBoard[20][10] =
+    openSpace = 196 - 15;
+
+    char tempBoard[BOARD_WIDTH + 2][BOARD_HEIGHT + 2] =
     {
-        {"  SSSS    "},
-        {"  Z       "},
-        {"  ZZ      "},
-        {"   Z      "},
-        {"      JJJ "},
-        {"L       J "},
-        {"LLL       "},
-        {"      OO  "},
-        {"  L   OO  "},
-        {"  L       "},
-        {"  LL      "},
-        {"       I  "},
-        {"       I  "},
-        {"  T    I  "},
-        {" TT    I  "},
-        {"  T       "},
-        {"     SS   "},
-        {"    SS    "},
-        {"SSSSSSSSSJ"},
-        {"++++++++++"}
+        {"++++++++++++"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+     ++++++"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+++        +"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+    +++   +"},
+        {"+    + +   +"},
+        {"+    +++   +"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"+          +"},
+        {"++++++++++++"}
     };
 
-    currentPiece = 0;
-
-    for (i = 0; i < 20; i++) {
-        for (j = 0; j < 10; j++) {
-            screen[i][j] = tempBoard[i][j];
+    for (i = 0; i < BOARD_WIDTH + 2; i++) {
+        for (j = 0; j < BOARD_HEIGHT + 2; j++) {
+            gameBoard[i][j] = tempBoard[i][j];
         }
     }
 }
