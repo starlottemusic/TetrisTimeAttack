@@ -15,7 +15,7 @@ byte pieceSize(byte index) {
  * @param index The index of the tetronimo in the array
  * @return The color pair index
  */
-char pieceColor(byte index) {
+char pieceColorName(byte index) {
     switch (index) {
         case 0:
             return 'I';
@@ -33,6 +33,32 @@ char pieceColor(byte index) {
             return 'Z';
         default:
             return '+';
+    }
+}
+
+/**
+ * Gets the color pair ID of a piece from it's char name in the tetronimos array
+ * @param colorName The piece name used to identify color (ie. 'L', 'T', etc)
+ * @return The color pair ID for rendering
+ */
+byte pieceColorID(char colorName) { //TODO consider just updating the array so we dont have to run this constantly
+    switch (colorName) {
+        case 'I':
+            return 1;
+        case 'J':
+            return 2;
+        case 'L':
+            return 3;
+        case 'O':
+            return 4;
+        case 'S':
+            return 5;
+        case 'T':
+            return 6;
+        case 'Z':
+            return 7;
+        default:
+            return 8;
     }
 }
 

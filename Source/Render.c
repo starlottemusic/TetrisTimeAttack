@@ -14,24 +14,26 @@ void redrawScreen() {
         for (j = 0; j < BOARD_HEIGHT + 2; j++) {
             if (gameBoard[i][j] == ' ') continue;
 
-            // Convert player pieces to their colorethe
+            // Convert player pieces to their color name for rendering
             if (gameBoard[i][j] == 'p') {
-                gameBoard[i][j] = pieceColor(activePiece.tetronimoIndex);
+                gameBoard[i][j] = pieceColorName(activePiece.tetronimoIndex);
                 isPlayerPiece = true;
             }
 
-            if (gameBoard[i][j] == 'T') attron(COLOR_PAIR(gameBoard[i][j]));
-            else attron(COLOR_PAIR(gameBoard[i][j]) | A_STANDOUT);
+            byte color = pieceColorID(gameBoard[i][j]);
 
-            mvprintw(i, 2 * j, "  ");
-            attroff(COLOR_PAIR(gameBoard[i][j]) | A_STANDOUT);
+            if (gameBoard[i][j] == 'T') attron(COLOR_PAIR(color));
+            else attron(COLOR_PAIR(color) | A_STANDOUT);
 
-            // Return player pieces to a detectable value
+            mvprintw(i, 2 * j, "  "); //TODO Replace w/ ¦¦ in prc
+            attroff(COLOR_PAIR(color) | A_STANDOUT);
+
+            // Return player pieces to expected value
             if (isPlayerPiece) {
                 gameBoard[i][j] = 'p';
                 isPlayerPiece = false;
             }
-            refresh(); // Ideally we'd only call this one but it freaks out if we have more than 4 of one char in a row otherwise
+            refresh(); //TODO Only call once in prclab1 (have to call every pixel due to issue w/ clion terminal)
         }
     }
 }

@@ -97,11 +97,12 @@ bool safeMove() {
  * Counts how many unfilled spaces are on the screen
  * @return Number of open spaces
  */
-int getOpenSpaces() {
-    int sum = 0;
+short getOpenSpaces() {
+    short sum = 0;
+    byte i, j;
 
-    for (int i = 0; i < BOARD_WIDTH; i++) {
-        for (int j = 0; j < BOARD_HEIGHT; j++) {
+    for (i = 0; i < BOARD_WIDTH; i++) {
+        for (j = 0; j < BOARD_HEIGHT; j++) {
             if (gameBoard[i + 1][j + 1] == ' ') sum++;
         }
     }

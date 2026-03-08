@@ -44,9 +44,10 @@ byte pieceSize(byte index);
 void attemptMovement(int direction);
 void placePiece(PlayerPiece piece);
 void clearPiece(PlayerPiece piece);
-char pieceColor(byte index);
+char pieceColorName(byte index);
+byte pieceColorID(char colorName);
 bool safeMove();
-int getOpenSpaces();
+short getOpenSpaces();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
