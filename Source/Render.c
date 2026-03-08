@@ -4,14 +4,16 @@ void redrawScreen(int x, int y) {
     clear();
     int i, j;
 
-    attron(COLOR_PAIR(1) | A_STANDOUT);
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
-            if (tetronimo[i][j] == ' ') continue;
-            mvprintw(y + j, x + 2 * i, "  ");
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            if (tetronimos[currentPiece][i][j] == ' ') continue;
+
+            if (tetronimos[currentPiece][i][j] == 'T') attron(COLOR_PAIR(tetronimos[currentPiece][i][j]));
+            else attron(COLOR_PAIR(tetronimos[currentPiece][i][j]) | A_STANDOUT);
+
+            mvprintw(y + i, x + 2 * j, "  ");
+            attroff(COLOR_PAIR(tetronimos[currentPiece][i][j]) | A_STANDOUT);
+            refresh(); // Ideally we'd only call this one but it freaks out if we have more than 4 of one char in a row otherwise
         }
     }
-    attroff(COLOR_PAIR(1) | A_STANDOUT);
-
-    refresh();
 }
