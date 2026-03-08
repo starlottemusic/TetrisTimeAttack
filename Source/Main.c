@@ -89,7 +89,6 @@ int main() {
       case ' ':
         clearPiece(activePiece);
         newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
-        placePiece(activePiece);
         redrawScreen();
         lastIn = ERR;
         usleep(10000);

@@ -37,10 +37,13 @@ char pieceColor(byte index) {
 }
 
 /**
- * Resets activePlayerPiece at the initial spawn point
+ * Resets activePlayerPiece at the initial spawn point if possible (no collisions)
  * @param index The index of the piece to be spawned from the tetronimos array
+ * @return True - Piece can be placed safely; False - Piece will collide
  */
-void newTurnPlayerPiece(byte index) {
+bool newTurnPlayerPiece(byte index) {
+    openSpace = getOpenSpaces() - 4;
+
     int i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
@@ -50,4 +53,10 @@ void newTurnPlayerPiece(byte index) {
     activePiece.tetronimoIndex = index;
     activePiece.x = 1;
     activePiece.y = 0;
+
+    placePiece(activePiece);
+
+    if (openSpace != getOpenSpaces())
+        return false;
+    return true;
 }

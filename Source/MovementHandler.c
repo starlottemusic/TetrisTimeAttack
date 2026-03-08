@@ -86,9 +86,19 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
  * @return True - Valid move, False - Invalid move
  */
 bool safeMove() {
-    int sum = 0;
     clearPiece(lastActivePiece);
     placePiece(activePiece);
+
+    if (getOpenSpaces() == openSpace) return true;
+    return false;
+}
+
+/**
+ * Counts how many unfilled spaces are on the screen
+ * @return Number of open spaces
+ */
+int getOpenSpaces() {
+    int sum = 0;
 
     for (int i = 0; i < BOARD_WIDTH; i++) {
         for (int j = 0; j < BOARD_HEIGHT; j++) {
@@ -96,6 +106,5 @@ bool safeMove() {
         }
     }
 
-    if (sum == openSpace) return true;
-    return false;
+    return sum;
 }

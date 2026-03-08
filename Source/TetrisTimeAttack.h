@@ -46,6 +46,7 @@ void placePiece(PlayerPiece piece);
 void clearPiece(PlayerPiece piece);
 char pieceColor(byte index);
 bool safeMove();
+int getOpenSpaces();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
