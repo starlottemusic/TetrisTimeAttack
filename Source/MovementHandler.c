@@ -1,7 +1,7 @@
 #include "TetrisTimeAttack.h"
 
 /**
- *
+ * Attempts to move a piece in a given direction. If movement fails, block movement, else move piece and update screen
  * @param direction The direction the movement is attempted in, via ncurses arrow key macros (ie. KEY_UP)
  */
 void attemptMovement(int direction) {
@@ -27,10 +27,13 @@ void attemptMovement(int direction) {
         clearPiece(activePiece);
         placePiece(lastActivePiece);
         activePiece = lastActivePiece;
-        redrawScreen();
     }
 }
 
+/**
+ * Places a piece onto the game board at coordinate (piece.x, piece.y)
+ * @param piece
+ */
 void placePiece(PlayerPiece piece) {
     byte i, j;
     for (i = 0; i < 4; i++) {
@@ -41,6 +44,10 @@ void placePiece(PlayerPiece piece) {
     }
 }
 
+/**
+ * Removes a piece from the game board at coordinate (piece.x, piece.y)
+ * @param piece
+ */
 void clearPiece(PlayerPiece piece) {
     byte i, j;
     for (i = 0; i < 4; i++) {

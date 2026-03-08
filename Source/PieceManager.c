@@ -10,6 +10,11 @@ byte pieceSize(byte index) {
     return 3; // other pieces
 }
 
+/**
+ * Gets the color of a piece from its respective index in the tetronimos array
+ * @param index The index of the tetronimo in the array
+ * @return The color pair index
+ */
 char pieceColor(byte index) {
     switch (index) {
         case 0:
@@ -31,6 +36,10 @@ char pieceColor(byte index) {
     }
 }
 
+/**
+ * Resets activePlayerPiece at the initial spawn point
+ * @param index The index of the piece to be spawned from the tetronimos array
+ */
 void newTurnPlayerPiece(byte index) {
     int i, j;
     for (i = 0; i < 4; i++) {

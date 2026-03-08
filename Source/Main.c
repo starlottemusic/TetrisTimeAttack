@@ -70,22 +70,28 @@ int main() {
         lastIn = ERR;
         usleep(10000);
         break;
-      case 'a': case 'A':
-        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
-        lastIn = ERR;
+      case 'd': case 'D':
+        clearPiece(activePiece);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
+        placePiece(activePiece);
         redrawScreen();
+        lastIn = ERR;
         usleep(10000);
         break;
-      case 'd': case 'D':
-        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
-        lastIn = ERR;
+      case 'a': case 'A':
+        clearPiece(activePiece);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
+        placePiece(activePiece);
         redrawScreen();
+        lastIn = ERR;
         usleep(10000);
         break;
       case ' ':
+        clearPiece(activePiece);
         newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
-        lastIn = ERR;
+        placePiece(activePiece);
         redrawScreen();
+        lastIn = ERR;
         usleep(10000);
         break;
     }

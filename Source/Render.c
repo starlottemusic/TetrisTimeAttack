@@ -1,9 +1,10 @@
 #include "TetrisTimeAttack.h"
 
-bool isPlayerPiece;
+bool isPlayerPiece; // Set true if the piece being rendered is actively controlled by the player
 
 /**
- * Formats & redraws the screen based off the global screen array. Colors are determined via characters
+ * Formats & redraws the screen based off the global screen array
+ * Colors are determined via chars w/ respect to the color pair table
  */
 void redrawScreen() {
     clear();
@@ -13,6 +14,7 @@ void redrawScreen() {
         for (j = 0; j < BOARD_HEIGHT + 2; j++) {
             if (gameBoard[i][j] == ' ') continue;
 
+            // Convert player pieces to their colorethe
             if (gameBoard[i][j] == 'p') {
                 gameBoard[i][j] = pieceColor(activePiece.tetronimoIndex);
                 isPlayerPiece = true;
@@ -23,6 +25,8 @@ void redrawScreen() {
 
             mvprintw(i, 2 * j, "  ");
             attroff(COLOR_PAIR(gameBoard[i][j]) | A_STANDOUT);
+
+            // Return player pieces to a detectable value
             if (isPlayerPiece) {
                 gameBoard[i][j] = 'p';
                 isPlayerPiece = false;
