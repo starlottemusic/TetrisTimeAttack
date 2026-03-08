@@ -5,11 +5,22 @@
 #include "FileManager.c"
 #include "MovementHandler.c"
 
+/**
+ * Returns the size of a piece from the Tetronimos array
+ * @param index The index of the piece in the array
+ * @return The size of the piece
+ */
 short int pieceSize(short int index) {
   if (index ==  0 || index ==  3) return 4; // I & O pieces
   return 3; // other pieces
 }
 
+/**
+ * Rotates a piece clockwise or counterclockwise
+ * @param piece The array of the piece to be rotated
+ * @param index The index of the piece from the Tetronimos global array
+ * @param clockwise If true, rotate CW. If false, rotate CCW
+ */
 void rotate(char piece[4][4], short int index, bool clockwise) {
   short int size = pieceSize(index);
   char temp[4][4];
@@ -27,11 +38,14 @@ void rotate(char piece[4][4], short int index, bool clockwise) {
   }
 }
 
+/**
+ * Called once per delta time, used for any time-dependent game functionality (ie. handling piece movement)
+ */
 void tick() {
 
 }
 
-int main(int argc, char *argv[]) {
+int main() {
 	initscr(); // start ncurses
   noecho(); // don't write keyboard input to screen
   cbreak(); // allow input w/o needing to press enter (CTRL+C still passes)
@@ -104,7 +118,7 @@ int main(int argc, char *argv[]) {
         usleep(10000);
         break;
       case ' ':
-        currentPiece++;
+        currentPiece = currentPiece >= 6 ? currentPiece - 6 : currentPiece + 1;
         lastIn = ERR;
         redrawScreen(x, y);
         usleep(10000);

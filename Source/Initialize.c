@@ -2,6 +2,10 @@
 
 #include "TetrisTimeAttack.h"
 
+/**
+ * Initialize the color pairs for each Tetronimo used in rendering
+ * On render pass, chars which match the pair index will render w/ the provided colors
+ */
 void initPalette() {
     start_color();
     init_pair('+', COLOR_WHITE, COLOR_WHITE);
@@ -14,7 +18,10 @@ void initPalette() {
     init_pair('Z', COLOR_RED, COLOR_RED);
 }
 
-void initPieces() {
+/**
+ * Draw all Tetronimos in a 4x4 array & write to the global set
+ */
+void initTetronimos() {
     int i, j, k;
 
     char pieceDefinition[7][4][4] = {
@@ -71,8 +78,11 @@ void initPieces() {
     }
 }
 
+/**
+ * Initialize all global variables
+ */
 void initGlobals() {
-    initPieces();
+    initTetronimos();
 
     int i, j;
 

@@ -1,5 +1,8 @@
 #include "TetrisTimeAttack.h"
 
+/**
+ * Formats & redraws the screen based off the global screen array. Colors are determined via characters
+ */
 void redrawScreen(int x, int y) {
     clear();
     int i, j;
