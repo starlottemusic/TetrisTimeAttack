@@ -21,10 +21,7 @@ void redrawScreen() {
             }
 
             byte color = pieceColorID(gameBoard[i][j]);
-
-            if (gameBoard[i][j] == 'T') attron(COLOR_PAIR(color));
-            else attron(COLOR_PAIR(color) | A_STANDOUT);
-
+            attron(COLOR_PAIR(color) | A_STANDOUT);
             mvprintw(i, 2 * j, "  "); //TODO Replace w/ ¦¦ in prc
             attroff(COLOR_PAIR(color) | A_STANDOUT);
 
