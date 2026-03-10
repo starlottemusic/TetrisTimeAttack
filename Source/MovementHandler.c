@@ -65,12 +65,24 @@ void clearPiece(PlayerPiece piece) {
  * @param clockwise If true, rotate CW. If false, rotate CCW
  */
 void rotate(char piece[4][4], byte index, bool clockwise) {
+    char orient = activePiece.rotation;
     byte size = pieceSize(index);
-    char temp[4][4];
+    char temp[4][4], oldPiece[4][4];
     byte i, j;
+
+    //lastActivePiece = activePiece;
+
+    // Copy piece to oldPiece
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            oldPiece[i][j] = piece[i][j];
+        }
+    }
+
+    // Apply rotation to piece
     for (i = 0; i < size; i++) {
         for (j = 0; j < size; j++) {
-            temp[i][j] = clockwise ? piece[j][(size - 1) - i] : piece[(size - 1) - j][i];
+            temp[i][j] = !clockwise ? piece[j][(size - 1) - i] : piece[(size - 1) - j][i];
         }
     }
 
@@ -79,6 +91,76 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
             piece[i][j] = temp[i][j];
         }
     }
+
+    // Run wallKick(), if wall kick cannot be performed then copy oldPiece to piece
+    if (!wallKick(index, orient, clockwise)) {
+        clearPiece(activePiece);
+        for (i = 0; i < 4; i++) {
+            for (j = 0; j < 4; j++) {
+                piece[i][j] = oldPiece[i][j];
+            }
+        }
+    }
+
+    // Assign new orient to active piece
+    switch (orient) {
+        case '0':
+            orient = clockwise ? 'R' : 'L';
+            break;
+        case 'R':
+            orient = clockwise ? '2' : '0';
+            break;
+        case '2':
+            orient = clockwise ? 'L' : 'R';
+            break;
+        case 'L':
+            orient = clockwise ? '0' : '2';
+            break;
+        default:
+            break;
+    }
+}
+
+/**
+ * On invalid rotation, nudges a piece in a predetermined sequence to the next available position.
+ * @param index The index of the piece from the Tetrominos global array
+ * @param orient The current orientation of the piece
+ * @param clockwise If true, rotate CW. If false, rotate CCW
+ */
+bool wallKick(byte index, char orient, bool clockwise) {
+    int t, p = index==3 ? 2 : index==0 ? 1 : 0; // Checks if piece is I or O
+
+    for (t=0;t<4;t++) {
+        lastActivePiece = activePiece;
+
+        switch (orient) {
+            case '0':
+                activePiece.x += clockwise ? kickTable[p][0][t][0] : kickTable[p][7][t][0];
+                activePiece.y += clockwise ? kickTable[p][0][t][1] : kickTable[p][7][t][1];
+                break;
+            case 'R':
+                activePiece.x += clockwise ? kickTable[p][2][t][0] : kickTable[p][1][t][0];
+                activePiece.y += clockwise ? kickTable[p][2][t][1] : kickTable[p][1][t][1];
+                break;
+            case '2':
+                activePiece.x += clockwise ? kickTable[p][4][t][0] : kickTable[p][3][t][0];
+                activePiece.y += clockwise ? kickTable[p][4][t][1] : kickTable[p][3][t][1];
+                break;
+            case 'L':
+                activePiece.x += clockwise ? kickTable[p][6][t][0] : kickTable[p][5][t][0];
+                activePiece.y += clockwise ? kickTable[p][6][t][1] : kickTable[p][5][t][1];
+                break;
+            default:
+                break;
+        }
+
+        if (safeMove())
+            return true;
+
+        activePiece = lastActivePiece;
+    }
+
+    return false;
 }
 
 /**

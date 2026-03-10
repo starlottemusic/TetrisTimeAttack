@@ -64,7 +64,7 @@ int main() {
         attemptMovement(KEY_UP);
         lastIn = ERR;
         usleep(10000);
-        break
+        break;
       case KEY_DOWN:
         attemptMovement(KEY_DOWN);
         lastIn = ERR;

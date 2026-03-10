@@ -26,6 +26,7 @@ typedef struct PlayerPiece {
     byte x;
     byte y;
     byte tetronimoIndex;
+    byte rotation;
     char tetronimo[4][4];
 } PlayerPiece;
 
@@ -39,6 +40,7 @@ typedef struct PastPiece {
 byte createOrOpenFile(FILE *filePtr, char *filePath);
 void loadConfig();
 void redrawScreen();
+void initKickTable();
 void initGlobals();
 byte pieceSize(byte index);
 void attemptMovement(int direction);
@@ -46,6 +48,7 @@ void placePiece(PlayerPiece piece);
 void clearPiece(PlayerPiece piece);
 char pieceColorName(byte index);
 byte pieceColorID(char colorName);
+bool wallKick(byte index, char orient, bool clockwise);
 bool safeMove();
 short getOpenSpaces();
 
@@ -53,6 +56,7 @@ short getOpenSpaces();
 char tetronimos[7][4][4]; // Array of all tetronimos
 char gameBoard[BOARD_WIDTH + 2][BOARD_HEIGHT + 2]; // Array of the current game board
 short openSpace;
+int kickTable[3][8][5][2];
 PlayerPiece activePiece;
 PlayerPiece lastActivePiece;
 
