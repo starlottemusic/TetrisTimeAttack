@@ -22,7 +22,7 @@ void redrawScreen() {
 
             byte color = pieceColorID(gameBoard[i][j]);
             attron(COLOR_PAIR(color) | A_STANDOUT);
-            mvprintw(i, 2 * j, "%c", activePiece.rotation); //TODO Replace w/ ¦¦ in prc
+            mvprintw(i, 2 * j, "%c ", activePiece.rotation); //TODO Replace w/ ¦¦ in prc
             attroff(COLOR_PAIR(color) | A_STANDOUT);
 
             // Return player pieces to expected value

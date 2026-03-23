@@ -66,11 +66,9 @@ void clearPiece(PlayerPiece piece) {
  */
 void rotate(char piece[4][4], byte index, bool clockwise) {
     char orient = activePiece.rotation;
-    byte size = isEven(index) ? 4 : 3;
+    byte rotSize = isEven(index) ? 4 : 3;
     char temp[4][4], oldPiece[4][4];
     byte i, j;
-
-    //lastActivePiece = activePiece;
 
     // Copy piece to oldPiece
     for (i = 0; i < 4; i++) {
@@ -80,14 +78,14 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
     }
 
     // Apply rotation to piece
-    for (i = 0; i < size; i++) {
-        for (j = 0; j < size; j++) {
-            temp[i][j] = !clockwise ? piece[j][(size - 1) - i] : piece[(size - 1) - j][i];
+    for (i = 0; i < rotSize; i++) {
+        for (j = 0; j < rotSize; j++) {
+            temp[i][j] = !clockwise ? piece[j][(rotSize - 1) - i] : piece[(rotSize - 1) - j][i];
         }
     }
 
-    for (i = 0; i < size; i++) {
-        for (j = 0; j < size; j++) {
+    for (i = 0; i < rotSize; i++) {
+        for (j = 0; j < rotSize; j++) {
             piece[i][j] = temp[i][j];
         }
     }
@@ -130,27 +128,27 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
  */
 bool wallKick(byte index, char orient, bool clockwise) {
     int i;
-    int size = index == 3 ? 2 : index == 0 ? 1 : 0; // Checks if piece is I (== 1) or O (== 2), else == 0
+    int kickSize = pieceSize(index) % 3; // Checks if piece is I (== 1) or O (== 2), else == 0
 
     for (i = 0; i < 4; i++) {
         lastActivePiece = activePiece;
 
         switch (orient) {
             case '0':
-                activePiece.x += clockwise ? kickTable[size][0][i][0] : kickTable[size][7][i][0];
-                activePiece.y += clockwise ? kickTable[size][0][i][1] : kickTable[size][7][i][1];
+                activePiece.x += clockwise ? kickTable[kickSize][0][i][0] : kickTable[kickSize][7][i][0];
+                activePiece.y += clockwise ? kickTable[kickSize][0][i][1] : kickTable[kickSize][7][i][1];
                 break;
             case 'R':
-                activePiece.x += clockwise ? kickTable[size][2][i][0] : kickTable[size][1][i][0];
-                activePiece.y += clockwise ? kickTable[size][2][i][1] : kickTable[size][1][i][1];
+                activePiece.x += clockwise ? kickTable[kickSize][2][i][0] : kickTable[kickSize][1][i][0];
+                activePiece.y += clockwise ? kickTable[kickSize][2][i][1] : kickTable[kickSize][1][i][1];
                 break;
             case '2':
-                activePiece.x += clockwise ? kickTable[size][4][i][0] : kickTable[size][3][i][0];
-                activePiece.y += clockwise ? kickTable[size][4][i][1] : kickTable[size][3][i][1];
+                activePiece.x += clockwise ? kickTable[kickSize][4][i][0] : kickTable[kickSize][3][i][0];
+                activePiece.y += clockwise ? kickTable[kickSize][4][i][1] : kickTable[kickSize][3][i][1];
                 break;
             case 'L':
-                activePiece.x += clockwise ? kickTable[size][6][i][0] : kickTable[size][5][i][0];
-                activePiece.y += clockwise ? kickTable[size][6][i][1] : kickTable[size][5][i][1];
+                activePiece.x += clockwise ? kickTable[kickSize][6][i][0] : kickTable[kickSize][5][i][0];
+                activePiece.y += clockwise ? kickTable[kickSize][6][i][1] : kickTable[kickSize][5][i][1];
                 break;
             default:
                 break;
@@ -158,15 +156,13 @@ bool wallKick(byte index, char orient, bool clockwise) {
 
         if (safeMove())
             return true;
-
-        activePiece = lastActivePiece;
     }
-
+    activePiece = lastActivePiece;
     return false;
 }
 
 /**
- * Checks if a piece translation is valid (doesn't collide w/ pieces, doesn't exceed board bounds)
+ * Moves active piece if valid (doesn't collide w/ pieces, doesn't exceed board bounds)
  * @return True - Valid move, False - Invalid move
  */
 bool safeMove() {
