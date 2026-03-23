@@ -6,8 +6,19 @@
  * @return The size of the piece
  */
 byte pieceSize(byte index) {
-    if (index == 0 || index == 3) return 4; // I & O pieces
+    if (index == 0) return 4; // I piece
+    if (index == 3) return 2; // O piece
     return 3; // other pieces
+}
+
+/**
+ * Returns if the piece is an even size (2 wide, 4 wide)
+ * @param index The index of the piece in the array
+ * @return True if piece is even, else return false
+ */
+bool isEven(byte index) {
+    if (pieceSize(index) % 2 == 0) return true;
+    return false;
 }
 
 /**
@@ -79,6 +90,7 @@ bool newTurnPlayerPiece(byte index) {
     activePiece.tetronimoIndex = index;
     activePiece.x = 1;
     activePiece.y = 0;
+    activePiece.rotation = '0';
 
     placePiece(activePiece);
 

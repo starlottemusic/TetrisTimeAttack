@@ -26,14 +26,14 @@ typedef struct PlayerPiece {
     byte x;
     byte y;
     byte tetronimoIndex;
-    byte rotation;
+    char rotation;
     char tetronimo[4][4];
 } PlayerPiece;
 
 typedef struct PastPiece {
     byte x;
     byte tetronimoIndex;
-    byte rotation;
+    char rotation;
 } PastPiece;
 
 // Function Headers
@@ -43,6 +43,7 @@ void redrawScreen();
 void initKickTable();
 void initGlobals();
 byte pieceSize(byte index);
+bool isEven(byte index);
 void attemptMovement(int direction);
 void placePiece(PlayerPiece piece);
 void clearPiece(PlayerPiece piece);

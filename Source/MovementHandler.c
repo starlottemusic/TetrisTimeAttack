@@ -66,7 +66,7 @@ void clearPiece(PlayerPiece piece) {
  */
 void rotate(char piece[4][4], byte index, bool clockwise) {
     char orient = activePiece.rotation;
-    byte size = pieceSize(index);
+    byte size = isEven(index) ? 4 : 3;
     char temp[4][4], oldPiece[4][4];
     byte i, j;
 
@@ -100,21 +100,22 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
                 piece[i][j] = oldPiece[i][j];
             }
         }
+        return;
     }
 
     // Assign new orient to active piece
     switch (orient) {
         case '0':
-            orient = clockwise ? 'R' : 'L';
+            activePiece.rotation = clockwise ? 'R' : 'L';
             break;
         case 'R':
-            orient = clockwise ? '2' : '0';
+            activePiece.rotation = clockwise ? '2' : '0';
             break;
         case '2':
-            orient = clockwise ? 'L' : 'R';
+            activePiece.rotation = clockwise ? 'L' : 'R';
             break;
         case 'L':
-            orient = clockwise ? '0' : '2';
+            activePiece.rotation = clockwise ? '0' : '2';
             break;
         default:
             break;
@@ -128,27 +129,28 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
  * @param clockwise If true, rotate CW. If false, rotate CCW
  */
 bool wallKick(byte index, char orient, bool clockwise) {
-    int t, p = index==3 ? 2 : index==0 ? 1 : 0; // Checks if piece is I or O
+    int i;
+    int size = index == 3 ? 2 : index == 0 ? 1 : 0; // Checks if piece is I (== 1) or O (== 2), else == 0
 
-    for (t=0;t<4;t++) {
+    for (i = 0; i < 4; i++) {
         lastActivePiece = activePiece;
 
         switch (orient) {
             case '0':
-                activePiece.x += clockwise ? kickTable[p][0][t][0] : kickTable[p][7][t][0];
-                activePiece.y += clockwise ? kickTable[p][0][t][1] : kickTable[p][7][t][1];
+                activePiece.x += clockwise ? kickTable[size][0][i][0] : kickTable[size][7][i][0];
+                activePiece.y += clockwise ? kickTable[size][0][i][1] : kickTable[size][7][i][1];
                 break;
             case 'R':
-                activePiece.x += clockwise ? kickTable[p][2][t][0] : kickTable[p][1][t][0];
-                activePiece.y += clockwise ? kickTable[p][2][t][1] : kickTable[p][1][t][1];
+                activePiece.x += clockwise ? kickTable[size][2][i][0] : kickTable[size][1][i][0];
+                activePiece.y += clockwise ? kickTable[size][2][i][1] : kickTable[size][1][i][1];
                 break;
             case '2':
-                activePiece.x += clockwise ? kickTable[p][4][t][0] : kickTable[p][3][t][0];
-                activePiece.y += clockwise ? kickTable[p][4][t][1] : kickTable[p][3][t][1];
+                activePiece.x += clockwise ? kickTable[size][4][i][0] : kickTable[size][3][i][0];
+                activePiece.y += clockwise ? kickTable[size][4][i][1] : kickTable[size][3][i][1];
                 break;
             case 'L':
-                activePiece.x += clockwise ? kickTable[p][6][t][0] : kickTable[p][5][t][0];
-                activePiece.y += clockwise ? kickTable[p][6][t][1] : kickTable[p][5][t][1];
+                activePiece.x += clockwise ? kickTable[size][6][i][0] : kickTable[size][5][i][0];
+                activePiece.y += clockwise ? kickTable[size][6][i][1] : kickTable[size][5][i][1];
                 break;
             default:
                 break;
