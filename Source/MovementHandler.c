@@ -128,7 +128,7 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
  */
 bool wallKick(byte index, char orient, bool clockwise) {
     int i;
-    int kickSize = pieceSize(index) % 3; // Checks if piece is I (== 1) or O (== 2), else == 0
+    int kickSize = index == 3 ? 2 : index == 0 ? 1 : 0; // Checks if piece is I (== 1) or O (== 2), else == 0
 
     for (i = 0; i < 4; i++) {
         lastActivePiece = activePiece;
@@ -156,8 +156,8 @@ bool wallKick(byte index, char orient, bool clockwise) {
 
         if (safeMove())
             return true;
+        activePiece = lastActivePiece;
     }
-    activePiece = lastActivePiece;
     return false;
 }
 

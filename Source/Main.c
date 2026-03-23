@@ -22,6 +22,7 @@ int main() {
 
   initGlobals();
   initPalette();
+  initKickTable();
 
   int lastIn, temp;
   clock_t tickCounter = clock();
