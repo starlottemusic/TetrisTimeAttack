@@ -14,7 +14,6 @@ void initPalette() {
     init_pair(6, COLOR_MAGENTA, COLOR_MAGENTA);
     init_pair(7, COLOR_RED, COLOR_RED);
     init_pair(8, COLOR_WHITE, COLOR_WHITE);
-
 }
 
 /**
@@ -78,7 +77,7 @@ void initTetronimos() {
 }
 
 /**
- * Initializes the kick table
+ * Initializes the kick table (via https://tetris.wiki/Super_Rotation_System)
  * @var p piece type
  * @var r rotation
  * @var t test
@@ -86,39 +85,44 @@ void initTetronimos() {
  */
 void initKickTable() {
     for (int p = 0; p < 3; p++) {
-        for (int r=0; r < 8; r++) {
-            for (int t=0; t < 5; t++) {
-                for (int c=0; c < 2; c++) {
-                    kickTable[p][r][t][c]=0;
+        for (int r = 0; r < 8; r++) {
+            for (int t = 0; t < 5; t++) {
+                for (int c = 0; c < 2; c++) {
+                    kickTable[p][r][t][c] = 0;
                 }
             }
         }
     }
 
     // Populate default table
-    int temp[8] = {-1,1,1,-1,1,-1,-1,1};
-    for (int r=0; r < 8; r++) {
+    int temp[8] = {-1, 1, 1, -1, 1, -1, -1, 1};
+    for (int r = 0; r < 8; r++) {
         kickTable[0][r][1][0] = temp[r];
         kickTable[0][r][2][0] = temp[r];
-        kickTable[0][r][2][1] = temp[r]*-1;
-        kickTable[0][r][3][1] = temp[r]*2;
+        kickTable[0][r][2][1] = temp[r] * -1;
+        kickTable[0][r][3][1] = temp[r] * 2;
         kickTable[0][r][4][0] = temp[r];
-        kickTable[0][r][4][1] = temp[r]*2;
+        kickTable[0][r][4][1] = temp[r] * 2;
     }
 
     // Populate I table
-    int tempI[4][8] = {{-2,2,-1,1,2,-2,1,-1},
-                       {1,-1,2,-2,-1,1,-2,2},
-                       {-1,1,2,-2,1,-1,-2,2},
-                       {2,-2,-1,1,-2,2,1,-1},
+    int tempI[4][8][2] = {
+        {{-2, 0}, {2, 0}, {-1, 0}, {1, 0}, {2, 0}, {-2, 0}, {1, 0}, {-1, 0}},
+        {{1, 0}, {-1, 0}, {2, 0}, {-2, 0}, {-1, 0}, {1, 0}, {-2, 0}, {2, 0}},
+        {{-2, -1}, {2, 1}, {-1, 2}, {1, -2}, {2, 1}, {-2, -1}, {1, -2}, {-1, 2}},
+        {{1, 2}, {-1, -2}, {2, -1}, {-2, 1}, {-1, -2}, {1, 2}, {-2, 1}, {2, -1}},
     };
-    for (int r=0; r < 8; r++) {
-        kickTable[1][r][1][0] = tempI[0][r];
-        kickTable[1][r][2][0] = tempI[1][r];
-        kickTable[1][r][3][0] = tempI[0][r];
-        kickTable[1][r][3][1] = tempI[2][r];
-        kickTable[1][r][4][0] = tempI[1][r];
-        kickTable[1][r][4][1] = tempI[3][r];
+
+    for (int r = 0; r < 8; r++) {
+        kickTable[1][r][1][0] = tempI[0][r][0];
+        kickTable[1][r][2][0] = tempI[1][r][0];
+        kickTable[1][r][3][0] = tempI[2][r][0];
+        kickTable[1][r][4][0] = tempI[3][r][0];
+
+        kickTable[1][r][1][1] = tempI[0][r][1];
+        kickTable[1][r][2][1] = tempI[1][r][1];
+        kickTable[1][r][3][1] = tempI[2][r][1];
+        kickTable[1][r][4][1] = tempI[3][r][1];
     }
 
     // O table contains all 0s
@@ -149,14 +153,14 @@ void initGlobals() {
         {"+          +"},
         {"+          +"},
         {"+          +"},
-        {"+   +++    +"},
-        {"+   + +    +"},
-        {"+   +++    +"},
-        {"+         ++"},
         {"+          +"},
-        {"+      +++ +"},
-        {"+      ++  +"},
-        {"+      +++ +"},
+        {"+          +"},
+        {"+        +++"},
+        {"++        ++"},
+        {"+          +"},
+        {"+ +++  +++ +"},
+        {"+  ++  ++  +"},
+        {"+ +++  +++ +"},
         {"++++++++++++"}
     };
 

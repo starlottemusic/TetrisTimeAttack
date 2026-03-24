@@ -91,8 +91,8 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
     }
 
     // Run wallKick(), if wall kick cannot be performed then copy oldPiece to piece
+
     if (!wallKick(index, orient, clockwise)) {
-        clearPiece(activePiece);
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
                 piece[i][j] = oldPiece[i][j];
@@ -129,35 +129,45 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
 bool wallKick(byte index, char orient, bool clockwise) {
     int i;
     int kickSize = index == 3 ? 2 : index == 0 ? 1 : 0; // Checks if piece is I (== 1) or O (== 2), else == 0
+    PlayerPiece tempActive = activePiece;
+    PlayerPiece tempLast = lastActivePiece;
 
-    for (i = 0; i < 4; i++) {
-        lastActivePiece = activePiece;
+    for (i = 0; i < 5; i++) {
 
         switch (orient) {
             case '0':
                 activePiece.x += clockwise ? kickTable[kickSize][0][i][0] : kickTable[kickSize][7][i][0];
-                activePiece.y += clockwise ? kickTable[kickSize][0][i][1] : kickTable[kickSize][7][i][1];
+                activePiece.y -= clockwise ? kickTable[kickSize][0][i][1] : kickTable[kickSize][7][i][1];
                 break;
             case 'R':
                 activePiece.x += clockwise ? kickTable[kickSize][2][i][0] : kickTable[kickSize][1][i][0];
-                activePiece.y += clockwise ? kickTable[kickSize][2][i][1] : kickTable[kickSize][1][i][1];
+                activePiece.y -= clockwise ? kickTable[kickSize][2][i][1] : kickTable[kickSize][1][i][1];
                 break;
             case '2':
                 activePiece.x += clockwise ? kickTable[kickSize][4][i][0] : kickTable[kickSize][3][i][0];
-                activePiece.y += clockwise ? kickTable[kickSize][4][i][1] : kickTable[kickSize][3][i][1];
+                activePiece.y -= clockwise ? kickTable[kickSize][4][i][1] : kickTable[kickSize][3][i][1];
                 break;
             case 'L':
                 activePiece.x += clockwise ? kickTable[kickSize][6][i][0] : kickTable[kickSize][5][i][0];
-                activePiece.y += clockwise ? kickTable[kickSize][6][i][1] : kickTable[kickSize][5][i][1];
+                activePiece.y -= clockwise ? kickTable[kickSize][6][i][1] : kickTable[kickSize][5][i][1];
                 break;
             default:
                 break;
         }
 
-        if (safeMove())
+        if (safeMove()) {
+            lastActivePiece = tempLast;
             return true;
-        activePiece = lastActivePiece;
+        }
+
+        lastActivePiece = activePiece;
+        activePiece = tempActive;
     }
+
+    clearPiece(lastActivePiece);
+    lastActivePiece = tempLast;
+    activePiece.x = tempActive.x;
+    activePiece.y = tempActive.y;
     return false;
 }
 
