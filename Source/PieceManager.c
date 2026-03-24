@@ -87,6 +87,8 @@ void attemptNewTurn(bool placePiece) {
         }
     }
 
+    //lineClear();
+
     if (!newTurnPlayerPiece(rand() % 7)) {
         redrawScreen();
         usleep(1000000);
@@ -123,4 +125,39 @@ bool newTurnPlayerPiece(byte index) {
     if (openSpace != getOpenSpaces())
         return false;
     return true;
+}
+
+/**
+ * Clears any complete lines on screen.
+ */
+void lineClear() {
+    int x, y;
+    bool clear[22];
+
+    // Check which lines need to be cleared
+    for(y=0;y<20;y++) {
+        clear[y] = 1;
+        for (x=0;x<10;x++) {
+            if (gameBoard[x][y] == ' ') {
+                clear[y] = 0;
+                break;
+            }
+        }
+    }
+
+    // Clear lines
+    for (int i=0;i<20;i++) {
+        if (clear[i]) {
+            for (y=1;y<21;y++) {
+                for (x=1;x<11;x++)
+                    gameBoard[x][y] = gameBoard[x][y+1];
+            }
+
+            for (x=0;x<20;x++)
+                gameBoard[x][0]=0;
+
+            if (clear[i+1])
+                i--;
+        }
+    }
 }

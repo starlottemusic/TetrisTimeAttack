@@ -56,6 +56,7 @@ short getOpenSpaces();
 bool newTurnPlayerPiece(byte index);
 void attemptNewTurn(bool placePiece);
 void rotate(char piece[4][4], byte index, bool clockwise);
+void lineClear();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
