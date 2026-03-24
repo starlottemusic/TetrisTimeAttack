@@ -34,6 +34,7 @@ void tick() {
 }
 
 int main() {
+    setlocale(LC_ALL, "");
     initscr(); // start ncurses
     noecho(); // don't write keyboard input to screen
     cbreak(); // allow input w/o needing to press enter (CTRL+C still passes)
@@ -49,7 +50,7 @@ int main() {
     int temp;
     clock_t tickCounter = clock();
 
-    newTurnPlayerPiece(0);
+    attemptNewTurn(false);
 
     placePiece(activePiece);
     redrawScreen();

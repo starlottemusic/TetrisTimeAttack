@@ -84,11 +84,12 @@ void initTetronimos() {
  * @var c coordinate
  */
 void initKickTable() {
-    for (int p = 0; p < 3; p++) {
-        for (int r = 0; r < 8; r++) {
-            for (int t = 0; t < 5; t++) {
-                for (int c = 0; c < 2; c++) {
-                    kickTable[p][r][t][c] = 0;
+    int i, j, k, l;
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 8; j++) {
+            for (k = 0; k < 5; k++) {
+                for (l = 0; l < 2; l++) {
+                    kickTable[i][j][k][l] = 0;
                 }
             }
         }
@@ -96,13 +97,13 @@ void initKickTable() {
 
     // Populate default table
     int temp[8] = {-1, 1, 1, -1, 1, -1, -1, 1};
-    for (int r = 0; r < 8; r++) {
-        kickTable[0][r][1][0] = temp[r];
-        kickTable[0][r][2][0] = temp[r];
-        kickTable[0][r][2][1] = temp[r] * -1;
-        kickTable[0][r][3][1] = temp[r] * 2;
-        kickTable[0][r][4][0] = temp[r];
-        kickTable[0][r][4][1] = temp[r] * 2;
+    for (i = 0; i < 8; i++) {
+        kickTable[0][i][1][0] = temp[i];
+        kickTable[0][i][2][0] = temp[i];
+        kickTable[0][i][2][1] = temp[i] * -1;
+        kickTable[0][i][3][1] = temp[i] * 2;
+        kickTable[0][i][4][0] = temp[i];
+        kickTable[0][i][4][1] = temp[i] * 2;
     }
 
     // Populate I table
@@ -113,16 +114,16 @@ void initKickTable() {
         {{1, 2}, {-1, -2}, {2, -1}, {-2, 1}, {-1, -2}, {1, 2}, {-2, 1}, {2, -1}},
     };
 
-    for (int r = 0; r < 8; r++) {
-        kickTable[1][r][1][0] = tempI[0][r][0];
-        kickTable[1][r][2][0] = tempI[1][r][0];
-        kickTable[1][r][3][0] = tempI[2][r][0];
-        kickTable[1][r][4][0] = tempI[3][r][0];
+    for (i = 0; i < 8; i++) {
+        kickTable[1][i][1][0] = tempI[0][i][0];
+        kickTable[1][i][2][0] = tempI[1][i][0];
+        kickTable[1][i][3][0] = tempI[2][i][0];
+        kickTable[1][i][4][0] = tempI[3][i][0];
 
-        kickTable[1][r][1][1] = tempI[0][r][1];
-        kickTable[1][r][2][1] = tempI[1][r][1];
-        kickTable[1][r][3][1] = tempI[2][r][1];
-        kickTable[1][r][4][1] = tempI[3][r][1];
+        kickTable[1][i][1][1] = tempI[0][i][1];
+        kickTable[1][i][2][1] = tempI[1][i][1];
+        kickTable[1][i][3][1] = tempI[2][i][1];
+        kickTable[1][i][4][1] = tempI[3][i][1];
     }
 
     // O table contains all 0s

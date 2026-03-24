@@ -83,18 +83,19 @@ void attemptNewTurn(bool placePiece) {
     for (i = 1; i <= BOARD_WIDTH; i++) {
         for (j = 1; j <= BOARD_HEIGHT; j++) {
             if (gameBoard[i][j] == 'p')
-                gameBoard[i][j] = color;
+                gameBoard[i][j] = placePiece ? color : ' ';
         }
     }
 
     if (!newTurnPlayerPiece(rand() % 7)) {
         redrawScreen();
         usleep(1000000);
+        endwin();
         exit(0); //TODO: handle game end
     }
 
     redrawScreen();
-    dropCooldown = 30;
+    dropCooldown = 15;
 }
 
 /**
