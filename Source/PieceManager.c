@@ -104,7 +104,7 @@ bool newTurnPlayerPiece(byte index) {
 
     activePiece.tetronimoIndex = index;
     activePiece.x = 4;
-    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spaw
+    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spawn 1 posit
     activePiece.rotation = '0';
 
     placePiece(activePiece);
