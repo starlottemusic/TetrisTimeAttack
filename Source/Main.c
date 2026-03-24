@@ -89,7 +89,7 @@ int main() {
         usleep(10000);
         break;
       case ' ':
-        attemptNewTurn();
+        attemptNewTurn(true);
         // newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
         redrawScreen();
         lastIn = ERR;

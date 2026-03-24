@@ -73,7 +73,11 @@ byte pieceColorID(char colorName) { //TODO consider just updating the array so w
     }
 }
 
-void attemptNewTurn() {
+/**
+ * Attempts to end the active turn and spawn the next piece
+ * @param placePiece If activePiece should be placed on the board
+ */
+void attemptNewTurn(bool placePiece) {
     byte i, j;
     char color = pieceColorName(activePiece.tetronimoIndex);
     for (i = 1; i <= BOARD_WIDTH; i++) {
@@ -83,7 +87,10 @@ void attemptNewTurn() {
         }
     }
 
-    newTurnPlayerPiece(rand() % 7);
+    if (!newTurnPlayerPiece(rand() % 7)) {
+        usleep(1000000);
+        exit(0); //TODO: handle game end
+    }
 }
 
 /**
@@ -93,7 +100,6 @@ void attemptNewTurn() {
  */
 bool newTurnPlayerPiece(byte index) {
     openSpace = getOpenSpaces() - 4;
-    byte x, y;
 
     byte i, j;
     for (i = 0; i < 4; i++) {
@@ -104,7 +110,7 @@ bool newTurnPlayerPiece(byte index) {
 
     activePiece.tetronimoIndex = index;
     activePiece.x = 4;
-    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spawn 1 posit
+    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spawn 1 position lower
     activePiece.rotation = '0';
 
     placePiece(activePiece);
