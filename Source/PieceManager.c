@@ -73,6 +73,19 @@ byte pieceColorID(char colorName) { //TODO consider just updating the array so w
     }
 }
 
+void attemptNewTurn() {
+    byte i, j;
+    char color = pieceColorName(activePiece.tetronimoIndex);
+    for (i = 1; i <= BOARD_WIDTH; i++) {
+        for (j = 1; j <= BOARD_HEIGHT; j++) {
+            if (gameBoard[i][j] == 'p')
+                gameBoard[i][j] = color;
+        }
+    }
+
+    newTurnPlayerPiece(rand() % 7);
+}
+
 /**
  * Resets activePlayerPiece at the initial spawn point if possible (no collisions)
  * @param index The index of the piece to be spawned from the tetronimos array
@@ -80,16 +93,18 @@ byte pieceColorID(char colorName) { //TODO consider just updating the array so w
  */
 bool newTurnPlayerPiece(byte index) {
     openSpace = getOpenSpaces() - 4;
+    byte x, y;
 
-    int i, j;
+    byte i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
             activePiece.tetronimo[i][j] = tetronimos[index][i][j] == ' ' ? tetronimos[index][i][j] : 'p';
         }
     }
+
     activePiece.tetronimoIndex = index;
-    activePiece.x = 1;
-    activePiece.y = 0;
+    activePiece.x = 4;
+    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spaw
     activePiece.rotation = '0';
 
     placePiece(activePiece);

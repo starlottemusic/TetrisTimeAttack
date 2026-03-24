@@ -23,6 +23,7 @@ int main() {
   initGlobals();
   initPalette();
   initKickTable();
+  srand(time(NULL));
 
   int lastIn, temp;
   clock_t tickCounter = clock();
@@ -88,8 +89,8 @@ int main() {
         usleep(10000);
         break;
       case ' ':
-        clearPiece(activePiece);
-        newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
+        attemptNewTurn();
+        // newTurnPlayerPiece(activePiece.tetronimoIndex >= 6 ? activePiece.tetronimoIndex - 6 : activePiece.tetronimoIndex + 1);
         redrawScreen();
         lastIn = ERR;
         usleep(10000);

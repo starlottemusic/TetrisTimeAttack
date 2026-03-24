@@ -52,6 +52,7 @@ byte pieceColorID(char colorName);
 bool wallKick(byte index, char orient, bool clockwise);
 bool safeMove();
 short getOpenSpaces();
+bool newTurnPlayerPiece(byte index);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
