@@ -88,9 +88,13 @@ void attemptNewTurn(bool placePiece) {
     }
 
     if (!newTurnPlayerPiece(rand() % 7)) {
+        redrawScreen();
         usleep(1000000);
         exit(0); //TODO: handle game end
     }
+
+    redrawScreen();
+    dropCooldown = 30;
 }
 
 /**

@@ -7,10 +7,9 @@
 void attemptMovement(int direction) {
     lastActivePiece = activePiece;
     switch (direction) {
-        case KEY_UP:
-            activePiece.y--;
-            break;
         case KEY_DOWN:
+            if (dropCooldown > 0)
+                return;
             activePiece.y++;
             break;
         case KEY_LEFT:
@@ -27,6 +26,10 @@ void attemptMovement(int direction) {
         clearPiece(activePiece);
         placePiece(lastActivePiece);
         activePiece = lastActivePiece;
+
+        if (direction == KEY_DOWN) {
+            attemptNewTurn(true);
+        }
     }
 }
 

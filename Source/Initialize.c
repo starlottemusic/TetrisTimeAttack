@@ -169,4 +169,6 @@ void initGlobals() {
             gameBoard[i][j] = tempBoard[i][j];
         }
     }
+
+    lastIn = ERR;
 }

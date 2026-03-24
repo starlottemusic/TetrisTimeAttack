@@ -53,6 +53,8 @@ bool wallKick(byte index, char orient, bool clockwise);
 bool safeMove();
 short getOpenSpaces();
 bool newTurnPlayerPiece(byte index);
+void attemptNewTurn(bool placePiece);
+void rotate(char piece[4][4], byte index, bool clockwise);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -61,5 +63,7 @@ short openSpace;
 int kickTable[3][8][5][2];
 PlayerPiece activePiece;
 PlayerPiece lastActivePiece;
+int lastIn;
+byte dropCooldown;
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H
