@@ -52,7 +52,8 @@ char pieceColorName(byte index) {
  * @param colorName The piece name used to identify color (ie. 'L', 'T', etc)
  * @return The color pair ID for rendering
  */
-byte pieceColorID(char colorName) { //TODO consider just updating the array so we dont have to run this constantly
+byte pieceColorID(char colorName) {
+    //TODO consider just updating the array so we dont have to run this constantly
     switch (colorName) {
         case 'I':
             return 1;
@@ -87,7 +88,7 @@ void attemptNewTurn(bool placePiece) {
         }
     }
 
-    //lineClear();
+    lineClear();
 
     if (!newTurnPlayerPiece(rand() % 7)) {
         redrawScreen();
@@ -117,7 +118,8 @@ bool newTurnPlayerPiece(byte index) {
 
     activePiece.tetronimoIndex = index;
     activePiece.x = 4;
-    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0; // L, J, and T pieces need to spawn 1 position lower
+    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0;
+    // L, J, and T pieces need to spawn 1 position lower
     activePiece.rotation = '0';
 
     placePiece(activePiece);
@@ -132,32 +134,30 @@ bool newTurnPlayerPiece(byte index) {
  */
 void lineClear() {
     int x, y;
-    bool clear[22];
+    bool clear[20];
 
     // Check which lines need to be cleared
-    for(y=0;y<20;y++) {
-        clear[y] = 1;
-        for (x=0;x<10;x++) {
-            if (gameBoard[x][y] == ' ') {
-                clear[y] = 0;
-                break;
+    for (y = 0; y < 20; y++) {
+        clear[y] = true;
+        for (x = 0; x < 10; x++) {
+            if (gameBoard[y + 1][x + 1] == ' ') {
+                clear[y] = false;
             }
         }
     }
 
     // Clear lines
-    for (int i=0;i<20;i++) {
+    for (int i = 0; i < 20; i++) {
         if (clear[i]) {
-            for (y=1;y<21;y++) {
-                for (x=1;x<11;x++)
-                    gameBoard[x][y] = gameBoard[x][y+1];
-            }
+            strcpy(gameBoard[i + 1], "x          x");
 
-            for (x=0;x<20;x++)
-                gameBoard[x][0]=0;
+            // TODO FIX PROBLEMATIC CODE
+            for (y = 0; y < 20; y++)
+                gameBoard[y + 1][0] = 0;
 
-            if (clear[i+1])
+            if (clear[i + 1])
                 i--;
+            // TODO PROBLEMATIC CODE END
         }
     }
 }
