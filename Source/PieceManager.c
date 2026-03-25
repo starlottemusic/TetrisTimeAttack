@@ -149,17 +149,15 @@ void lineClear() {
     // Clear lines
     for (int i = 0; i < 20; i++) {
         if (clear[i]) {
-            strcpy(gameBoard[i + 1], "x          x");
+            // Clear the targeted line
+            memcpy(gameBoard[i + 1], "x          x", 12);
+            redrawScreen();
 
-            // TODO FIX PROBLEMATIC CODE
-            char tempLine[12];
-            for (y = i; y > 1; y--) {
-                strcpy(tempLine, gameBoard[y]);
-                for (x = 0; x < 10; x++) {
-                    gameBoard[y + 1][x + 1] = tempLine[x];
-                }
-            }
-            // TODO PROBLEMATIC CODE END
+            // Shift all future lines & clear targets down
+            for (y = i; y > 0; y--)
+                memcpy(gameBoard[y + 1], gameBoard[y], 12);
+            // Clear top of buffer
+            memcpy(gameBoard[1], "x          x", 12);
         }
     }
 }
