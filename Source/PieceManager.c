@@ -152,11 +152,13 @@ void lineClear() {
             strcpy(gameBoard[i + 1], "x          x");
 
             // TODO FIX PROBLEMATIC CODE
-            for (y = 0; y < 20; y++)
-                gameBoard[y + 1][0] = 0;
-
-            if (clear[i + 1])
-                i--;
+            char tempLine[12];
+            for (y = i; y > 1; y--) {
+                strcpy(tempLine, gameBoard[y]);
+                for (x = 0; x < 10; x++) {
+                    gameBoard[y + 1][x + 1] = tempLine[x];
+                }
+            }
             // TODO PROBLEMATIC CODE END
         }
     }
