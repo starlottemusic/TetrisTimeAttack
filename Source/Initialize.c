@@ -139,7 +139,7 @@ void initGameGlobals() {
 
     openSpace = 196 - 15;
 
-    char tempGameBoard[GAMEBOARD_WIDTH][GAMEBOARD_HEIGHT] =
+    char tempGameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH] =
     {
         "++++++++++++",
         "+          +",
@@ -167,7 +167,7 @@ void initGameGlobals() {
 
     memcpy(gameBoard, tempGameBoard, 240);
 
-    char tempHoldSlot[HOLD_WIDTH][HOLD_HEIGHT] = {
+    char tempHoldSlot[HOLD_HEIGHT][HOLD_WIDTH] = {
         "++++++++",
         "+      +",
         "+      +",
@@ -179,6 +179,8 @@ void initGameGlobals() {
     };
 
     memcpy(holdSlot, tempHoldSlot, 64);
+
+    score = -100; // -100 to handle initial line being cleared. bandaid fixes solve al
 
     heldPiece.tetronimoIndex = -1;
     canHold = true;

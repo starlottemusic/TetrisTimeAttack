@@ -93,7 +93,7 @@ void settlePiece(PlayerPiece* piece, byte x, byte y, bool shouldClear, byte boar
 void attemptNewTurn(bool placePiece, bool isHold) {
     byte nextPiece;
 
-    settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_HEIGHT, GAMEBOARD_WIDTH, &gameBoard);
+    settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, &gameBoard);
 
     lineClear();
 
@@ -107,17 +107,17 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         redrawGame();
         usleep(1000000);
         endwin();
+        printf("DEBUG: Score was %lu", score);
         exit(0); //TODO: handle game end
     }
 
     if (!isHold) {
         canHold = true;
-        usleep(250000);
+        usleep(100000);
     }
 
     redrawGame();
     turnCooldown = 15;
-
 }
 
 /**
@@ -172,7 +172,8 @@ void holdPiece() {
  * Clears any complete lines on screen.
  */
 void lineClear() {
-    int x, y;
+    byte x, y;
+    byte linesCleared = 0;
     bool clear[20];
 
     // Check which lines need to be cleared
@@ -197,6 +198,11 @@ void lineClear() {
                 memcpy(gameBoard[y + 1], gameBoard[y], 12);
             // Clear top of buffer
             memcpy(gameBoard[1], "x          x", 12);
+
+            linesCleared++;
         }
     }
+
+    if (linesCleared > 0)
+        score += 50 * scorePow(2, linesCleared);
 }

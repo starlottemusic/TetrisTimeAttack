@@ -6,6 +6,7 @@
 #include "MovementHandler.c"
 #include "PieceManager.c"
 #include "InputHandler.c"
+#include "Util.c"
 
 long tickTimer = 0;
 
@@ -41,6 +42,7 @@ int main() {
     curs_set(0); // hide cursor
     keypad(stdscr, TRUE); // set keypad mode to true (allow arrow keys to give inputs)
     timeout(0); // make user input timeout immediately
+
 
     initGameGlobals();
     initPalette();

@@ -196,8 +196,8 @@ short getOpenSpaces() {
     short sum = 0;
     byte i, j;
 
-    for (i = 0; i < GAMEBOARD_WIDTH - 2; i++) {
-        for (j = 0; j < GAMEBOARD_HEIGHT - 2; j++) {
+    for (i = 0; i < GAMEBOARD_HEIGHT - 2; i++) {
+        for (j = 0; j < GAMEBOARD_WIDTH - 2; j++) {
             if (gameBoard[i + 1][j + 1] == ' ') sum++;
         }
     }

@@ -39,6 +39,6 @@ void redrawBoard(int rows, int cols, char renderArray[][rows], byte x, byte y) {
  */
 void redrawGame() {
     clear();
-    redrawBoard(GAMEBOARD_HEIGHT, GAMEBOARD_WIDTH, gameBoard, 1, 1);
-    redrawBoard(HOLD_HEIGHT, HOLD_WIDTH, holdSlot, 14, 1);
+    redrawBoard(GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, gameBoard, 1, 1);
+    redrawBoard(HOLD_WIDTH, HOLD_HEIGHT, holdSlot, 14, 1);
 }

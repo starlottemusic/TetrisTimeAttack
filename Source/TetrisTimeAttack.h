@@ -12,10 +12,10 @@
 
 //Macros
 #define DELTA_TIME ((float) 1 / 60) // Length of one frame
-#define GAMEBOARD_WIDTH  22
-#define GAMEBOARD_HEIGHT 12
-#define HOLD_WIDTH 8
+#define GAMEBOARD_HEIGHT  22
+#define GAMEBOARD_WIDTH 12
 #define HOLD_HEIGHT 8
+#define HOLD_WIDTH 8
 
 // Structs & Datatype Aliases
 typedef char byte;
@@ -59,11 +59,12 @@ bool newTurnPlayerPiece(byte index);
 void rotate(char piece[4][4], byte index, bool clockwise);
 void lineClear();
 void redrawGame();
+long scorePow(int base, int exp);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
-char gameBoard[GAMEBOARD_WIDTH][GAMEBOARD_HEIGHT]; // Working array of the current game board
-char holdSlot[HOLD_WIDTH][HOLD_HEIGHT]; // Working array of the hold slot
+char gameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH]; // Working array of the current game board
+char holdSlot[HOLD_HEIGHT][HOLD_WIDTH]; // Working array of the hold slot
 short openSpace;
 int kickTable[3][8][5][2];
 PlayerPiece activePiece;
@@ -72,5 +73,6 @@ PlayerPiece heldPiece;
 int lastIn;
 byte turnCooldown;
 bool canHold;
+long score;
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H
