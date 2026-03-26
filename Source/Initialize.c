@@ -132,14 +132,14 @@ void initKickTable() {
 /**
  * Initialize all global variables
  */
-void initGlobals() {
+void initGameGlobals() {
     initTetronimos();
 
     byte i, j;
 
     openSpace = 196 - 15;
 
-    char tempBoard[BOARD_WIDTH + 2][BOARD_HEIGHT + 2] =
+    char tempGameBoard[GAMEBOARD_WIDTH][GAMEBOARD_HEIGHT] =
     {
         "++++++++++++",
         "+          +",
@@ -165,11 +165,22 @@ void initGlobals() {
         "++++++++++++"
     };
 
-    for (i = 0; i < BOARD_WIDTH + 2; i++) {
-        for (j = 0; j < BOARD_HEIGHT + 2; j++) {
-            gameBoard[i][j] = tempBoard[i][j];
-        }
-    }
+    memcpy(gameBoard, tempGameBoard, 240);
 
+    char tempHoldSlot[HOLD_WIDTH][HOLD_HEIGHT] = {
+        "++++++++",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "++++++++"
+    };
+
+    memcpy(holdSlot, tempHoldSlot, 64);
+
+    heldPiece.tetronimoIndex = -1;
+    canHold = true;
     lastIn = ERR;
 }

@@ -1,5 +1,7 @@
 #include "TetrisTimeAttack.h"
 
+extern void holdPiece();
+
 /**
  * Handles keyboard input during gameplay
  */
@@ -14,7 +16,8 @@ void handleGameInput() {
             lastIn = ERR;
             break;
         case KEY_UP:
-            //TODO add hold
+            holdPiece();
+            lastIn = ERR;
             break;
         case KEY_DOWN:
             attemptMovement(KEY_DOWN);
@@ -24,14 +27,20 @@ void handleGameInput() {
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
             placePiece(activePiece);
-            redrawScreen();
+            redrawGame();
             lastIn = ERR;
             break;
         case 'a': case 'A':
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
             placePiece(activePiece);
-            redrawScreen();
+            redrawGame();
+            lastIn = ERR;
+            break;
+        case ' ':
+            while (turnCooldown <= 0)
+                attemptMovement(KEY_DOWN);
+            turnCooldown = 0;
             lastIn = ERR;
             break;
     }

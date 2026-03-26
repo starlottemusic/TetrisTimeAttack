@@ -1,5 +1,7 @@
 #include "TetrisTimeAttack.h"
 
+extern void attemptNewTurn(bool placePiece, bool isHold);
+
 /**
  * Attempts to move a piece in a given direction. If movement fails, block movement, else move piece and update screen
  * @param direction The direction the movement is attempted in, via ncurses arrow key macros (ie. KEY_UP)
@@ -8,7 +10,7 @@ void attemptMovement(int direction) {
     lastActivePiece = activePiece;
     switch (direction) {
         case KEY_DOWN:
-            if (dropCooldown > 0)
+            if (turnCooldown > 0)
                 return;
             activePiece.y++;
             break;
@@ -21,14 +23,14 @@ void attemptMovement(int direction) {
     }
 
     if (safeMove()) {
-        redrawScreen();
+        redrawGame();
     } else {
         clearPiece(activePiece);
         placePiece(lastActivePiece);
         activePiece = lastActivePiece;
 
         if (direction == KEY_DOWN) {
-            attemptNewTurn(true);
+            attemptNewTurn(true, false);
         }
     }
 }
@@ -194,8 +196,8 @@ short getOpenSpaces() {
     short sum = 0;
     byte i, j;
 
-    for (i = 0; i < BOARD_WIDTH; i++) {
-        for (j = 0; j < BOARD_HEIGHT; j++) {
+    for (i = 0; i < GAMEBOARD_WIDTH - 2; i++) {
+        for (j = 0; j < GAMEBOARD_HEIGHT - 2; j++) {
             if (gameBoard[i + 1][j + 1] == ' ') sum++;
         }
     }

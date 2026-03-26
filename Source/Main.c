@@ -22,8 +22,8 @@ void tick() {
     if (tickTimer % difficulty == 0)
         attemptMovement(KEY_DOWN);
 
-    if (dropCooldown > 0)
-        dropCooldown--;
+    if (turnCooldown > 0)
+        turnCooldown--;
 
     // Crash on overflow
     if (tickTimer < -1) {
@@ -42,7 +42,7 @@ int main() {
     keypad(stdscr, TRUE); // set keypad mode to true (allow arrow keys to give inputs)
     timeout(0); // make user input timeout immediately
 
-    initGlobals();
+    initGameGlobals();
     initPalette();
     initKickTable();
     srand(time(NULL));
@@ -50,10 +50,10 @@ int main() {
     int temp;
     clock_t tickCounter = clock();
 
-    attemptNewTurn(false);
+    attemptNewTurn(false, false);
 
     placePiece(activePiece);
-    redrawScreen();
+    redrawGame();
 
     while (1) {
         if ((temp = getch()) != ERR) {

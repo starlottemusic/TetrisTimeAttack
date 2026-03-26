@@ -74,31 +74,50 @@ byte pieceColorID(char colorName) {
     }
 }
 
+void settlePiece(PlayerPiece* piece, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth, char (*boardPtr)[boardWidth][boardHeight]) {
+    char color = pieceColorName(piece->tetronimoIndex);
+    byte i, j;
+    for (i = 0; i <= 4; i++) {
+        for (j = 0; j <= 4; j++) {
+            if ((*boardPtr)[i + y][j + x] == 'p')
+                (*boardPtr)[i + y][j + x] = shouldClear ? ' ' : color;
+        }
+    }
+};
+
 /**
  * Attempts to end the active turn and spawn the next piece
  * @param placePiece If activePiece should be placed on the board
+ * @param isHold Whether a piece should be brought from the hold slot
  */
-void attemptNewTurn(bool placePiece) {
-    byte i, j;
-    char color = pieceColorName(activePiece.tetronimoIndex);
-    for (i = 1; i <= BOARD_WIDTH; i++) {
-        for (j = 1; j <= BOARD_HEIGHT; j++) {
-            if (gameBoard[i][j] == 'p')
-                gameBoard[i][j] = placePiece ? color : ' ';
-        }
-    }
+void attemptNewTurn(bool placePiece, bool isHold) {
+    byte nextPiece;
+
+    settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_HEIGHT, GAMEBOARD_WIDTH, &gameBoard);
 
     lineClear();
 
-    if (!newTurnPlayerPiece(rand() % 7)) {
-        redrawScreen();
+    if (isHold && heldPiece.tetronimoIndex != -1) {
+        nextPiece = heldPiece.tetronimoIndex;
+    } else {
+        nextPiece = rand() % 7;
+    }
+
+    if (!newTurnPlayerPiece(nextPiece)) {
+        redrawGame();
         usleep(1000000);
         endwin();
         exit(0); //TODO: handle game end
     }
 
-    redrawScreen();
-    dropCooldown = 15;
+    if (!isHold) {
+        canHold = true;
+        usleep(250000);
+    }
+
+    redrawGame();
+    turnCooldown = 15;
+
 }
 
 /**
@@ -129,6 +148,26 @@ bool newTurnPlayerPiece(byte index) {
     return true;
 }
 
+void holdPiece() {
+    if (!canHold) return;
+    canHold = false;
+
+    int i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            holdSlot[i + 2][j + 2] = activePiece.tetronimo[i][j];
+        }
+    }
+
+    settlePiece(&activePiece, 2, 2, false, 8, 8, &holdSlot);
+
+    PlayerPiece tempHeldPiece = activePiece;
+    attemptNewTurn(false, true);
+    heldPiece = tempHeldPiece;
+
+    redrawGame();
+}
+
 /**
  * Clears any complete lines on screen.
  */
@@ -151,7 +190,7 @@ void lineClear() {
         if (clear[i]) {
             // Clear the targeted line
             memcpy(gameBoard[i + 1], "x          x", 12);
-            redrawScreen();
+            redrawGame();
 
             // Shift all future lines & clear targets down
             for (y = i; y > 0; y--)
