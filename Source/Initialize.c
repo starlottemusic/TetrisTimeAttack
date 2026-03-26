@@ -180,7 +180,7 @@ void initGameGlobals() {
 
     memcpy(holdSlot, tempHoldSlot, 64);
 
-    score = -100; // -100 to handle initial line being cleared. bandaid fixes solve al
+    score = -100; // -100 to handle initial line being cleared. bandaid fixes solve all buig
 
     heldPiece.tetronimoIndex = -1;
     canHold = true;
