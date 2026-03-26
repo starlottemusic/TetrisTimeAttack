@@ -172,7 +172,7 @@ void holdPiece() {
  * Clears any complete lines on screen.
  */
 void lineClear() {
-    byte x, y;
+    byte x, y, i;
     byte linesCleared = 0;
     bool clear[20];
 
@@ -187,7 +187,7 @@ void lineClear() {
     }
 
     // Clear lines
-    for (int i = 0; i < 20; i++) {
+    for (i = 0; i < 20; i++) {
         if (clear[i]) {
             // Clear the targeted line
             memcpy(gameBoard[i + 1], "x          x", 12);
