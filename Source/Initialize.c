@@ -167,8 +167,28 @@ void initGameGlobals() {
 
     memcpy(gameBoard, tempGameBoard, 240);
 
-    char tempHoldSlot[HOLD_HEIGHT][HOLD_WIDTH] = {
+    char tempHoldBoard[HOLD_HEIGHT][INFO_WIDTH] = {
         "++++++++",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "++++++++"
+    };
+
+    memcpy(holdBoard, tempHoldBoard, 64);
+
+    char tempNextBoard[NEXT_HEIGHT][INFO_WIDTH] = {
+        "++++++++",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
+        "+      +",
         "+      +",
         "+      +",
         "+      +",
@@ -178,9 +198,12 @@ void initGameGlobals() {
         "++++++++"
     };
 
-    memcpy(holdSlot, tempHoldSlot, 64);
+    memcpy(nextBoard, tempNextBoard, 120);
 
     score = -100; // -100 to handle initial line being cleared. bandaid fixes solve all buig
+
+    for (i = 0; i < 4; i++)
+        nextQueue[i] = rand() % 7;
 
     heldPiece.tetronimoIndex = -1;
     canHold = true;

@@ -22,6 +22,16 @@ bool isEven(byte index) {
 }
 
 /**
+ * Returns if the piece should be offset vertically when placed
+ * @param index The index of the piece in the array
+ * @return True if piece should be offset, else return false
+ */
+bool shouldOffset(byte index) {
+    if (index == 1 || index == 2 || index == 5) return true;
+    return false;
+}
+
+/**
  * Gets the color of a piece from its respective index in the tetronimos array
  * @param index The index of the tetronimo in the array
  * @return The color pair index
@@ -100,7 +110,7 @@ void attemptNewTurn(bool placePiece, bool isHold) {
     if (isHold && heldPiece.tetronimoIndex != -1) {
         nextPiece = heldPiece.tetronimoIndex;
     } else {
-        nextPiece = rand() % 7;
+        nextPiece = upNext();
     }
 
     if (!newTurnPlayerPiece(nextPiece)) {
@@ -137,7 +147,7 @@ bool newTurnPlayerPiece(byte index) {
 
     activePiece.tetronimoIndex = index;
     activePiece.x = 4;
-    activePiece.y = (index == 1 || index == 2 || index == 5) ? 1 : 0;
+    activePiece.y = shouldOffset(index) ? 1 : 0;
     // L, J, and T pieces need to spawn 1 position lower
     activePiece.rotation = '0';
 
@@ -155,17 +165,42 @@ void holdPiece() {
     int i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            holdSlot[i + 2][j + 2] = activePiece.tetronimo[i][j];
+            holdBoard[i + 2][j + 2] = activePiece.tetronimo[i][j];
         }
     }
 
-    settlePiece(&activePiece, 2, 2, false, 8, 8, &holdSlot);
+    settlePiece(&activePiece, 2, 2, false, 8, 8, &holdBoard);
 
     PlayerPiece tempHeldPiece = activePiece;
     attemptNewTurn(false, true);
     heldPiece = tempHeldPiece;
 
     redrawGame();
+}
+
+byte upNext() {
+    byte nextPiece = nextQueue[0];
+    nextQueue[0] = nextQueue[1];
+    nextQueue[1] = nextQueue[2];
+    nextQueue[2] = nextQueue[3];
+    nextQueue[3] = rand() % 7;
+    updateNext();
+    return nextPiece;
+}
+
+void updateNext() {
+    int i, j, k;
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            for (k = 0; k < 4; k++) {
+
+                nextBoard[j + 3 * i + shouldOffset(nextQueue[i]) + 1][k + 2] = tetronimos[nextQueue[i]][j][k];
+            }
+        }
+        settlePiece(&activePiece, 2, 2, false, 15, 8, &holdBoard);
+    }
+
 }
 
 /**

@@ -14,8 +14,9 @@
 #define DELTA_TIME ((float) 1 / 60) // Length of one frame
 #define GAMEBOARD_HEIGHT  22
 #define GAMEBOARD_WIDTH 12
-#define HOLD_HEIGHT 8
-#define HOLD_WIDTH 8
+#define HOLD_HEIGHT 7
+#define NEXT_HEIGHT 16
+#define INFO_WIDTH 8
 
 // Structs & Datatype Aliases
 typedef char byte;
@@ -42,7 +43,7 @@ typedef struct PastPiece {
 // Function Headers
 byte createOrOpenFile(FILE *filePtr, char *filePath);
 void loadConfig();
-void redrawBoard(int rows, int cols, char renderArray[][cols], byte x, byte y);
+void redrawBoard(int cols, int rows, char renderArray[][rows], byte x, byte y);
 void initKickTable();
 void initGameGlobals();
 byte pieceSize(byte index);
@@ -60,11 +61,15 @@ void rotate(char piece[4][4], byte index, bool clockwise);
 void lineClear();
 void redrawGame();
 long scorePow(int base, int exp);
+byte upNext();
+void updateNext();
+bool shouldOffset(byte index);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
 char gameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH]; // Working array of the current game board
-char holdSlot[HOLD_HEIGHT][HOLD_WIDTH]; // Working array of the hold slot
+char holdBoard[HOLD_HEIGHT][INFO_WIDTH]; // Working array of the hold board
+char nextBoard[NEXT_HEIGHT][INFO_WIDTH]; // Working array for the "Up Next" board
 short openSpace;
 int kickTable[3][8][5][2];
 PlayerPiece activePiece;
@@ -74,5 +79,6 @@ int lastIn;
 byte turnCooldown;
 bool canHold;
 long score;
+byte nextQueue[4];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

@@ -6,11 +6,11 @@ bool isPlayerPiece; // Set true if the piece being rendered is actively controll
  * Formats & redraws the screen based off the global screen array
  * Colors are determined via chars w/ respect to the color pair table
  */
-void redrawBoard(int rows, int cols, char renderArray[][rows], byte x, byte y) {
+void redrawBoard(int cols, int rows, char renderArray[][cols], byte x, byte y) {
     int i, j;
 
-    for (i = 0; i < cols; i++) {
-        for (j = 0; j < rows; j++) {
+    for (i = 0; i < rows; i++) {
+        for (j = 0; j < cols; j++) {
             if (renderArray[i][j] == ' ') continue;
 
             // Convert player pieces to their color name for rendering
@@ -40,5 +40,6 @@ void redrawBoard(int rows, int cols, char renderArray[][rows], byte x, byte y) {
 void redrawGame() {
     clear();
     redrawBoard(GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, gameBoard, 1, 1);
-    redrawBoard(HOLD_WIDTH, HOLD_HEIGHT, holdSlot, 14, 1);
+    redrawBoard(INFO_WIDTH, HOLD_HEIGHT, holdBoard, 14, 1);
+    redrawBoard(INFO_WIDTH, NEXT_HEIGHT, nextBoard, 14, HOLD_HEIGHT);
 }
