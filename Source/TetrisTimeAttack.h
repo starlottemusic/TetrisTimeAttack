@@ -64,6 +64,12 @@ long scorePow(int base, int exp);
 byte upNext();
 void updateNext();
 bool shouldOffset(byte index);
+void startNCursesScreen();
+void tick();
+void initPalette();
+void attemptNewTurn(bool placePiece, bool isHold);
+void tickGame();
+void tickMenu();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -75,10 +81,12 @@ int kickTable[3][8][5][2];
 PlayerPiece activePiece;
 PlayerPiece lastActivePiece;
 PlayerPiece heldPiece;
-int lastIn;
+int lastInput;
 byte turnCooldown;
 bool canHold;
 long score;
 byte nextQueue[4];
+char screenState;
+long tickTimer;
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

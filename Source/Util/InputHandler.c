@@ -1,47 +1,57 @@
-#include "TetrisTimeAttack.h"
+#include "../TetrisTimeAttack.h"
 
 extern void holdPiece();
+
+/**
+ * Reads keyboard input and stores it in lastInput
+ */
+void readInput() {
+    int temp;
+    if ((temp = getch()) != ERR) {
+        lastInput = temp;
+    }
+}
 
 /**
  * Handles keyboard input during gameplay
  */
 void handleGameInput() {
-    switch (lastIn) {
+    switch (lastInput) {
         case KEY_LEFT:
             attemptMovement(KEY_LEFT);
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case KEY_RIGHT:
             attemptMovement(KEY_RIGHT);
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case KEY_UP:
             holdPiece();
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case KEY_DOWN:
             attemptMovement(KEY_DOWN);
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case 'd': case 'D':
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
             placePiece(activePiece);
             redrawGame();
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case 'a': case 'A':
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
             placePiece(activePiece);
             redrawGame();
-            lastIn = ERR;
+            lastInput = ERR;
             break;
         case ' ':
             while (turnCooldown <= 0)
                 attemptMovement(KEY_DOWN);
             turnCooldown = 0;
-            lastIn = ERR;
+            lastInput = ERR;
             break;
     }
 }

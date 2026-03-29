@@ -1,4 +1,4 @@
-#include "TetrisTimeAttack.h"
+#include "../TetrisTimeAttack.h"
 
 /**
  * Returns the size of a piece from the Tetronimos array

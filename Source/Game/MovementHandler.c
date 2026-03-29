@@ -1,4 +1,4 @@
-#include "TetrisTimeAttack.h"
+#include "../TetrisTimeAttack.h"
 
 extern void attemptNewTurn(bool placePiece, bool isHold);
 
