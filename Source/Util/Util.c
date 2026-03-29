@@ -16,7 +16,7 @@ long scorePow(int base, int exp) {
 }
 
 void tick() {
-    static clock_t tickCounter;
+    static clock_t tickCounter = -RAND_MAX;
 
     if ((float) tickCounter / CLOCKS_PER_SEC < (float) clock() / CLOCKS_PER_SEC - DELTA_TIME) {
         tickCounter = clock();
@@ -39,5 +39,5 @@ void startNCursesScreen() {
     curs_set(0); // hide cursor
     keypad(stdscr, TRUE); // set keypad mode to true (allow arrow keys to give inputs)
     timeout(0); // make user input timeout immediately
-
+    initPalette();
 }

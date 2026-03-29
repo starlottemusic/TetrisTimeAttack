@@ -165,7 +165,7 @@ void initGameGlobals() {
         "++++++++++++"
     };
 
-    memcpy(gameBoard, tempGameBoard, 240);
+    memcpy(gameBoard, tempGameBoard, sizeof(gameBoard));
 
     char tempHoldBoard[HOLD_HEIGHT][INFO_WIDTH] = {
         "++++++++",
@@ -177,7 +177,7 @@ void initGameGlobals() {
         "++++++++"
     };
 
-    memcpy(holdBoard, tempHoldBoard, 64);
+    memcpy(holdBoard, tempHoldBoard, sizeof(holdBoard));
 
     char tempNextBoard[NEXT_HEIGHT][INFO_WIDTH] = {
         "++++++++",
@@ -198,9 +198,9 @@ void initGameGlobals() {
         "++++++++"
     };
 
-    memcpy(nextBoard, tempNextBoard, 120);
+    memcpy(nextBoard, tempNextBoard, sizeof(nextBoard));
 
-    score = -100; // -100 to handle initial line being cleared. bandaid fixes solve all buig
+    score = 0;
 
     for (i = 0; i < 4; i++)
         nextQueue[i] = rand() % 7;
@@ -209,4 +209,32 @@ void initGameGlobals() {
     canHold = true;
     lastInput = ERR;
     tickTimer = 0;
+}
+
+void initMenuGlobals() {
+    strcpy(menuOptions[0], "+   START GAME   +");
+    strcpy(menuOptions[2], "+    TUTORIAL    +");
+    strcpy(menuOptions[1], "+  LEADERBOARDS  +");
+    strcpy(menuOptions[3], "+    CONTROLS    +");
+    strcpy(menuOptions[4], "+      QUIT      +");
+
+    char tempLogo[LOGO_HEIGHT][LOGO_WIDTH] = {
+        " SS  ZZTTT OOJJJ  SS  ZZTTT  ZJJJ IIIISS  IIII",
+        "SSJJJIZZT  OOZ J SSJJJIZZT  ZZ  J  OOSS  OOJ  ",
+        "    JI      ZZ       JI     ZT OO  OOJJ  OOJ  ",
+        "    LI      ZLLL     LI     TT OO   LJ    JJSS",
+        "    LI      SL       LI     ITLLL   LJ     SSZ",
+        "    LL     TSS       LL     I LS    LL      ZZ",
+        "    OO     TTS       OO     I  SS  TZZ   TTTZL",
+        "    OO     TIIII     OO     I   S TTTZZ   TLLL",
+        "                                              ",
+        "                                              ",
+        " +++ +++ +   + +++    +++ +++ +++ +++ +++ + + ",
+        "  +   +  ++ ++ +      + +  +   +  + + +   + + ",
+        "  +   +  + + + ++     +++  +   +  +++ +   ++  ",
+        "  +   +  + + + +      + +  +   +  + + +   + + ",
+        "  +  +++ +   + +++    + +  +   +  + + +++ + + "
+    };
+
+    memcpy(menuLogo, tempLogo, 720);
 }

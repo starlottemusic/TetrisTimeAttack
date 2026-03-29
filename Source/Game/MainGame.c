@@ -25,7 +25,6 @@ void tickGame() {
 }
 
 void mainGame() {
-    screenState = 'G';
     startNCursesScreen();
 
     initGameGlobals();
@@ -38,7 +37,7 @@ void mainGame() {
     placePiece(activePiece);
     redrawGame();
 
-    while (1) {
+    while (screenState == 'G') {
         readInput();
         tick();
     }

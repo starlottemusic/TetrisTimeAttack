@@ -1,6 +1,6 @@
 #include "TetrisTimeAttack.h"
 
-#include "Game/InitializeGame.c"
+#include "Util/Init.c"
 #include "Util/Render.c"
 #include "Util/FileManager.c"
 #include "Game/MovementHandler.c"
@@ -11,5 +11,5 @@
 #include "Menu/MainMenu.c"
 
 int main() {
-    mainGame();
+    mainMenu();
 }

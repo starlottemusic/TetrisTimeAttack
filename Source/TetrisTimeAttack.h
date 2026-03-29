@@ -17,6 +17,9 @@
 #define HOLD_HEIGHT 7
 #define NEXT_HEIGHT 16
 #define INFO_WIDTH 8
+#define MENU_LENGTH 5
+#define LOGO_WIDTH 46
+#define LOGO_HEIGHT 15
 
 // Structs & Datatype Aliases
 typedef char byte;
@@ -70,6 +73,15 @@ void initPalette();
 void attemptNewTurn(bool placePiece, bool isHold);
 void tickGame();
 void tickMenu();
+void readInput();
+void handleGameInput();
+void handleMenuInput();
+void cycleMenu(int keyInput);
+void mainGame();
+void mainMenu();
+void initMenuGlobals();
+void redrawMenu(byte selectedOption);
+void selectMenuOption();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -88,5 +100,7 @@ long score;
 byte nextQueue[4];
 char screenState;
 long tickTimer;
+char menuOptions[5][100];
+char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

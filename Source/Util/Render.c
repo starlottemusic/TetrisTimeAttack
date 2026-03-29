@@ -43,3 +43,15 @@ void redrawGame() {
     redrawBoard(INFO_WIDTH, HOLD_HEIGHT, holdBoard, 14, 1);
     redrawBoard(INFO_WIDTH, NEXT_HEIGHT, nextBoard, 14, HOLD_HEIGHT);
 }
+
+void redrawMenu(byte selectedOption) {
+    byte i, j;
+
+    redrawBoard(LOGO_WIDTH, LOGO_HEIGHT, menuLogo, 1, 1);
+
+    for (i = 0; i < MENU_LENGTH; i++) {
+        if (i == selectedOption) attron(A_STANDOUT);
+        mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6 , "%s", menuOptions[i]);
+        attroff(A_STANDOUT);
+    }
+}

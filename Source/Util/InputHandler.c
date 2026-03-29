@@ -12,6 +12,23 @@ void readInput() {
     }
 }
 
+void handleMenuInput() {
+    switch (lastInput) {
+        case KEY_UP:
+            cycleMenu(KEY_UP);
+            lastInput = ERR;
+            break;
+        case KEY_DOWN:
+            cycleMenu(KEY_DOWN);
+            lastInput = ERR;
+            break;
+        case KEY_ENTER: case ' ': case 10: // Enter, space, or line feed
+            selectMenuOption();
+            lastInput = ERR;
+            break;
+    }
+}
+
 /**
  * Handles keyboard input during gameplay
  */
@@ -33,14 +50,16 @@ void handleGameInput() {
             attemptMovement(KEY_DOWN);
             lastInput = ERR;
             break;
-        case 'd': case 'D':
+        case 'd':
+        case 'D':
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
             placePiece(activePiece);
             redrawGame();
             lastInput = ERR;
             break;
-        case 'a': case 'A':
+        case 'a':
+        case 'A':
             clearPiece(activePiece);
             rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
             placePiece(activePiece);
