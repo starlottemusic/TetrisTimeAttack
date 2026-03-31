@@ -1,28 +1,97 @@
 #include "../TetrisTimeAttack.h"
 
+byte encryptionKey = 67;
+
 /**
  * Attempts to read a file to the input pointer. If it doesn't exist, attempt to create it.
  *  RETURN: 1 if file exists, 0 if created, -1 if could not be created
  **/
-byte createOrOpenFile(FILE *filePtr, char *filePath) {
-    filePtr = fopen(filePath, "r");
-    if (filePtr == NULL) {
-        filePtr = fopen(filePath, "w");
-        if (filePtr == NULL) {
-            printf("DEBUG: Error creating file.\n");
+byte createOrOpenFile(FILE **filePtrPtr, char *filePath) {
+    mkdir("TTA_Data", 0777);
+    *filePtrPtr = fopen(filePath, "r");
+    if (*filePtrPtr == NULL) {
+        *filePtrPtr = fopen(filePath, "w");
+        if (*filePtrPtr == NULL) {
             return -1;
         }
-        printf("DEBUG: File opened successfully.\n");
         return 0;
     }
-    printf("DEBUG: File created successfully.\n");
     return 1;
 }
 
 void loadConfig() {
-    FILE* configFile;
-    //TODO: Set default config values
-    if (createOrOpenFile(configFile, "config.txt") == 1) {
-        //TODO: Read config values
+    FILE *configFile;
+    char temp[10];
+
+    switch (createOrOpenFile(&configFile, "TTA_Data/config.ini")) {
+        case 0: // Config file newly created
+            setDefaultConfig();
+            writeConfig(configFile);
+            fclose(configFile);
+            break;
+        case 1: // Config file opened from existing
+            fgets(temp, 10, configFile);
+            keyMap.hardDrop = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.holdPiece = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.moveDown = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.moveRight = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.moveLeft = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.rotateCCW = atoi(temp);
+            fgets(temp, 10, configFile);
+            keyMap.rotateCW = atoi(temp);
+            fclose(configFile);
+            break;
+        case -1: // Could not create or open config file
+            setDefaultConfig();
+            break;
+        default:
+            endwin();
+            printf("ERROR: Config file createOrOpen returned OOB.");
+            exit(-1);
+    }
+}
+
+void setDefaultConfig() {
+    keyMap.hardDrop = ' ';
+    keyMap.holdPiece = KEY_UP;
+    keyMap.moveDown = KEY_DOWN;
+    keyMap.moveRight = KEY_RIGHT;
+    keyMap.moveLeft = KEY_LEFT;
+    keyMap.rotateCCW = 'A';
+    keyMap.rotateCW = 'D';
+}
+
+void writeConfig(FILE* filePtr) {
+    char temp[10];
+
+    sprintf(temp, "%d\n", keyMap.hardDrop);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.holdPiece);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.moveDown);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.moveRight);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.moveLeft);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.rotateCCW);
+    fputs(temp, filePtr);
+    sprintf(temp, "%d\n", keyMap.rotateCW);
+    fputs(temp, filePtr);
+}
+
+/**
+ * Encrypts/decrypts a string for printing to leaderboards
+ * @param text string to be encrypted/decrypted
+ */
+void encryptText(char *text) {
+    byte i;
+    for (i = 0; i < strlen(text); i++) {
+        text[i] = text[i] ^ encryptionKey;
     }
 }

@@ -11,5 +11,6 @@
 #include "Menu/MainMenu.c"
 
 int main() {
+    loadConfig();
     mainMenu();
 }

@@ -94,7 +94,8 @@ byte pieceColorID(char colorName) {
  * @param boardWidth Width of the board the piece is placed on
  * @param boardPtr Pointer to the board array the piece is placed on
  */
-void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth, char (*boardPtr)[boardWidth][boardHeight]) {
+void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth,
+                 char (*boardPtr)[boardWidth][boardHeight]) {
     char color = pieceColorName(piecePtr->tetronimoIndex);
     byte i, j;
     for (i = 0; i <= 4; i++) {
@@ -213,13 +214,11 @@ void updateNext() {
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
             for (k = 0; k < 4; k++) {
-
                 nextBoard[j + 3 * i + shouldOffset(nextQueue[i]) + 1][k + 2] = tetronimos[nextQueue[i]][j][k];
             }
         }
         settlePiece(&activePiece, 2, 2, false, 15, 8, &holdBoard);
     }
-
 }
 
 /**
@@ -258,5 +257,5 @@ void lineClear() {
     }
 
     if (linesCleared > 0)
-        score += 50 * scorePow(2, linesCleared);
+        score += 100 * scorePow(2, linesCleared);
 }

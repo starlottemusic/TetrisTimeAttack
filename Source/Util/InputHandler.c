@@ -1,3 +1,5 @@
+#include <ctype.h>
+
 #include "../TetrisTimeAttack.h"
 
 /**
@@ -6,6 +8,7 @@
 void readInput() {
     int temp;
     if ((temp = getch()) != ERR) {
+        temp = tolower(temp);
         lastInput = temp;
     }
 }
@@ -23,7 +26,9 @@ void handleMenuInput() {
             cycleMenu(KEY_DOWN);
             lastInput = ERR;
             break;
-        case KEY_ENTER: case ' ': case 10: // Enter, space, or line feed
+        case KEY_ENTER:
+        case ' ':
+        case 10: // Enter, space, or line feed
             selectMenuOption();
             lastInput = ERR;
             break;
@@ -34,47 +39,32 @@ void handleMenuInput() {
  * Handles specific key inputs during gameplay
  */
 void handleGameInput() {
-    switch (lastInput) {
-        case KEY_LEFT:
-            attemptMovement(KEY_LEFT);
-            lastInput = ERR;
-            break;
-        case KEY_RIGHT:
-            attemptMovement(KEY_RIGHT);
-            lastInput = ERR;
-            break;
-        case KEY_UP:
-            holdPiece();
-            lastInput = ERR;
-            break;
-        case KEY_DOWN:
+    // Horrible giant if statement because switch cases are constant at compilation
+    if (lastInput == keyMap.holdPiece) {
+        holdPiece();
+    } else if (lastInput == keyMap.moveLeft) {
+        attemptMovement(KEY_LEFT);
+    } else if (lastInput == keyMap.moveRight) {
+        attemptMovement(KEY_RIGHT);
+    } else if (lastInput == keyMap.moveDown) {
+        attemptMovement(KEY_DOWN);
+        score++;
+    } else if (lastInput == keyMap.rotateCW) {
+        clearPiece(activePiece);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
+        placePiece(activePiece);
+        redrawGame();
+    } else if (lastInput == keyMap.rotateCCW) {
+        clearPiece(activePiece);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
+        placePiece(activePiece);
+        redrawGame();
+    } else if (lastInput == keyMap.hardDrop) {
+        while (turnCooldown <= 0) {
             attemptMovement(KEY_DOWN);
             score++;
-            lastInput = ERR;
-            break;
-        case 'd':
-        case 'D':
-            clearPiece(activePiece);
-            rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
-            placePiece(activePiece);
-            redrawGame();
-            lastInput = ERR;
-            break;
-        case 'a':
-        case 'A':
-            clearPiece(activePiece);
-            rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
-            placePiece(activePiece);
-            redrawGame();
-            lastInput = ERR;
-            break;
-        case ' ':
-            while (turnCooldown <= 0) {
-                attemptMovement(KEY_DOWN);
-                score++;
-            }
-            turnCooldown = 0;
-            lastInput = ERR;
-            break;
-    }
+        }
+        turnCooldown = 0;
+    } else return;
+    lastInput = ERR;
 }

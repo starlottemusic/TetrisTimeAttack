@@ -240,5 +240,15 @@ void initMenuGlobals() {
         "  +  +++ +   + +++    + +  +   +  + + +++ + + "
     };
 
-    memcpy(menuLogo, tempLogo, 720);
+    memcpy(menuLogo, tempLogo, 690);
 }
+
+char inputArray[7][20] = {
+    "MOVE LEFT - ",
+    "MOVE DOWN - ",
+    "MOVE RIGHT - ",
+    "ROTATE CCW - ",
+    "ROTATE CW - ",
+    "HARD DROP - ",
+    "HOLD PIECE - "
+};

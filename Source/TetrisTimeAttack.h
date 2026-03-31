@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <sys/stat.h>
 #include <unistd.h> // not needed in prclab1
 
 //Macros
@@ -43,8 +44,18 @@ typedef struct PastPiece {
     char rotation;
 } PastPiece;
 
+typedef struct KeyMap {
+    int holdPiece;
+    int moveDown;
+    int moveLeft;
+    int moveRight;
+    int rotateCW;
+    int rotateCCW;
+    int hardDrop;
+} KeyMap;
+
 // Function Headers
-byte createOrOpenFile(FILE *filePtr, char *filePath);
+byte createOrOpenFile(FILE **filePtrPtr, char *filePath);
 void loadConfig();
 void redrawBoard(int cols, int rows, char renderArray[][rows], byte x, byte y);
 void initKickTable();
@@ -83,6 +94,9 @@ void initMenuGlobals();
 void redrawMenu(byte selectedOption);
 void selectMenuOption();
 void holdPiece();
+void encryptText(char *text);
+void setDefaultConfig();
+void writeConfig(FILE* filePtr);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -103,5 +117,8 @@ char screenState;
 long tickTimer;
 char menuOptions[5][100];
 char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
+KeyMap keyMap;
+
+extern char inputArray[7][20];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H
