@@ -84,8 +84,18 @@ byte pieceColorID(char colorName) {
     }
 }
 
-void settlePiece(PlayerPiece* piece, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth, char (*boardPtr)[boardWidth][boardHeight]) {
-    char color = pieceColorName(piece->tetronimoIndex);
+/**
+ *
+ * @param piecePtr Pointer to the playerPiece to be settled
+ * @param x x position to settle at
+ * @param y y position to settle at
+ * @param shouldClear If the piece should be placed or removed
+ * @param boardHeight Height of the board the piece is placed on
+ * @param boardWidth Width of the board the piece is placed on
+ * @param boardPtr Pointer to the board array the piece is placed on
+ */
+void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth, char (*boardPtr)[boardWidth][boardHeight]) {
+    char color = pieceColorName(piecePtr->tetronimoIndex);
     byte i, j;
     for (i = 0; i <= 4; i++) {
         for (j = 0; j <= 4; j++) {
@@ -158,6 +168,9 @@ bool newTurnPlayerPiece(byte index) {
     return true;
 }
 
+/**
+ * Attempts to put activePiece in the hold slot, starting a new turn. Fails if a hold has already occurred this move
+ */
 void holdPiece() {
     if (!canHold) return;
     canHold = false;
@@ -178,6 +191,10 @@ void holdPiece() {
     redrawGame();
 }
 
+/**
+ * Cycles the "up next" queue and generates the next random piece
+ * @return The most recent piece index from the cycle
+ */
 byte upNext() {
     byte nextPiece = nextQueue[0];
     nextQueue[0] = nextQueue[1];
@@ -188,6 +205,9 @@ byte upNext() {
     return nextPiece;
 }
 
+/**
+ * Adjusts the pieces in the up next board to match the list
+ */
 void updateNext() {
     int i, j, k;
 

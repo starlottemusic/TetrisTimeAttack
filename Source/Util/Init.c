@@ -211,6 +211,9 @@ void initGameGlobals() {
     tickTimer = 0;
 }
 
+/**
+ * Initialize global variables for menu
+ */
 void initMenuGlobals() {
     strcpy(menuOptions[0], "+   START GAME   +");
     strcpy(menuOptions[2], "+    TUTORIAL    +");

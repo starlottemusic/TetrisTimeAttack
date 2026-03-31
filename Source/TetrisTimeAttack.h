@@ -82,6 +82,7 @@ void mainMenu();
 void initMenuGlobals();
 void redrawMenu(byte selectedOption);
 void selectMenuOption();
+void holdPiece();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos

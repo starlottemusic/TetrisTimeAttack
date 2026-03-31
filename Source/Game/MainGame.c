@@ -15,15 +15,11 @@ void tickGame() {
 
     if (turnCooldown > 0)
         turnCooldown--;
-
-    // Crash on overflow
-    if (tickTimer < -1) {
-        endwin();
-        printf("You have been playing for 414 days consecutively. Frankly, this crash is for your own good.\n");
-        exit(-1);
-    }
 }
 
+/**
+ * The "main()" function the game, called from the menu. Runs until gamestate is changed from 'G'
+ */
 void mainGame() {
     startNCursesScreen();
 

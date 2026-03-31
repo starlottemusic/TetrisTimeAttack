@@ -1,7 +1,5 @@
 #include "../TetrisTimeAttack.h"
 
-extern void holdPiece();
-
 /**
  * Reads keyboard input and stores it in lastInput
  */
@@ -12,6 +10,9 @@ void readInput() {
     }
 }
 
+/**
+ * Handles specific key inputs in the menu
+ */
 void handleMenuInput() {
     switch (lastInput) {
         case KEY_UP:
@@ -30,7 +31,7 @@ void handleMenuInput() {
 }
 
 /**
- * Handles keyboard input during gameplay
+ * Handles specific key inputs during gameplay
  */
 void handleGameInput() {
     switch (lastInput) {

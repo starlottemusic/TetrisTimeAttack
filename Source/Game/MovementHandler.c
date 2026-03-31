@@ -1,7 +1,5 @@
 #include "../TetrisTimeAttack.h"
 
-extern void attemptNewTurn(bool placePiece, bool isHold);
-
 /**
  * Attempts to move a piece in a given direction. If movement fails, block movement, else move piece and update screen
  * @param direction The direction the movement is attempted in, via ncurses arrow key macros (ie. KEY_UP)

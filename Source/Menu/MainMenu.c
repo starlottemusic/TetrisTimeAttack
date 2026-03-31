@@ -3,6 +3,10 @@
 byte selectedOption;
 byte menuCooldown;
 
+/**
+ * Cycles the selected menu option depending on
+ * @param keyInput ncurses macro for movement direction (should be KEY_UP or KEY_DOWN)
+ */
 void cycleMenu(int keyInput) {
     if (keyInput == KEY_UP)
         selectedOption--;
@@ -13,6 +17,9 @@ void cycleMenu(int keyInput) {
     selectedOption = selectedOption % MENU_LENGTH;
 }
 
+/**
+ * Sets the screen state to the desired state depending on the highlighted menu option
+ */
 void selectMenuOption() {
     switch (selectedOption) {
         case 0:
@@ -32,6 +39,9 @@ void selectMenuOption() {
     }
 }
 
+/**
+ * Main class for the menu screen
+ */
 void mainMenu() {
     screenState = 'M';
     startNCursesScreen();

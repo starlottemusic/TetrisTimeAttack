@@ -15,11 +15,15 @@ long scorePow(int base, int exp) {
     return powOut;
 }
 
+/**
+ * Attempts to call the active screen's tick method once per delta time. If the tick counter overflows, crash the program.
+ */
 void tick() {
     static clock_t tickCounter = -RAND_MAX;
 
     if ((float) tickCounter / CLOCKS_PER_SEC < (float) clock() / CLOCKS_PER_SEC - DELTA_TIME) {
         tickCounter = clock();
+
         switch (screenState) {
             case 'G':
                 tickGame();
@@ -28,11 +32,21 @@ void tick() {
                 tickMenu();
                 break;
         }
+
+        // Crash on overflow
+        if (tickTimer < -1) {
+            endwin();
+            printf("You have been playing for 414 days consecutively. Frankly, this crash is for your own good.\n");
+            exit(-1);
+        }
     }
 }
 
+/**
+ * Initializes a new ncurses screen and configures it with desired default values
+ */
 void startNCursesScreen() {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, ""); // Necessary for dithered characters to be printed
     initscr(); // start ncurses
     noecho(); // don't write keyboard input to screen
     cbreak(); // allow input w/o needing to press enter (CTRL+C still passes)
