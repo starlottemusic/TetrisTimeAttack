@@ -29,7 +29,7 @@ void redrawBoard(int cols, int rows, char renderArray[][cols], byte x, byte y) {
                 renderArray[i][j] = 'p';
                 isPlayerPiece = false;
             }
-            refresh(); //TODO Only call once in prclab1 (have to call every pixel due to issue w/ clion terminal)
+            refresh(); //Remove in prc (have to call every pixel due to issue w/ clion terminal)
         }
     }
 }
@@ -42,16 +42,29 @@ void redrawGame() {
     redrawBoard(GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, gameBoard, 1, 1);
     redrawBoard(INFO_WIDTH, HOLD_HEIGHT, holdBoard, 14, 1);
     redrawBoard(INFO_WIDTH, NEXT_HEIGHT, nextBoard, 14, HOLD_HEIGHT);
+    attron(COLOR_PAIR(9) | A_STANDOUT);
+    mvprintw(1, 5, "SCORE: %lu", score);
+    mvprintw(1, 34, "HOLD");
+    mvprintw(HOLD_HEIGHT, 34, "NEXT");
+    attroff(COLOR_PAIR(9) | A_STANDOUT);
+    refresh();
 }
 
+/**
+ * Redraw the main menu (options & logo) with selected option highlighted
+ * @param selectedOption The index of the selected option
+ */
 void redrawMenu(byte selectedOption) {
-    byte i, j;
+    byte i;
 
     redrawBoard(LOGO_WIDTH, LOGO_HEIGHT, menuLogo, 1, 1);
 
     for (i = 0; i < MENU_LENGTH; i++) {
-        if (i == selectedOption) attron(A_STANDOUT);
-        mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6 , "%s", menuOptions[i]);
+        if (i == selectedOption)
+            attron(A_STANDOUT);
+        mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6, "%s", menuOptions[i]);
         attroff(A_STANDOUT);
     }
+
+    refresh();
 }

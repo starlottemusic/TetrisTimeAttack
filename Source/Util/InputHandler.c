@@ -49,6 +49,7 @@ void handleGameInput() {
             break;
         case KEY_DOWN:
             attemptMovement(KEY_DOWN);
+            score++;
             lastInput = ERR;
             break;
         case 'd':
@@ -68,8 +69,10 @@ void handleGameInput() {
             lastInput = ERR;
             break;
         case ' ':
-            while (turnCooldown <= 0)
+            while (turnCooldown <= 0) {
                 attemptMovement(KEY_DOWN);
+                score++;
+            }
             turnCooldown = 0;
             lastInput = ERR;
             break;

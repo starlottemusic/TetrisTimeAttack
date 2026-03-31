@@ -127,7 +127,6 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         redrawGame();
         usleep(1000000);
         endwin();
-        printf("DEBUG: Score was %lu\n", score);
         screenState = 'M'; //TODO: handle game end
     }
 

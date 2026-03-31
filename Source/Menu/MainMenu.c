@@ -74,6 +74,9 @@ void mainMenu() {
     exit(0);
 }
 
+/**
+ * Time-based inputs for menu, called once per delta time
+ */
 void tickMenu() {
     handleMenuInput();
 

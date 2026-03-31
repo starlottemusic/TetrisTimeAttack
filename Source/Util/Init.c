@@ -14,6 +14,7 @@ void initPalette() {
     init_pair(6, COLOR_MAGENTA, COLOR_MAGENTA);
     init_pair(7, COLOR_RED, COLOR_RED);
     init_pair(8, COLOR_WHITE, COLOR_WHITE);
+    init_pair(9, COLOR_WHITE, COLOR_BLACK);
 }
 
 /**
