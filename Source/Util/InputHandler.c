@@ -14,22 +14,26 @@ void readInput() {
 }
 
 /**
- * Handles specific key inputs in the menu
+ * Handles specific key inputs for menus
  */
-void handleMenuInput() {
+void handleMenuInput(byte menuLength) {
     switch (lastInput) {
         case KEY_UP:
-            cycleMenu(KEY_UP);
+            cycleMenu(KEY_UP, menuLength);
             lastInput = ERR;
             break;
         case KEY_DOWN:
-            cycleMenu(KEY_DOWN);
+            cycleMenu(KEY_DOWN, menuLength);
             lastInput = ERR;
             break;
         case KEY_ENTER:
         case ' ':
         case 10: // Enter, space, or line feed
-            selectMenuOption();
+            if (screenState == 'C') {
+                selectControlOption();
+            } else {
+                selectMenuOption();
+            }
             lastInput = ERR;
             break;
     }

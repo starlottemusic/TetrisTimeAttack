@@ -1,21 +1,6 @@
 #include "../TetrisTimeAttack.h"
 
-byte selectedOption;
 byte menuCooldown;
-
-/**
- * Cycles the selected menu option depending on
- * @param keyInput ncurses macro for movement direction (should be KEY_UP or KEY_DOWN)
- */
-void cycleMenu(int keyInput) {
-    if (keyInput == KEY_UP)
-        selectedOption--;
-    else
-        selectedOption++;
-
-    if (selectedOption < 0) selectedOption = MENU_LENGTH - 1;
-    selectedOption = selectedOption % MENU_LENGTH;
-}
 
 /**
  * Sets the screen state to the desired state depending on the highlighted menu option
@@ -30,6 +15,7 @@ void selectMenuOption() {
         case 2:
             break;
         case 3:
+            screenState = 'C';
             break;
         case 4:
             screenState = 'E';
@@ -46,12 +32,11 @@ void mainMenu() {
     screenState = 'M';
     startNCursesScreen();
     initMenuGlobals();
-    selectedOption = 0;
 
     while (screenState != 'E') {
         readInput();
-        tickMenu();
-        redrawMenu(selectedOption);
+        tick();
+        redrawMenu();
 
         if (menuCooldown <= 0) {
             switch (screenState) {
@@ -60,7 +45,14 @@ void mainMenu() {
                     mainGame();
                     startNCursesScreen();
                     clear();
-                    menuCooldown = 120;
+                    menuCooldown = 30;
+                    break;
+                case 'C':
+                    endwin();
+                    mainControls();
+                    selectedOption = 0;
+                    startNCursesScreen();
+                    clear();
                     break;
                 case 'M': default:
                     break;
@@ -78,7 +70,7 @@ void mainMenu() {
  * Time-based inputs for menu, called once per delta time
  */
 void tickMenu() {
-    handleMenuInput();
+    handleMenuInput(MENU_LENGTH);
 
     if (menuCooldown > 0) {
         menuCooldown--;

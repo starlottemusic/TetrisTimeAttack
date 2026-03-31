@@ -31,6 +31,9 @@ void tick() {
             case 'M':
                 tickMenu();
                 break;
+            case 'C':
+                tickControls();
+                break;
         }
 
         // Crash on overflow
@@ -54,4 +57,18 @@ void startNCursesScreen() {
     keypad(stdscr, TRUE); // set keypad mode to true (allow arrow keys to give inputs)
     timeout(0); // make user input timeout immediately
     initPalette();
+}
+
+/**
+ * Cycles the selected menu option depending on
+ * @param keyInput ncurses macro for movement direction (should be KEY_UP or KEY_DOWN)
+ */
+void cycleMenu(int keyInput, byte menuLength) {
+    if (keyInput == KEY_UP)
+        selectedOption--;
+    else
+        selectedOption++;
+
+    if (selectedOption < 0) selectedOption = menuLength - 1;
+    selectedOption = selectedOption % menuLength;
 }

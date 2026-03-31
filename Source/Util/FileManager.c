@@ -54,6 +54,7 @@ void loadConfig() {
             printf("ERROR: Config file createOrOpen returned OOB.");
             exit(-1);
     }
+    updateConfigText();
 }
 
 void setDefaultConfig() {
@@ -62,8 +63,17 @@ void setDefaultConfig() {
     keyMap.moveDown = KEY_DOWN;
     keyMap.moveRight = KEY_RIGHT;
     keyMap.moveLeft = KEY_LEFT;
-    keyMap.rotateCCW = 'A';
-    keyMap.rotateCW = 'D';
+    keyMap.rotateCCW = 'a';
+    keyMap.rotateCW = 'd';
+}
+
+void saveConfig() {
+    FILE *configFile = fopen("TTA_Data/config.ini", "w");
+
+    if (configFile != NULL) {
+        writeConfig(configFile);
+        fclose(configFile);
+    };
 }
 
 void writeConfig(FILE* filePtr) {

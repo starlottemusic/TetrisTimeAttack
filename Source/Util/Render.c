@@ -54,7 +54,7 @@ void redrawGame() {
  * Redraw the main menu (options & logo) with selected option highlighted
  * @param selectedOption The index of the selected option
  */
-void redrawMenu(byte selectedOption) {
+void redrawMenu() {
     byte i;
 
     redrawBoard(LOGO_WIDTH, LOGO_HEIGHT, menuLogo, 1, 1);
@@ -64,6 +64,28 @@ void redrawMenu(byte selectedOption) {
             attron(A_STANDOUT);
         mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6, "%s", menuOptions[i]);
         attroff(A_STANDOUT);
+    }
+
+    refresh();
+}
+
+/**
+ * Redraw the control config screen with selected option highlighted
+ * @param selectedOption The index of the selected option
+ */
+void redrawControls(bool drawTextOut, int textOutIndex) {
+    byte i;
+
+    for (i = 0; i < CONTROLS_LENGTH; i++) {
+        if (i == selectedOption)
+            attron(A_STANDOUT);
+
+        mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6, "%s", controlConfigs[i]);
+        attroff(A_STANDOUT);
+    }
+
+    if (drawTextOut) {
+        mvprintw(11, LOGO_WIDTH - 6, controlFeedback[textOutIndex]);
     }
 
     refresh();

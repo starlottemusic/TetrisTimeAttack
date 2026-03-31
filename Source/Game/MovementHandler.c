@@ -5,6 +5,7 @@
  * @param direction The direction the movement is attempted in, via ncurses arrow key macros (ie. KEY_UP)
  */
 void attemptMovement(int direction) {
+    static byte gracePeriod = 5;
     lastActivePiece = activePiece;
     switch (direction) {
         case KEY_DOWN:
@@ -28,7 +29,12 @@ void attemptMovement(int direction) {
         activePiece = lastActivePiece;
 
         if (direction == KEY_DOWN) {
+            gracePeriod--;
+        }
+
+        if (gracePeriod == 0) {
             attemptNewTurn(true, false);
+            gracePeriod = 5;
         }
     }
 }

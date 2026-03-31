@@ -21,6 +21,7 @@
 #define MENU_LENGTH 5
 #define LOGO_WIDTH 46
 #define LOGO_HEIGHT 15
+#define CONTROLS_LENGTH 8
 
 // Structs & Datatype Aliases
 typedef char byte;
@@ -86,17 +87,27 @@ void tickGame();
 void tickMenu();
 void readInput();
 void handleGameInput();
-void handleMenuInput();
-void cycleMenu(int keyInput);
+void handleMenuInput(byte menuLength);
+void cycleMenu(int keyInput, byte menuLength);
 void mainGame();
 void mainMenu();
 void initMenuGlobals();
-void redrawMenu(byte selectedOption);
+void redrawMenu();
 void selectMenuOption();
 void holdPiece();
 void encryptText(char *text);
 void setDefaultConfig();
 void writeConfig(FILE* filePtr);
+void mainControls();
+void tickControls();
+void redrawControls(bool drawTextOut, int textOutIndex);
+void selectControlOption();
+void appendKeyName(int configIndex, int key);
+void getNcursesKeyName(int keyIndex, char *nameOut);
+void updateConfigText();
+void startRebind(byte index);
+void bindKey(byte index, int key);
+void saveConfig();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -119,6 +130,8 @@ char menuOptions[5][100];
 char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 KeyMap keyMap;
 
-extern char inputArray[7][20];
+extern char controlConfigs[CONTROLS_LENGTH][40];
+extern char controlFeedback[4][40];
+extern byte selectedOption;
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

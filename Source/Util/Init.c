@@ -243,12 +243,22 @@ void initMenuGlobals() {
     memcpy(menuLogo, tempLogo, 690);
 }
 
-char inputArray[7][20] = {
+char controlConfigs[CONTROLS_LENGTH][40] = {
     "MOVE LEFT - ",
     "MOVE DOWN - ",
-    "MOVE RIGHT - ",
+    "MOVE RIGHT - WHAT",
     "ROTATE CCW - ",
     "ROTATE CW - ",
     "HARD DROP - ",
-    "HOLD PIECE - "
+    "HOLD PIECE - ",
+    "Exit to Menu"
 };
+
+char controlFeedback[4][40] = {
+    "Press any key to rebind %s",
+    "(Press ESC to cancel)",
+    "Key successfully bound!",
+    "Key binding canceled."
+};
+
+byte selectedOption = 0;

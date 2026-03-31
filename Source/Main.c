@@ -9,6 +9,7 @@
 #include "Util/Util.c"
 #include "Game/MainGame.c"
 #include "Menu/MainMenu.c"
+#include "Controls/MainControls.c"
 
 int main() {
     loadConfig();
