@@ -6,7 +6,7 @@
  * @param exp Power of the exponent (B -> A^B)
  * @return base^exp
  */
-long scorePow(int base, int exp) {
+int scorePow(int base, int exp) {
     long powOut = base;
     while (exp > 1) {
         powOut *= base;
@@ -78,4 +78,9 @@ void cycleMenu(int keyInput, byte menuLength) {
 
 byte centered(char* text) {
     return -strlen(text) / 2;
+}
+
+bool isValidCharacter(int ncursesChar) {
+    if (ncursesChar > 32 && ncursesChar < 128) return 1;
+    return 0;
 }

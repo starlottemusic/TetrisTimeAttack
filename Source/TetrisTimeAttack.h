@@ -22,13 +22,14 @@
 #define LOGO_WIDTH 46
 #define LOGO_HEIGHT 15
 #define CONTROLS_LENGTH 8
+#define SCORE_WINDOW_OFFSET 9
 
 // Structs & Datatype Aliases
 typedef char byte;
 
 typedef struct Leaderboard {
     char name[3];
-    long score;
+    int score;
 } Leaderboard;
 
 typedef struct PlayerPiece {
@@ -75,7 +76,7 @@ bool newTurnPlayerPiece(byte index);
 void rotate(char piece[4][4], byte index, bool clockwise);
 void lineClear();
 void redrawGame();
-long scorePow(int base, int exp);
+int scorePow(int base, int exp);
 byte upNext();
 void updateNext();
 bool shouldOffset(byte index);
@@ -108,10 +109,13 @@ void updateConfigText();
 void startRebind(byte index);
 void bindKey(byte index, int key);
 void saveConfig();
-FILE* openLeaderboard();
+FILE* openLeaderboard(char accessMode[3]);
 void scoreWindow();
 void tickScoreWindow();
 byte centered(char* text);
+bool isValidCharacter(int ncursesChar);
+void initLeaderboard();
+void saveScore(char* name);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -126,7 +130,7 @@ PlayerPiece heldPiece;
 int lastInput;
 byte turnCooldown;
 bool canHold;
-long score;
+int score;
 byte nextQueue[4];
 char screenState;
 long tickTimer;
@@ -137,6 +141,6 @@ KeyMap keyMap;
 extern char controlConfigs[CONTROLS_LENGTH][40];
 extern char controlFeedback[4][40];
 extern byte selectedOption;
-extern char initScores[50];
+extern char initScores[60];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

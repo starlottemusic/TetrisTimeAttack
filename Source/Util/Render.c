@@ -43,7 +43,7 @@ void redrawGame() {
     redrawBoard(INFO_WIDTH, HOLD_HEIGHT, holdBoard, 14, 1);
     redrawBoard(INFO_WIDTH, NEXT_HEIGHT, nextBoard, 14, HOLD_HEIGHT);
     attron(COLOR_PAIR(9) | A_STANDOUT);
-    mvprintw(1, 5, "SCORE: %lu", score);
+    mvprintw(1, 5, "SCORE: %d", score);
     mvprintw(1, 34, "HOLD");
     mvprintw(HOLD_HEIGHT, 34, "NEXT");
     attroff(COLOR_PAIR(9) | A_STANDOUT);

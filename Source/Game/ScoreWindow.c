@@ -13,14 +13,14 @@ char windowBorder[9][15] = {
 };
 
 void scoreWindow() {
-    redrawBoard(15, 9, windowBorder, 4, 10);
+    redrawBoard(15, 9, windowBorder, 4, SCORE_WINDOW_OFFSET);
     char scoreText[50];
 
-    sprintf(scoreText, "Your score was: %lu", score);
+    sprintf(scoreText, "Your score was: %d", score);
 
-    mvprintw(12, 23 + centered("Game Over!"), "Game Over!");
-    mvprintw(13, 23 + centered(scoreText), scoreText);
-    mvprintw(15, 23 + centered("Enter your initials:"), "Enter your initials:");
+    mvprintw(SCORE_WINDOW_OFFSET + 2, 23 + centered("Game Over!"), "Game Over!");
+    mvprintw(SCORE_WINDOW_OFFSET + 3, 23 + centered(scoreText), scoreText);
+    mvprintw(SCORE_WINDOW_OFFSET + 5, 23 + centered("Enter your initials:"), "Enter your initials:");
 
     while (screenState == 'S') {
         inputListener();
@@ -29,8 +29,37 @@ void scoreWindow() {
 }
 
 void tickScoreWindow() {
-    if (lastInput == '\n') {
+    static byte textLength = 0;
+    static char name[3];
+
+    if (isValidCharacter(lastInput) && textLength < 3) {
+        lastInput = toupper(lastInput);
+        name[textLength] = lastInput;
+        textLength++;
         lastInput = ERR;
+    } else if (lastInput == 263 /*backspace*/ && textLength > 0) {
+        textLength--;
+        name[textLength] = ' ';
+        lastInput = ERR;
+    }
+
+    if (lastInput == '\n' && textLength == 3) {
+        lastInput = ERR;
+        saveScore(name);
         screenState = 'M';
     }
+
+    mvprintw(SCORE_WINDOW_OFFSET + 6, 21, "%s", name);
+}
+
+void saveScore(char* name) {
+    char formattedName[50];
+
+    sprintf(formattedName, "%s - %d\n", name, score);
+
+    FILE* leaderboard = openLeaderboard("a");
+    if (leaderboard == NULL)
+        return;
+    fputs(formattedName, leaderboard);
+    fclose(leaderboard);
 }

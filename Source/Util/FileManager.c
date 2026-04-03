@@ -96,17 +96,29 @@ void writeConfig(FILE* filePtr) {
 }
 
 /**
- * Encrypts/decrypts a string for printing to leaderboards
- * @param text string to be encrypted/decrypted
+ * Encrypts a string for printing to leaderboards
+ * @param text string to be encrypted
  */
 void encryptText(char *text) {
     byte i;
     for (i = 0; i < strlen(text); i++) {
-        text[i] = text[i] ^ encryptionKey;
+        text[i] += encryptionKey;
+    }
+}
+
+/**
+ * Decrypts a string for reading from leaderboards
+ * @param text string to be decrypted
+ */
+void decryptText(char *text) {
+    byte i;
+    for (i = 0; i < strlen(text); i++) {
+        text[i] -= encryptionKey;
     }
 }
 
 FILE* openLeaderboard(char accessMode[3]) {
+    initLeaderboard();
     FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", accessMode);
     if (leaderboard == NULL) {
         leaderboard = fopen("TTA_Data/LDBLOC.sav", accessMode);
