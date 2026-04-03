@@ -38,7 +38,7 @@ void mainControls() {
     refresh();
 
     while (screenState == 'C') {
-        readInput();
+        inputListener();
         tick();
         redrawControls(textCooldown > 0, textIndex);
     }
@@ -100,7 +100,7 @@ void startRebind(byte index) {
     mvprintw(11, LOGO_WIDTH - 6, controlFeedback[1]);
 
     while (waiting) {
-        readInput();
+        inputListener();
         if (lastInput != ERR) {
             waiting = false;
             if (lastInput == 27) {

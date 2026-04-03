@@ -10,6 +10,7 @@
 #include "Game/MainGame.c"
 #include "Menu/MainMenu.c"
 #include "Controls/MainControls.c"
+#include "Game/ScoreWindow.c"
 
 int main() {
     loadConfig();

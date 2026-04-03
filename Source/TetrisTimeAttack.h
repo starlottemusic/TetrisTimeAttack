@@ -85,7 +85,7 @@ void initPalette();
 void attemptNewTurn(bool placePiece, bool isHold);
 void tickGame();
 void tickMenu();
-void readInput();
+void inputListener();
 void handleGameInput();
 void handleMenuInput(byte menuLength);
 void cycleMenu(int keyInput, byte menuLength);
@@ -108,6 +108,10 @@ void updateConfigText();
 void startRebind(byte index);
 void bindKey(byte index, int key);
 void saveConfig();
+FILE* openLeaderboard();
+void scoreWindow();
+void tickScoreWindow();
+byte centered(char* text);
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos
@@ -133,5 +137,6 @@ KeyMap keyMap;
 extern char controlConfigs[CONTROLS_LENGTH][40];
 extern char controlFeedback[4][40];
 extern byte selectedOption;
+extern char initScores[50];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

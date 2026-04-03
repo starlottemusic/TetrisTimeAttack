@@ -34,7 +34,7 @@ void mainMenu() {
     initMenuGlobals();
 
     while (screenState != 'E') {
-        readInput();
+        inputListener();
         tick();
         redrawMenu();
 

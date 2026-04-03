@@ -5,7 +5,7 @@
 /**
  * Reads keyboard input and stores it in lastInput
  */
-void readInput() {
+void inputListener() {
     int temp;
     if ((temp = getch()) != ERR) {
         temp = tolower(temp);

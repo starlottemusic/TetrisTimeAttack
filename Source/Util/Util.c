@@ -34,6 +34,9 @@ void tick() {
             case 'C':
                 tickControls();
                 break;
+            case 'S':
+                tickScoreWindow();
+                break;
         }
 
         // Crash on overflow
@@ -71,4 +74,8 @@ void cycleMenu(int keyInput, byte menuLength) {
 
     if (selectedOption < 0) selectedOption = menuLength - 1;
     selectedOption = selectedOption % menuLength;
+}
+
+byte centered(char* text) {
+    return -strlen(text) / 2;
 }

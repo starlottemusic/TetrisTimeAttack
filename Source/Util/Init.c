@@ -15,6 +15,7 @@ void initPalette() {
     init_pair(7, COLOR_RED, COLOR_RED);
     init_pair(8, COLOR_WHITE, COLOR_WHITE);
     init_pair(9, COLOR_WHITE, COLOR_BLACK);
+    init_pair(10, COLOR_BLACK, COLOR_BLACK);
 }
 
 /**
@@ -262,3 +263,30 @@ char controlFeedback[4][40] = {
 };
 
 byte selectedOption = 0;
+
+char initScores[50] = "|CHR - 123|DEA - 123|MAR - 123|COL - 123|MAC - 123";
+
+/**
+ * If global leaderboard DNE, attempts to create with initial values. If global leaderboard cannot be accessed,
+ * checks if local leaderboard exists and attempts to load.
+ */
+void initLeaderboard() {
+    encryptText(initScores);
+    FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
+    if (leaderboard == NULL) {
+        leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
+        if (leaderboard == NULL) {
+            leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if local ldb exists
+            if (leaderboard == NULL) {
+                leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if local ldb can be created
+                if (leaderboard != NULL) {
+                    fprintf(leaderboard, initScores);
+                    fclose(leaderboard);
+                }
+            }
+            return;
+        }
+        fprintf(leaderboard, initScores);
+        fclose(leaderboard);
+    }
+}

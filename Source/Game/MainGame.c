@@ -34,7 +34,7 @@ void mainGame() {
     redrawGame();
 
     while (screenState == 'G') {
-        readInput();
+        inputListener();
         tick();
     }
 }

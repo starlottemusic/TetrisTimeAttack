@@ -65,6 +65,8 @@ char pieceColorName(byte index) {
 byte pieceColorID(char colorName) {
     //TODO consider just updating the array so we dont have to run this constantly
     switch (colorName) {
+        case 'B':
+            return 10;
         case 'I':
             return 1;
         case 'J':
@@ -127,8 +129,9 @@ void attemptNewTurn(bool placePiece, bool isHold) {
     if (!newTurnPlayerPiece(nextPiece)) {
         redrawGame();
         usleep(1000000);
+        screenState = 'S';
+        scoreWindow();
         endwin();
-        screenState = 'M'; //TODO: handle game end
     }
 
     if (!isHold) {
