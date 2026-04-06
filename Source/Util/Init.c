@@ -264,7 +264,7 @@ char controlFeedback[4][40] = {
 
 byte selectedOption = 0;
 
-char initScores[60] = "CHR - 60684\nDEA - 22765\nCOL - 11498\nMAC - 2001\nHAM - 600\n";
+char initScores[60] = "HSM - 119736\nCHR - 60684\nDEA - 22765\nCOL - 11498\nHAM - 600\n";
 
 /**
  * If global leaderboard DNE, attempts to create with initial values. If global leaderboard cannot be accessed,
