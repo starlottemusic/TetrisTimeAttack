@@ -116,6 +116,7 @@ byte centered(char* text);
 bool isValidCharacter(int ncursesChar);
 void initLeaderboard();
 void saveScore(char* name);
+void runAnim();
 
 // Global Variables
 char tetronimos[7][4][4]; // Array of all tetronimos

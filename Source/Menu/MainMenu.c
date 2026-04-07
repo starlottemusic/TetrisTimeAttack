@@ -13,6 +13,7 @@ void selectMenuOption() {
         case 1:
             break;
         case 2:
+            screenState = 'T';
             break;
         case 3:
             screenState = 'C';
@@ -47,6 +48,11 @@ void mainMenu() {
                     clear();
                     menuCooldown = 30;
                     break;
+                case 'T':
+                    endwin();
+                    runAnim();
+                    startNCursesScreen();
+                    clear();
                 case 'C':
                     endwin();
                     mainControls();
