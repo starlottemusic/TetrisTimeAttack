@@ -50,9 +50,11 @@ void mainMenu() {
                     break;
                 case 'T':
                     endwin();
+                    mainTutorial();
                     startNCursesScreen();
                     clear();
-                    runAnim();
+                    menuCooldown = 30;
+                    break;
                 case 'C':
                     endwin();
                     mainControls();

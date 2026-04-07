@@ -40,6 +40,28 @@ void handleMenuInput(byte menuLength) {
 }
 
 /**
+ * Handles specific key inputs for menus
+ */
+void handleTutorialInput() {
+    switch (lastInput) {
+        case KEY_UP:
+
+            lastInput = ERR;
+            break;
+        case KEY_DOWN:
+
+            lastInput = ERR;
+            break;
+        case KEY_ENTER:
+        case ' ':
+        case 10: // Enter, space, or line feed
+
+            lastInput = ERR;
+            break;
+    }
+}
+
+/**
  * Handles specific key inputs during gameplay
  */
 void handleGameInput() {

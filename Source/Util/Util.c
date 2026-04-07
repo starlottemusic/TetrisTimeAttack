@@ -37,6 +37,9 @@ void tick() {
             case 'S':
                 tickScoreWindow();
                 break;
+            case 'T':
+                tickTutorial();
+                break;
         }
 
         // Crash on overflow
