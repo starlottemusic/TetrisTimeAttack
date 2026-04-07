@@ -11,6 +11,7 @@ void selectMenuOption() {
             screenState = 'G';
             break;
         case 1:
+            screenState = 'L';
             break;
         case 2:
             screenState = 'T';
@@ -61,6 +62,13 @@ void mainMenu() {
                     selectedOption = 0;
                     startNCursesScreen();
                     clear();
+                    break;
+                case 'L':
+                    endwin();
+                    mainLeaderboard();
+                    startNCursesScreen();
+                    clear();
+                    menuCooldown = 30;
                     break;
                 case 'M': default:
                     break;

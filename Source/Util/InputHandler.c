@@ -56,6 +56,7 @@ void handleTutorialInput() {
         case ' ':
         case 10: // Enter, space, or line feed
 
+
             lastInput = ERR;
             break;
     }

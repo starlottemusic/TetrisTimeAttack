@@ -9,6 +9,7 @@
 #include <time.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <limits.h>
 #include <unistd.h> // not needed in prclab1
 
 //Macros
@@ -27,8 +28,8 @@
 // Structs & Datatype Aliases
 typedef char byte;
 
-typedef struct Leaderboard {
-    char name[3];
+typedef struct MainLeaderboard {
+    char name[4];
     int score;
 } Leaderboard;
 
@@ -119,6 +120,9 @@ void saveScore(char* name);
 void mainTutorial();
 void tickTutorial();
 void handleTutorialInput();
+void mainLeaderboard();
+void decryptText(char *text);
+void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos

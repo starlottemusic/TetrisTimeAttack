@@ -102,6 +102,7 @@ void writeConfig(FILE* filePtr) {
 void encryptText(char *text) {
     byte i;
     for (i = 0; i < strlen(text); i++) {
+        if (text[i] == '\n') continue;
         text[i] += encryptionKey;
     }
 }
@@ -113,6 +114,7 @@ void encryptText(char *text) {
 void decryptText(char *text) {
     byte i;
     for (i = 0; i < strlen(text); i++) {
+        if (text[i] == '\n') continue;
         text[i] -= encryptionKey;
     }
 }

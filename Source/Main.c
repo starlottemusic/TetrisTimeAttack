@@ -11,6 +11,7 @@
 #include "Menu/MainMenu.c"
 #include "Controls/MainControls.c"
 #include "Game/ScoreWindow.c"
+#include "Leaderboard/MainLeaderboard.c"
 
 int main() {
     loadConfig();

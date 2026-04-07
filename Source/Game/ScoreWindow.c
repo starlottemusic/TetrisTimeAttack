@@ -57,6 +57,8 @@ void saveScore(char* name) {
 
     sprintf(formattedName, "%s - %d\n", name, score);
 
+    encryptText(formattedName);
+
     FILE* leaderboard = openLeaderboard("a");
     if (leaderboard == NULL)
         return;
