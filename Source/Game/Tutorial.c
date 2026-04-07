@@ -1,6 +1,6 @@
 #include "../TetrisTimeAttack.h"
 
-int slide = 0;
+int slide = 3, frame;
 
 void mainTutorial() {
     int frame;
@@ -25,15 +25,38 @@ void mainTutorial() {
 }
 
 void tickTutorial() {
+    if (slide==0)
+        mvprintw(22,3,"Exit");
+    else
+        mvprintw(22,3,"Back");
+
+    if (slide==3)
+        mvprintw(22,60,"Exit");
+    else
+        mvprintw(22,60,"Next");
+
     switch (slide) {
         case 0:
-            mvprintw(67, 67, "Complete lines to clear the board and score points.");
+            mvprintw(20, 7, "Complete lines to clear the board and score points.");
+            switch (frame) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
             break;
         case 1:
+            mvprintw(20, 17, "After 4 moves, the board resets.");
             break;
         case 2:
+            mvprintw(20, 4, "The next run, your previous moves play over your new ones.");
             break;
         case 3:
+            mvprintw(20, 9, "Clearing lines removes old moves from the queue.");
             break;
         default:
             break;
