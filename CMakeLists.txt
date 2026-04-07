@@ -8,5 +8,6 @@ find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
 add_executable(TetrisTimeAttack Source/Main.c
-        Source/TetrisTimeAttack.h)
+        Source/TetrisTimeAttack.h
+        Source/Game/Tutorial.c)
 target_link_libraries(TetrisTimeAttack ${CURSES_LIBRARY})
