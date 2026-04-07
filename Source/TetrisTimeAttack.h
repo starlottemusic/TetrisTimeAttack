@@ -119,25 +119,25 @@ void saveScore(char* name);
 void runAnim();
 
 // Global Variables
-char tetronimos[7][4][4]; // Array of all tetronimos
-char gameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH]; // Working array of the current game board
-char holdBoard[HOLD_HEIGHT][INFO_WIDTH]; // Working array of the hold board
-char nextBoard[NEXT_HEIGHT][INFO_WIDTH]; // Working array for the "Up Next" board
-short openSpace;
-int kickTable[3][8][5][2];
-PlayerPiece activePiece;
-PlayerPiece lastActivePiece;
-PlayerPiece heldPiece;
-int lastInput;
-byte turnCooldown;
-bool canHold;
-int score;
-byte nextQueue[4];
-char screenState;
-long tickTimer;
-char menuOptions[5][100];
-char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
-KeyMap keyMap;
+extern char tetronimos[7][4][4]; // Array of all tetronimos
+extern char gameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH]; // Working array of the current game board
+extern char holdBoard[HOLD_HEIGHT][INFO_WIDTH]; // Working array of the hold board
+extern char nextBoard[NEXT_HEIGHT][INFO_WIDTH]; // Working array for the "Up Next" board
+extern short openSpace;
+extern int kickTable[3][8][5][2];
+extern PlayerPiece activePiece;
+extern PlayerPiece lastActivePiece;
+extern PlayerPiece heldPiece;
+extern int lastInput;
+extern byte turnCooldown;
+extern bool canHold;
+extern int score;
+extern byte nextQueue[4];
+extern char screenState;
+extern long tickTimer;
+extern char menuOptions[5][100];
+extern char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
+extern KeyMap keyMap;
 
 extern char controlConfigs[CONTROLS_LENGTH][40];
 extern char controlFeedback[4][40];
