@@ -50,9 +50,9 @@ void mainMenu() {
                     break;
                 case 'T':
                     endwin();
-                    runAnim();
                     startNCursesScreen();
                     clear();
+                    runAnim();
                 case 'C':
                     endwin();
                     mainControls();
