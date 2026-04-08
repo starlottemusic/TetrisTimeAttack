@@ -12,6 +12,7 @@
 #include "Controls/MainControls.c"
 #include "Game/ScoreWindow.c"
 #include "Leaderboard/MainLeaderboard.c"
+#include "Tutorial/Tutorial.c"
 
 int main() {
     loadConfig();
