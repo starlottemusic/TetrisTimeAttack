@@ -47,6 +47,11 @@ typedef struct PastPiece {
     char rotation;
 } PastPiece;
 
+typedef struct pastChannel {
+    PastPiece* pieces;
+    byte pieceCount;
+} Channel;
+
 typedef struct KeyMap {
     int holdPiece;
     int moveDown;
@@ -125,6 +130,11 @@ void tickTutorial();
 void handleTutorialInput();
 char assignMatrix(int s, int f);
 void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y);
+void extendPast();
+void initializePastChannels();
+PastPiece nextPast(byte fromIndex, bool shouldRemove);
+void dropPast(PastPiece piece);
+void drawFrame(int s, int f);
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos
@@ -143,7 +153,7 @@ extern int score;
 extern byte nextQueue[4];
 extern char screenState;
 extern long tickTimer;
-extern char menuOptions[5][100];
+extern char menuOptions[MENU_LENGTH][100];
 extern char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 extern KeyMap keyMap;
 
@@ -151,6 +161,15 @@ extern char controlConfigs[CONTROLS_LENGTH][40];
 extern char controlFeedback[4][40];
 extern byte selectedOption;
 extern char initScores[60];
+extern bool isTimeAttack;
+extern char pastBoard[GAMEBOARD_HEIGHT][INFO_WIDTH];
+extern byte taActiveChannel;
+
+extern PastPiece* pieces1;
+extern PastPiece* pieces2;
+extern PastPiece* pieces3;
+extern PastPiece* pieces4;
+extern Channel past[4];
 
 extern char mat[6][10];
 

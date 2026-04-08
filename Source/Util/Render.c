@@ -42,10 +42,15 @@ void redrawGame() {
     redrawBoard(GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, gameBoard, 1, 1);
     redrawBoard(INFO_WIDTH, HOLD_HEIGHT, holdBoard, 14, 1);
     redrawBoard(INFO_WIDTH, NEXT_HEIGHT, nextBoard, 14, HOLD_HEIGHT);
+    if (isTimeAttack)
+        redrawBoard(INFO_WIDTH, GAMEBOARD_HEIGHT, pastBoard, 23, 1);
+
     attron(COLOR_PAIR(9) | A_STANDOUT);
     mvprintw(1, 5, "SCORE: %d", score);
     mvprintw(1, 34, "HOLD");
     mvprintw(HOLD_HEIGHT, 34, "NEXT");
+    if (isTimeAttack)
+        mvprintw(1, 52, "PAST");
     attroff(COLOR_PAIR(9) | A_STANDOUT);
     refresh();
 }

@@ -23,6 +23,8 @@ void tickGame() {
 void mainGame() {
     startNCursesScreen();
 
+    if (isTimeAttack)
+        initializePastChannels();
     initGameGlobals();
     initPalette();
     initKickTable();
@@ -36,5 +38,12 @@ void mainGame() {
     while (screenState == 'G') {
         inputListener();
         tick();
+    }
+
+    if (isTimeAttack) {
+        free(pieces1);
+        free(pieces2);
+        free(pieces3);
+        free(pieces4);
     }
 }
