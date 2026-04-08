@@ -123,6 +123,7 @@ void handleTutorialInput();
 void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
+void drawFrame(int s, int f);
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos
