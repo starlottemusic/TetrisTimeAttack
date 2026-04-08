@@ -16,13 +16,21 @@ void mainTutorial() {
 }
 
 void tickTutorial(byte tickCounter) {
-    static int swaps;
+    // Update current frame
     if (tickCounter % 60 == 0) {
         frame++;
         if (frame == 4)
             frame = 0;
     }
 
+    // Update current slide
+    if (lastInput == KEY_LEFT)
+        slide--;
+
+    if (lastInput == KEY_RIGHT)
+        slide++;
+
+    // Print next/back/exit buttons
     if (slide==0)
         mvprintw(22,3,"Exit");
     else
@@ -35,6 +43,7 @@ void tickTutorial(byte tickCounter) {
 
     mvprintw(22,12,"Move left and right to navigate tutorial");
 
+    // Print tutorial text depending on slide
     switch (slide) {
         case 0:
             mvprintw(18, 8, "Complete lines to clear the board and score points.");
@@ -52,6 +61,7 @@ void tickTutorial(byte tickCounter) {
             break;
     }
 
+    // Draw tutorial matrix to slide
     assignMatrix(slide, frame);
     redrawBoard(SLIDE_WIDTH,SLIDE_HEIGHT,mat,11,10);
     refresh();
@@ -270,7 +280,7 @@ char assignMatrix(int s, int f) {
                     "B+BTTTBB+",
                     "B+BBTBB+",
                     "B+BBBBBB+",
-                    "B+BZZBB+",
+                    "B+BZZBBB+",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
                 mvprintw(18,11,"            ");
