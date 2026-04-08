@@ -8,18 +8,26 @@ byte menuCooldown;
 void selectMenuOption() {
     switch (selectedOption) {
         case 0:
-            screenState = 'G';
+            isTimeAttack = !isTimeAttack;
+            if (isTimeAttack)
+                strcpy(menuOptions[0], "+  TIME ATTACK!  +");
+            else
+                strcpy(menuOptions[0], "+    CLASSIC!    +");
+
             break;
         case 1:
-            screenState = 'L';
+            screenState = 'G';
             break;
         case 2:
-            screenState = 'T';
+            screenState = 'L';
             break;
         case 3:
-            screenState = 'C';
+            screenState = 'T';
             break;
         case 4:
+            screenState = 'C';
+            break;
+        case 5:
             screenState = 'E';
             break;
         default:

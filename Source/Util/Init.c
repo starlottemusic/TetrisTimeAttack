@@ -16,9 +16,62 @@ int score;
 byte nextQueue[4];
 char screenState;
 long tickTimer;
-char menuOptions[5][100];
 char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 KeyMap keyMap;
+bool isTimeAttack = true;
+byte taActiveChannel = 0;
+
+// Separate due to memory shenanigans
+PastPiece *pieces1;
+PastPiece *pieces2;
+PastPiece *pieces3;
+PastPiece *pieces4;
+
+Channel past[4];
+
+void initializePastChannels() {
+    int i;
+    for (i = 0; i < 4; i++)
+        past[i].pieceCount = 0;
+    past[0].pieces = pieces1;
+    past[1].pieces = pieces2;
+    past[2].pieces = pieces3;
+    past[3].pieces = pieces4;
+}
+
+char menuOptions[MENU_LENGTH][100] = {
+    "+  TIME ATTACK!  +",
+    "+   START GAME   +",
+    "+  LEADERBOARDS  +",
+    "+    TUTORIAL    +",
+    "+    CONTROLS    +",
+    "+      QUIT      +"
+};
+
+char pastBoard[GAMEBOARD_HEIGHT][INFO_WIDTH] = {
+    "++++++++",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "+      +",
+    "++++++++"
+};
 
 /**
  * Initialize the color pairs for each Tetronimo used in rendering
@@ -237,12 +290,6 @@ void initGameGlobals() {
  * Initialize global variables for menu
  */
 void initMenuGlobals() {
-    strcpy(menuOptions[0], "+   START GAME   +");
-    strcpy(menuOptions[2], "+    TUTORIAL    +");
-    strcpy(menuOptions[1], "+  LEADERBOARDS  +");
-    strcpy(menuOptions[3], "+    CONTROLS    +");
-    strcpy(menuOptions[4], "+      QUIT      +");
-
     char tempLogo[LOGO_HEIGHT][LOGO_WIDTH] = {
         " SS  ZZTTT OOJJJ  SS  ZZTTT  ZJJJ IIIISS  IIII",
         "SSJJJIZZT  OOZ J SSJJJIZZT  ZZ  J  OOSS  OOJ  ",

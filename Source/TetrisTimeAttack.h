@@ -19,7 +19,7 @@
 #define HOLD_HEIGHT 7
 #define NEXT_HEIGHT 16
 #define INFO_WIDTH 8
-#define MENU_LENGTH 5
+#define MENU_LENGTH 6
 #define LOGO_WIDTH 46
 #define LOGO_HEIGHT 15
 #define CONTROLS_LENGTH 8
@@ -46,6 +46,11 @@ typedef struct PastPiece {
     byte tetronimoIndex;
     char rotation;
 } PastPiece;
+
+typedef struct pastChannel {
+    PastPiece* pieces;
+    byte pieceCount;
+} Channel;
 
 typedef struct KeyMap {
     int holdPiece;
@@ -123,6 +128,10 @@ void handleTutorialInput();
 void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
+void extendPast();
+void initializePastChannels();
+PastPiece nextPast(byte fromIndex, bool shouldRemove);
+void dropPast(PastPiece piece);
 void drawFrame(int s, int f);
 
 // Global Variables
@@ -142,7 +151,7 @@ extern int score;
 extern byte nextQueue[4];
 extern char screenState;
 extern long tickTimer;
-extern char menuOptions[5][100];
+extern char menuOptions[MENU_LENGTH][100];
 extern char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 extern KeyMap keyMap;
 
@@ -150,5 +159,14 @@ extern char controlConfigs[CONTROLS_LENGTH][40];
 extern char controlFeedback[4][40];
 extern byte selectedOption;
 extern char initScores[60];
+extern bool isTimeAttack;
+extern char pastBoard[GAMEBOARD_HEIGHT][INFO_WIDTH];
+extern byte taActiveChannel;
+
+extern PastPiece* pieces1;
+extern PastPiece* pieces2;
+extern PastPiece* pieces3;
+extern PastPiece* pieces4;
+extern Channel past[4];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

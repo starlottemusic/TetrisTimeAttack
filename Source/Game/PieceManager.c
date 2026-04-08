@@ -116,6 +116,10 @@ void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte b
 void attemptNewTurn(bool placePiece, bool isHold) {
     byte nextPiece;
 
+    if (isTimeAttack && placePiece) {
+        extendPast();
+    }
+
     settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, &gameBoard);
 
     lineClear();
@@ -126,10 +130,37 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         nextPiece = upNext();
     }
 
+    if (isTimeAttack && placePiece) {
+        taActiveChannel++;
+        if (taActiveChannel > 3)
+            taActiveChannel = 0;
+
+        redrawGame();
+        usleep(100000);
+        PastPiece lastPast;
+        lastPast = nextPast(0, false);
+
+        int i = 0;
+        while (lastPast.tetronimoIndex != -1) {
+            dropPast(lastPast);
+            i++;
+            lastPast = nextPast(i, false);
+        }
+
+
+    }
+
     if (!newTurnPlayerPiece(nextPiece)) {
+        if (isTimeAttack) {
+            free(pieces1);
+            free(pieces2);
+            free(pieces3);
+            free(pieces4);
+        }
         redrawGame();
         usleep(1000000);
         screenState = 'S';
+        lastInput = ERR;
         scoreWindow();
         endwin();
     }
@@ -141,6 +172,57 @@ void attemptNewTurn(bool placePiece, bool isHold) {
 
     redrawGame();
     turnCooldown = 15;
+}
+
+void dropPast(PastPiece piece) {
+    PlayerPiece dropPiece = {piece.x, 0, piece.tetronimoIndex, piece.rotation};
+    int i, j;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 4; j++) {
+            dropPiece.tetronimo[i][j] = tetronimos[piece.tetronimoIndex][i][j];
+        }
+    }
+
+    openSpace = getOpenSpaces();
+    for (i = 0; i < 20; i++) {
+        placePiece(dropPiece);
+        if (getOpenSpaces() == openSpace) {
+            clearPiece(dropPiece);
+        }
+    }
+}
+
+PastPiece nextPast(byte fromIndex, bool shouldRemove) {
+    PastPiece nextPiece;
+
+    if (fromIndex >= past[taActiveChannel].pieceCount) {
+         nextPiece.tetronimoIndex = -1;
+        return nextPiece;
+    }
+
+    nextPiece = past[taActiveChannel].pieces[fromIndex];
+
+    if (shouldRemove) {
+        int i;
+        for (i = fromIndex; i < past[taActiveChannel].pieceCount; i++) {
+            past[taActiveChannel].pieces[i] = past[taActiveChannel].pieces[i + 1];
+        }
+        past[taActiveChannel].pieceCount--;
+        past[taActiveChannel].pieces = realloc(past[taActiveChannel].pieces,
+                                               sizeof(PastPiece) * (past[taActiveChannel].pieceCount + 1));
+    }
+
+    return nextPiece;
+}
+
+void extendPast() {
+    past[taActiveChannel].pieces = realloc(past[taActiveChannel].pieces,
+                                           sizeof(PastPiece) * (past[taActiveChannel].pieceCount));
+
+    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].tetronimoIndex = activePiece.tetronimoIndex;
+    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].rotation = activePiece.rotation;
+    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].x = activePiece.x;
+    past[taActiveChannel].pieceCount++;
 }
 
 /**
