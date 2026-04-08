@@ -1,19 +1,12 @@
 #include "../TetrisTimeAttack.h"
-
 int slide = 0, frame = 0; //Automate
 
 void mainTutorial() {
-    int frame;
     initGameGlobals();
     startNCursesScreen();
     clear();
 
     // increase frame every second (delta time?)
-
-    // create back and next buttons
-    // increase slide when user presses next
-    // decrease slide when user presses back
-    // replace back with exit on slide 0 and next with exit on slide 3
 
     while (slide >= 0 && slide <= 4) {
         inputListener();
@@ -40,7 +33,6 @@ void tickTutorial() {
     switch (slide) {
         case 0:
             mvprintw(20, 7, "Complete lines to clear the board and score points.");
-            drawFrame(slide, frame);
             break;
         case 1:
             mvprintw(20, 17, "After 4 moves, the board resets.");
@@ -54,83 +46,23 @@ void tickTutorial() {
         default:
             break;
     }
+
+    char mat[6][10];
+
+    drawMatrix(6,10,mat,23,12);
     refresh();
 }
 
-void drawFrame(int s, int f) {
-    switch (s) {
-        case 0: // Tetris slide
-            switch (f) {
-                case 0:
-                    attron(COLOR_PAIR(7) | A_STANDOUT);
-                    mvprintw(16, 31, "▒▒");
-                    mvprintw(17, 29, "▒▒▒▒▒▒▒▒▒▒");
-                    mvprintw(18, 29, "▒▒▒▒▒▒▒▒▒▒▒▒");
-                    attron(COLOR_PAIR(6) | A_STANDOUT);
-                    mvprintw(14, 41, "▒▒"); // TODO change to "▒▒" in prc
-                    mvprintw(15, 39, "▒▒▒▒");
-                    mvprintw(16, 41, "▒▒");
-                    mvprintw(17, 33, "▒▒");
-                    mvprintw(18, 31, "▒▒▒▒▒▒");
-                    attron(COLOR_PAIR(4) | A_STANDOUT);
-                    mvprintw(17,23,"▒▒▒▒");
-                    mvprintw(18,23,"▒▒▒▒");
-                    attroff(COLOR_PAIR(4) | A_STANDOUT);
-                    break;
-                case 1:
-                        break;
-                case 2:
-                        break;
-                case 3:
-                        break;
-                default:
-                        break;
+void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (renderArray[i][j] == 0) continue;
 
-            }
-            break;
-        case 1: // 4 Moves slide
-            switch (f) {
-                case 0:
-                        break;
-                case 1:
-                        break;
-                case 2:
-                        break;
-                case 3:
-                        break;
-                default:
-                        break;
-            }
-            break;
-        case 2: // Play old moves slide
-            switch (f) {
-                case 0:
-                        break;
-                case 1:
-                        break;
-                case 2:
-                        break;
-                case 3:
-                        break;
-                default:
-                        break;
-            }
-            break;
-        case 3: // Clear moves slide
-            switch (f) {
-                case 0:
-                        break;
-                case 1:
-                        break;
-                case 2:
-                        break;
-                case 3:
-                        break;
-                default:
-                        break;
-            }
-            break;
-        default:
-            break;
+            attron(COLOR_PAIR(renderArray[i][j]) | A_STANDOUT);
+            mvprintw(y + i, 2 * (x + j), "  "); // TODO change to "▒▒" in prc
+            attroff(COLOR_PAIR(renderArray[i][j]) | A_STANDOUT);
+
+            refresh(); //Remove in prc (have to call every pixel due to issue w/ clion terminal)
+        }
     }
 }

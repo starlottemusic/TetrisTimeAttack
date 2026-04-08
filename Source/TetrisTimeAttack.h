@@ -117,13 +117,14 @@ byte centered(char* text);
 bool isValidCharacter(int ncursesChar);
 void initLeaderboard();
 void saveScore(char* name);
-void mainTutorial();
-void tickTutorial();
-void handleTutorialInput();
 void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
-void drawFrame(int s, int f);
+void mainTutorial();
+void tickTutorial();
+void handleTutorialInput();
+char assignMatrix(int s, int f);
+void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y);
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos
