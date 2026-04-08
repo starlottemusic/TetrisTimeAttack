@@ -152,4 +152,6 @@ extern char controlFeedback[4][40];
 extern byte selectedOption;
 extern char initScores[60];
 
+extern char mat[6][10];
+
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H

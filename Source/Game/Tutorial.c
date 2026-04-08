@@ -47,22 +47,84 @@ void tickTutorial() {
             break;
     }
 
-    char mat[6][10];
-
-    drawMatrix(6,10,mat,23,12);
+    assignMatrix(slide, frame);
+    redrawBoard(6,10,mat,23,12);
     refresh();
 }
 
-void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y) {
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
-            if (renderArray[i][j] == 0) continue;
+char assignMatrix(int s, int f) {
+    switch (s) {
+        case 0:
+            switch (f) {
+                case 0:
+                    char temp[6][10] = {
+                    "    OO    ",
+                    "    OO    ",
+                    "  S       ",
+                    " ZSS      ",
+                    "ZZTS  LLLJ",
+                    "ZTTT  LJJJ",
+                    };
+                    memcpy(mat, temp, 60);
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
 
-            attron(COLOR_PAIR(renderArray[i][j]) | A_STANDOUT);
-            mvprintw(y + i, 2 * (x + j), "  "); // TODO change to "▒▒" in prc
-            attroff(COLOR_PAIR(renderArray[i][j]) | A_STANDOUT);
+        case 1:
+            switch (f) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
 
-            refresh(); //Remove in prc (have to call every pixel due to issue w/ clion terminal)
-        }
+        case 2:
+            switch (f) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
+
+        case 3:
+            switch (f) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    break;
+            }
+            break;
+
+        default:
+            break;
+
     }
 }
