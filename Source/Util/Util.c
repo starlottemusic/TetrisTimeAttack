@@ -38,7 +38,7 @@ void tick() {
                 tickScoreWindow();
                 break;
             case 'T':
-                tickTutorial();
+                tickTutorial(tickCounter);
                 break;
         }
 

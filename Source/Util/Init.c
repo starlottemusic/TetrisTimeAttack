@@ -20,7 +20,7 @@ char menuLogo[LOGO_HEIGHT][LOGO_WIDTH];
 KeyMap keyMap;
 bool isTimeAttack = true;
 byte taActiveChannel = 0;
-char mat[6][10];
+char mat[SLIDE_HEIGHT][SLIDE_WIDTH];
 
 // Separate due to memory shenanigans
 PastPiece *pieces1;

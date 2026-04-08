@@ -24,6 +24,8 @@
 #define LOGO_HEIGHT 15
 #define CONTROLS_LENGTH 8
 #define SCORE_WINDOW_OFFSET 9
+#define SLIDE_WIDTH 10
+#define SLIDE_HEIGHT 6
 
 // Structs & Datatype Aliases
 typedef char byte;
@@ -126,7 +128,7 @@ void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
 void mainTutorial();
-void tickTutorial();
+void tickTutorial(byte tickCounter);
 void handleTutorialInput();
 char assignMatrix(int s, int f);
 void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y);
@@ -171,6 +173,6 @@ extern PastPiece* pieces3;
 extern PastPiece* pieces4;
 extern Channel past[4];
 
-extern char mat[6][10];
+extern char mat[SLIDE_HEIGHT][SLIDE_WIDTH];
 
 #endif //TETRISTIMEATTACK_TETRISTIMEATTACK_H
