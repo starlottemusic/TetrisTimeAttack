@@ -12,7 +12,7 @@ void mainLeaderboard() {
 
     FILE *leaderboardFile = openLeaderboard("r");
     int entries = 0;
-    while (fgets(buffer, 50, leaderboardFile) != NULL) {
+    while (fgets(buffer, 16, leaderboardFile) != NULL) {
         leaderboard = (Leaderboard *) realloc(leaderboard, sizeof(Leaderboard) * (entries + 1));
         decryptText(buffer);
         strncpy(leaderboard[entries].name, buffer, 3);

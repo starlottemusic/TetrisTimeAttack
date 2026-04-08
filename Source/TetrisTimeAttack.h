@@ -19,7 +19,7 @@
 #define HOLD_HEIGHT 7
 #define NEXT_HEIGHT 16
 #define INFO_WIDTH 8
-#define MENU_LENGTH 5
+#define MENU_LENGTH 6
 #define LOGO_WIDTH 46
 #define LOGO_HEIGHT 15
 #define CONTROLS_LENGTH 8
