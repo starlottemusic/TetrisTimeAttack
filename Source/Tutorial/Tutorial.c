@@ -6,7 +6,10 @@ void mainTutorial() {
     startNCursesScreen();
     clear();
 
-    while (slide >= 0 && slide <= 4) {
+    slide = 0;
+    frame = 0;
+
+    while (slide >= 0 && slide <= 3) {
         inputListener();
         tick();
     }
@@ -19,16 +22,20 @@ void tickTutorial(byte tickCounter) {
     // Update current frame
     if (tickCounter % 60 == 0) {
         frame++;
-        if (frame == 4)
+        if (frame > 3)
             frame = 0;
     }
 
     // Update current slide
-    if (lastInput == KEY_LEFT)
+    if (lastInput == KEY_LEFT) {
         slide--;
+        lastInput = ERR;
+    }
 
-    if (lastInput == KEY_RIGHT)
+    if (lastInput == KEY_RIGHT) {
         slide++;
+        lastInput = ERR;
+    }
 
     // Print next/back/exit buttons
     if (slide==0)
@@ -46,15 +53,19 @@ void tickTutorial(byte tickCounter) {
     // Print tutorial text depending on slide
     switch (slide) {
         case 0:
+            mvprintw(18, 2, "                                                                                ");
             mvprintw(18, 8, "Complete lines to clear the board and score points.");
             break;
         case 1:
+            mvprintw(18, 2, "                                                                                ");
             mvprintw(18, 17, "After 4 moves, the board resets.");
             break;
         case 2:
+            mvprintw(18, 2, "                                                                                ");
             mvprintw(18, 4, "The next run, your previous moves play over your new ones.");
             break;
         case 3:
+            mvprintw(18, 2, "                                                                                ");
             mvprintw(18, 9, "Clearing lines removes old moves from the queue.");
             break;
         default:
@@ -219,7 +230,7 @@ char assignMatrix(int s, int f) {
                     char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
                         "BBBBBBBBBB",
                         "BBBBB++BBB",
-                        "BBBBB++BB",
+                        "BBBBB++BBB",
                         "BBBBJBLLBB",
                         "BBBBJJJLBB",
                         "BBBIIIILBB",
@@ -230,6 +241,7 @@ char assignMatrix(int s, int f) {
             default:
                     break;
             }
+            break;
         case 3: // Slide 3
             switch (f) {
             case 0: { // Frame 0
@@ -242,7 +254,7 @@ char assignMatrix(int s, int f) {
                     "B+BTTTBB+",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(10,2,"Oldest ->");
+                mvprintw(10,10,"Oldest ->");
                 break;
             }
             case 1: { // Frame 1
@@ -255,8 +267,8 @@ char assignMatrix(int s, int f) {
                     "B+BTTTBB+",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(10,2,"         ");
-                mvprintw(13,2,"Newest ->");
+                mvprintw(10,10,"         ");
+                mvprintw(13,10,"Newest ->");
                 break;
             }
             case 2: { // Frame 2
@@ -269,8 +281,8 @@ char assignMatrix(int s, int f) {
                     "B+BTTTBB+",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(13,2,"         ");
-                mvprintw(18,10,"[LINE CLEAR]");
+                mvprintw(13,10,"         ");
+                mvprintw(8,26,"[LINE CLEAR]");
                 break;
             }
             case 3: { // Frame 3
@@ -278,12 +290,12 @@ char assignMatrix(int s, int f) {
                     "B+BIIIIB+",
                     "B+BBBBBB+",
                     "B+BTTTBB+",
-                    "B+BBTBB+",
+                    "B+BBTBBB+",
                     "B+BBBBBB+",
                     "B+BZZBBB+",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(18,11,"            ");
+                mvprintw(8,30,"            ");
                 break;
             }
             default:
