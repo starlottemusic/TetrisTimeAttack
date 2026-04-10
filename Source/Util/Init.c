@@ -362,12 +362,14 @@ void initLeaderboard() {
                     if (leaderboard != NULL) {
                         fprintf(leaderboard, initTAScores);
                         fclose(leaderboard);
+                        chmod("TTA_Data/TTA_TALDBLOC.sav", 0666);
                     }
                 }
                 return;
             }
             fprintf(leaderboard, initTAScores);
             fclose(leaderboard);
+            chmod("/tmp/TTA_TALDBGLB.sav", 0666);
         } else fclose(leaderboard);
     } else {
         encryptText(initScores);
@@ -381,12 +383,14 @@ void initLeaderboard() {
                     if (leaderboard != NULL) {
                         fprintf(leaderboard, initScores);
                         fclose(leaderboard);
+                        chmod("TTA_Data/TTA_LDBLOC.sav", 0666);
                     }
                 }
                 return;
             }
             fprintf(leaderboard, initScores);
             fclose(leaderboard);
+            chmod("/tmp/TTA_LDBGLB.sav", 0666);
         } else fclose(leaderboard);
     }
 }
