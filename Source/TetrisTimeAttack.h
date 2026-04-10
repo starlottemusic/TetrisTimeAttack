@@ -81,7 +81,7 @@ bool wallKick(byte index, char orient, bool clockwise);
 bool safeMove();
 short getOpenSpaces();
 bool newTurnPlayerPiece(byte index);
-void rotate(char piece[4][4], byte index, bool clockwise);
+void rotate(char piece[4][4], byte index, bool clockwise, bool force);
 void lineClear();
 void redrawGame();
 int scorePow(int base, int exp);
@@ -137,6 +137,7 @@ void initializePastChannels();
 PastPiece nextPast(byte fromIndex, bool shouldRemove);
 void dropPast(PastPiece piece);
 void drawFrame(int s, int f);
+void initGameboard();
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos

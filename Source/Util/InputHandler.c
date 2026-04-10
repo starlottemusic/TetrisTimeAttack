@@ -78,12 +78,12 @@ void handleGameInput() {
         score++;
     } else if (lastInput == keyMap.rotateCW) {
         clearPiece(activePiece);
-        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, true, false);
         placePiece(activePiece);
         redrawGame();
     } else if (lastInput == keyMap.rotateCCW) {
         clearPiece(activePiece);
-        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false);
+        rotate(activePiece.tetronimo, activePiece.tetronimoIndex, false, false);
         placePiece(activePiece);
         redrawGame();
     } else if (lastInput == keyMap.hardDrop) {

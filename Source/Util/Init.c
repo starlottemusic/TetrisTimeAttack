@@ -38,6 +38,7 @@ void initializePastChannels() {
     past[1].pieces = pieces2;
     past[2].pieces = pieces3;
     past[3].pieces = pieces4;
+    taActiveChannel = 0;
 }
 
 char menuOptions[MENU_LENGTH][100] = {
@@ -215,33 +216,7 @@ void initGameGlobals() {
 
     openSpace = 196 - 15;
 
-    char tempGameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH] =
-    {
-        "++++++++++++",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "+          +",
-        "++++++++++++"
-    };
-
-    memcpy(gameBoard, tempGameBoard, sizeof(gameBoard));
+    initGameboard();
 
     char tempHoldBoard[HOLD_HEIGHT][INFO_WIDTH] = {
         "++++++++",
@@ -285,6 +260,36 @@ void initGameGlobals() {
     canHold = true;
     lastInput = ERR;
     tickTimer = 0;
+}
+
+void initGameboard() {
+    char tempGameBoard[GAMEBOARD_HEIGHT][GAMEBOARD_WIDTH] =
+    {
+        "++++++++++++",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "+          +",
+        "++++++++++++"
+    };
+
+    memcpy(gameBoard, tempGameBoard, sizeof(gameBoard));
 }
 
 /**

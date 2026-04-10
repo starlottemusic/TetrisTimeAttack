@@ -73,7 +73,7 @@ void clearPiece(PlayerPiece piece) {
  * @param index The index of the piece from the Tetronimos global array
  * @param clockwise If true, rotate CW. If false, rotate CCW
  */
-void rotate(char piece[4][4], byte index, bool clockwise) {
+void rotate(char piece[4][4], byte index, bool clockwise, bool force) {
     char orient = activePiece.rotation;
     byte rotSize = isEven(index) ? 4 : 3;
     char temp[4][4], oldPiece[4][4];
@@ -101,7 +101,7 @@ void rotate(char piece[4][4], byte index, bool clockwise) {
 
     // Run wallKick(), if wall kick cannot be performed then copy oldPiece to piece
 
-    if (!wallKick(index, orient, clockwise)) {
+    if (!force && !wallKick(index, orient, clockwise)) {
         for (i = 0; i < 4; i++) {
             for (j = 0; j < 4; j++) {
                 piece[i][j] = oldPiece[i][j];

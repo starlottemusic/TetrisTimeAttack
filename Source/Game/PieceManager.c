@@ -116,13 +116,11 @@ void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte b
 void attemptNewTurn(bool placePiece, bool isHold) {
     byte nextPiece;
 
-    if (isTimeAttack && placePiece) {
+    if (isTimeAttack && placePiece && !isHold) {
         extendPast();
     }
 
     settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, &gameBoard);
-
-    lineClear();
 
     if (isHold && heldPiece.tetronimoIndex != -1) {
         nextPiece = heldPiece.tetronimoIndex;
@@ -130,10 +128,12 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         nextPiece = upNext();
     }
 
-    if (isTimeAttack && placePiece) {
+    if (isTimeAttack && placePiece && !isHold) {
         taActiveChannel++;
-        if (taActiveChannel > 3)
+        if (taActiveChannel > 3) {
             taActiveChannel = 0;
+            initGameboard();
+        }
 
         redrawGame();
         usleep(100000);
@@ -146,9 +146,9 @@ void attemptNewTurn(bool placePiece, bool isHold) {
             i++;
             lastPast = nextPast(i, false);
         }
-
-
     }
+
+    lineClear();
 
     if (!newTurnPlayerPiece(nextPiece)) {
         if (isTimeAttack) {
@@ -175,28 +175,58 @@ void attemptNewTurn(bool placePiece, bool isHold) {
 }
 
 void dropPast(PastPiece piece) {
-    PlayerPiece dropPiece = {piece.x, 0, piece.tetronimoIndex, piece.rotation};
+    openSpace = getOpenSpaces();
+
+    PlayerPiece dropPiece = {piece.x, 0 + shouldOffset(piece.tetronimoIndex), piece.tetronimoIndex, piece.rotation};
     int i, j;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 4; j++) {
-            dropPiece.tetronimo[i][j] = tetronimos[piece.tetronimoIndex][i][j];
+            dropPiece.tetronimo[i][j] = tetronimos[piece.tetronimoIndex][i][j] == ' ' ? ' ' : 'p';
         }
     }
 
-    openSpace = getOpenSpaces();
+    switch (piece.rotation) {
+        case '0':
+            break;
+        case 'R':
+            rotate(dropPiece.tetronimo, dropPiece.tetronimoIndex, true, true);
+            dropPiece.y += 2;
+            break;
+        case '2':
+            rotate(dropPiece.tetronimo, dropPiece.tetronimoIndex, true, true);
+            rotate(dropPiece.tetronimo, dropPiece.tetronimoIndex, true, true);
+            dropPiece.y += 2;
+            break;
+        case 'L':
+            rotate(dropPiece.tetronimo, dropPiece.tetronimoIndex, false, true);
+            dropPiece.y += 2;
+            break;
+        default:
+            endwin();
+            printf("ERROR: Past piece rotation OOB\n");
+            exit(-1);
+    }
+
     for (i = 0; i < 20; i++) {
         placePiece(dropPiece);
-        if (getOpenSpaces() == openSpace) {
+        if (getOpenSpaces() == openSpace - 4) {
             clearPiece(dropPiece);
+            dropPiece.y++;
         }
     }
+    clearPiece(dropPiece);
+    dropPiece.y--;
+    placePiece(dropPiece);
+    settlePiece(&dropPiece, dropPiece.x, dropPiece.y, false, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, &gameBoard);
+    redrawGame();
+    usleep(100000);
 }
 
 PastPiece nextPast(byte fromIndex, bool shouldRemove) {
     PastPiece nextPiece;
 
     if (fromIndex >= past[taActiveChannel].pieceCount) {
-         nextPiece.tetronimoIndex = -1;
+        nextPiece.tetronimoIndex = -1;
         return nextPiece;
     }
 
@@ -217,7 +247,7 @@ PastPiece nextPast(byte fromIndex, bool shouldRemove) {
 
 void extendPast() {
     past[taActiveChannel].pieces = realloc(past[taActiveChannel].pieces,
-                                           sizeof(PastPiece) * (past[taActiveChannel].pieceCount));
+                                           sizeof(PastPiece) * (past[taActiveChannel].pieceCount + 1));
 
     past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].tetronimoIndex = activePiece.tetronimoIndex;
     past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].rotation = activePiece.rotation;
