@@ -305,5 +305,5 @@ void lineClear() {
     }
 
     if (linesCleared > 0)
-        score += 100 * scorePow(2, linesCleared);
+        score += isTimeAttack ? 500 * scorePow(2, linesCleared) : 100 * scorePow(2, linesCleared);
 }

@@ -21,6 +21,8 @@ int getDifficulty() {
     float scoreMultiplier = ((float) score) / 25000.0f;
     if (scoreMultiplier > 1) scoreMultiplier = 1;
     difficulty -= (int) (25.0f * scoreMultiplier);
+    if (isTimeAttack)
+        difficulty *= 2;
     return difficulty;
 }
 
