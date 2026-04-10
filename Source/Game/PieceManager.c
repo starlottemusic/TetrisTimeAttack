@@ -261,6 +261,8 @@ void erasePast() {
     byte count = past[taActiveChannel].pieceCount;
     byte i;
 
+    if (count < 0) count = 0;
+
     for (i = 0; i < count - 1; i++) {
         past[channel].pieces[i].tetronimoIndex = past[channel].pieces[i + 1].tetronimoIndex;
         past[channel].pieces[i].rotation = past[channel].pieces[i + 1].rotation;
