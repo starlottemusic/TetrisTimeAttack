@@ -128,7 +128,7 @@ void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
 void mainTutorial();
-void tickTutorial(byte tickCounter);
+void tickTutorial();
 void handleTutorialInput();
 char assignMatrix(int s, int f);
 void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y);
