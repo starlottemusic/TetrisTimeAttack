@@ -21,7 +21,7 @@ void redrawBoard(int cols, int rows, char renderArray[][cols], byte x, byte y) {
 
             byte color = pieceColorID(renderArray[i][j]);
             attron(COLOR_PAIR(color) | A_STANDOUT);
-            mvprintw(y + i, 2 * (x + j), "  "); // TODO change to "▒▒" in prc
+            mvprintw(y + i, 2 * (x + j), "▒▒");
             attroff(COLOR_PAIR(color) | A_STANDOUT);
 
             // Return player pieces to expected value
@@ -29,7 +29,6 @@ void redrawBoard(int cols, int rows, char renderArray[][cols], byte x, byte y) {
                 renderArray[i][j] = 'p';
                 isPlayerPiece = false;
             }
-            refresh(); //Remove in prc (have to call every pixel due to issue w/ clion terminal)
         }
     }
 }
@@ -98,7 +97,6 @@ void redrawControls(bool drawTextOut, int textOutIndex) {
     if (drawTextOut) {
         mvprintw(11, LOGO_WIDTH - 6 + centered(controlFeedback[textOutIndex]), controlFeedback[textOutIndex]);
     }
-
 
     refresh();
 }

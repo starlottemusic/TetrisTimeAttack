@@ -352,9 +352,9 @@ char initTAScores[60] = "HSM - 119736\nCHR - 30342\nDEA - 11382\nCOL - 5749\nHAM
 void initLeaderboard() {
     if (isTimeAttack) {
         encryptText(initTAScores);
-        FILE *leaderboard = fopen("TTA_Data/TTA_TALDBGLB.sav", "r"); // Check if global ldb exists
+        FILE *leaderboard = fopen("/tmp/TTA_TALDBGLB.sav", "r"); // Check if global ldb exists
         if (leaderboard == NULL) {
-            leaderboard = fopen("TTA_Data/TTA_TALDBGLB.sav", "w"); // Check if global ldb can be created
+            leaderboard = fopen("/tmp/TTA_TALDBGLB.sav", "w"); // Check if global ldb can be created
             if (leaderboard == NULL) {
                 leaderboard = fopen("TTA_Data/TTA_TALDBLOC.sav", "r"); // Check if local ldb exists
                 if (leaderboard == NULL) {
@@ -371,9 +371,9 @@ void initLeaderboard() {
         }
     } else {
         encryptText(initScores);
-        FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
+        FILE *leaderboard = fopen("/tmp/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
         if (leaderboard == NULL) {
-            leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
+            leaderboard = fopen("/tmp/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
             if (leaderboard == NULL) {
                 leaderboard = fopen("TTA_Data/TTA_LDBLOC.sav", "r"); // Check if local ldb exists
                 if (leaderboard == NULL) {

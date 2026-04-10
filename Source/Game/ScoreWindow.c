@@ -37,7 +37,7 @@ void tickScoreWindow() {
         name[textLength] = lastInput;
         textLength++;
         lastInput = ERR;
-    } else if (lastInput == 263 /*backspace*/ && textLength > 0) {
+    } else if ((lastInput == 263 || lastInput == 8) /*backspace*/ && textLength > 0) {
         textLength--;
         name[textLength] = ' ';
         lastInput = ERR;
