@@ -368,7 +368,7 @@ void initLeaderboard() {
             }
             fprintf(leaderboard, initTAScores);
             fclose(leaderboard);
-        }
+        } else fclose(leaderboard);
     } else {
         encryptText(initScores);
         FILE *leaderboard = fopen("/tmp/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
@@ -387,6 +387,6 @@ void initLeaderboard() {
             }
             fprintf(leaderboard, initScores);
             fclose(leaderboard);
-        }
+        } else fclose(leaderboard);
     }
 }
