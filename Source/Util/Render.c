@@ -49,8 +49,14 @@ void redrawGame() {
     mvprintw(1, 5, "SCORE: %d", score);
     mvprintw(1, 34, "HOLD");
     mvprintw(HOLD_HEIGHT, 34, "NEXT");
-    if (isTimeAttack)
+    if (isTimeAttack) {
         mvprintw(1, 52, "PAST");
+        mvprintw(1, 46, " %d", 4 - taActiveChannel);
+        mvprintw(GAMEBOARD_HEIGHT, 46, " %d", 4 - taActiveChannel);
+        mvprintw(1, 60, "%d ", 4 - taActiveChannel);
+        mvprintw(GAMEBOARD_HEIGHT, 60, "%d ", 4 - taActiveChannel);
+    }
+
     attroff(COLOR_PAIR(9) | A_STANDOUT);
     refresh();
 }

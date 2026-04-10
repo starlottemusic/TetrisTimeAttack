@@ -28,7 +28,6 @@ void mainGame() {
     initGameGlobals();
     initPalette();
     initKickTable();
-    srand(time(NULL));
 
     attemptNewTurn(false, false);
 
@@ -41,6 +40,7 @@ void mainGame() {
     }
 
     if (isTimeAttack) {
+        past->pieceCount = 0;
         free(pieces1);
         free(pieces2);
         free(pieces3);

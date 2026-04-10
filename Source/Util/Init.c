@@ -21,6 +21,7 @@ KeyMap keyMap;
 bool isTimeAttack = true;
 byte taActiveChannel = 0;
 char mat[SLIDE_HEIGHT][SLIDE_WIDTH];
+char pastBoard[GAMEBOARD_HEIGHT][INFO_WIDTH];
 
 // Separate due to memory shenanigans
 PastPiece *pieces1;
@@ -48,31 +49,6 @@ char menuOptions[MENU_LENGTH][100] = {
     "+    TUTORIAL    +",
     "+    CONTROLS    +",
     "+      QUIT      +"
-};
-
-char pastBoard[GAMEBOARD_HEIGHT][INFO_WIDTH] = {
-    "++++++++",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "+      +",
-    "++++++++"
 };
 
 /**
@@ -251,6 +227,35 @@ void initGameGlobals() {
 
     memcpy(nextBoard, tempNextBoard, sizeof(nextBoard));
 
+    if (isTimeAttack) {
+        char tempPast[GAMEBOARD_HEIGHT][INFO_WIDTH] = {
+            "++++++++",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "+      +",
+            "++++++++"
+        };
+
+        memcpy(pastBoard, tempPast, sizeof(pastBoard));
+    }
+
     score = 0;
 
     for (i = 0; i < 4; i++)
@@ -337,29 +342,51 @@ char controlFeedback[4][40] = {
 
 byte selectedOption = 0;
 
-char initScores[60] = "HSM - 119736\nCHR - 60684\nDEA - 22765\nCOL - 11498\nHAM - 600\n";
+char initScores[60] = "HSM - 200479\nCHR - 60684\nDEA - 22765\nCOL - 11498\nHAM - 600\n";
+char initTAScores[60] = "HSM - 119736\nCHR - 30342\nDEA - 11382\nCOL - 5749\nHAM - 300\n";
 
 /**
  * If global leaderboard DNE, attempts to create with initial values. If global leaderboard cannot be accessed,
  * checks if local leaderboard exists and attempts to load.
  */
 void initLeaderboard() {
-    encryptText(initScores);
-    FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
-    if (leaderboard == NULL) {
-        leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
+    if (isTimeAttack) {
+        encryptText(initScores);
+        FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
         if (leaderboard == NULL) {
-            leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if local ldb exists
+            leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
             if (leaderboard == NULL) {
-                leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if local ldb can be created
-                if (leaderboard != NULL) {
-                    fprintf(leaderboard, initScores);
-                    fclose(leaderboard);
+                leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if local ldb exists
+                if (leaderboard == NULL) {
+                    leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if local ldb can be created
+                    if (leaderboard != NULL) {
+                        fprintf(leaderboard, initScores);
+                        fclose(leaderboard);
+                    }
                 }
+                return;
             }
-            return;
+            fprintf(leaderboard, initScores);
+            fclose(leaderboard);
         }
-        fprintf(leaderboard, initScores);
-        fclose(leaderboard);
+    } else {
+        encryptText(initScores);
+        FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if global ldb exists
+        if (leaderboard == NULL) {
+            leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if global ldb can be created
+            if (leaderboard == NULL) {
+                leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "r"); // Check if local ldb exists
+                if (leaderboard == NULL) {
+                    leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", "w"); // Check if local ldb can be created
+                    if (leaderboard != NULL) {
+                        fprintf(leaderboard, initScores);
+                        fclose(leaderboard);
+                    }
+                }
+                return;
+            }
+            fprintf(leaderboard, initScores);
+            fclose(leaderboard);
+        }
     }
 }
