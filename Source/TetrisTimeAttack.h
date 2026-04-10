@@ -138,6 +138,7 @@ PastPiece nextPast(byte fromIndex, bool shouldRemove);
 void dropPast(PastPiece piece);
 void drawFrame(int s, int f);
 void initGameboard();
+void erasePast();
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos

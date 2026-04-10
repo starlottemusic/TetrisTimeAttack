@@ -252,7 +252,26 @@ void extendPast() {
     past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].tetronimoIndex = activePiece.tetronimoIndex;
     past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].rotation = activePiece.rotation;
     past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].x = activePiece.x;
+
     past[taActiveChannel].pieceCount++;
+}
+
+void erasePast() {
+    byte channel = (taActiveChannel == 0) ? 3 : taActiveChannel - 1;
+    byte count = past[taActiveChannel].pieceCount;
+    byte i;
+
+    for (i = 0; i < count - 1; i++) {
+        past[channel].pieces[i].tetronimoIndex = past[channel].pieces[i + 1].tetronimoIndex;
+        past[channel].pieces[i].rotation = past[channel].pieces[i + 1].rotation;
+        past[channel].pieces[i].x = past[channel].pieces[i + 1].x;
+    }
+
+    past[channel].pieceCount--;
+
+    past[channel].pieces = realloc(past[channel].pieces,
+                                       sizeof(PastPiece) * (past[channel].pieceCount));
+
 }
 
 /**
@@ -368,6 +387,10 @@ void lineClear() {
             memcpy(gameBoard[1], "x          x", 12);
 
             linesCleared++;
+
+            if (isTimeAttack) {
+                erasePast();
+            }
         }
     }
 
