@@ -91,13 +91,14 @@ void redrawControls(bool drawTextOut, int textOutIndex) {
         if (i == selectedOption)
             attron(A_STANDOUT);
 
-        mvprintw(i + LOGO_HEIGHT + 4, LOGO_WIDTH - 6, "%s", controlConfigs[i]);
+        mvprintw(i + 16, LOGO_WIDTH - 6 + centered(controlConfigs[i]), "%s", controlConfigs[i]);
         attroff(A_STANDOUT);
     }
 
     if (drawTextOut) {
-        mvprintw(11, LOGO_WIDTH - 6, controlFeedback[textOutIndex]);
+        mvprintw(11, LOGO_WIDTH - 6 + centered(controlFeedback[textOutIndex]), controlFeedback[textOutIndex]);
     }
+
 
     refresh();
 }

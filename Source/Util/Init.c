@@ -336,7 +336,7 @@ char controlConfigs[CONTROLS_LENGTH][40] = {
 char controlFeedback[4][40] = {
     "Press any key to rebind %s",
     "(Press ESC to cancel)",
-    "Key successfully bound!",
+    "Key bound!",
     "Key binding canceled."
 };
 

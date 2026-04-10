@@ -51,7 +51,7 @@ void appendKeyName(int configIndex, int key) {
     byte nameLength = strlen(controlConfigs[configIndex]) - strlen(strchr(controlConfigs[configIndex], '-')) + 2;
     strncat(fixedName, controlConfigs[configIndex], nameLength);
 
-    if (key <= 256 && key != ' ') {
+    if (key <= 256 && key != ' ' && key != '\n') {
         sprintf(keyName, "%c", key);
         keyName[0] = toupper(keyName[0]);
         strcat(fixedName, keyName);
@@ -72,6 +72,9 @@ void getNcursesKeyName(int keyIndex, char *nameOut) {
     switch (keyIndex) {
         case ' ':
             strcpy(nameOut, "SPACE");
+            break;
+        case '\n':
+            strcpy(nameOut, "ENTER");
             break;
         case KEY_DOWN:
             strcpy(nameOut, "DOWN");
@@ -94,10 +97,13 @@ void getNcursesKeyName(int keyIndex, char *nameOut) {
 void startRebind(byte index) {
     bool waiting = true;
     lastInput = ERR;
-    byte messageLength = strlen(controlConfigs[index]);
+    char messageOut[50];
 
-    mvprintw(10, LOGO_WIDTH - messageLength / 2 - 6, controlFeedback[0], controlConfigs[index]);
-    mvprintw(11, LOGO_WIDTH - 6, controlFeedback[1]);
+    sprintf(messageOut, controlFeedback[0], controlConfigs[index]);
+
+
+    mvprintw(10, LOGO_WIDTH - 6 + centered(messageOut), messageOut);
+    mvprintw(11, LOGO_WIDTH - 6 + centered(controlFeedback[1]), controlFeedback[1]);
 
     while (waiting) {
         inputListener();

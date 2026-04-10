@@ -100,7 +100,7 @@ void redrawLeaderboard(Leaderboard *leaderboard, int page, int length) {
         max = 20;
 
     for (i = 0; i < max; i++) {
-        mvprintw(i, 0, "%s - %d", leaderboard[i + 20 * page].name, leaderboard[i + 20 * page].score);
+        mvprintw(i + 10, LOGO_WIDTH / 2 + 14, "%s - %d", leaderboard[i + 20 * page].name, leaderboard[i + 20 * page].score);
     }
     refresh();
 }
