@@ -33,11 +33,13 @@ void tickTutorial() {
     // Update current slide
     if (lastInput == KEY_LEFT) {
         slide--;
+        frame = 0;
         lastInput = ERR;
     }
 
     if (lastInput == KEY_RIGHT) {
         slide++;
+        frame = 0;
         lastInput = ERR;
     }
 
@@ -193,6 +195,9 @@ char assignMatrix(int s, int f) {
             }
             break;
         case 2: // Slide 2
+            mvprintw(13,10,"         ");
+            mvprintw(10,10,"         ");
+            mvprintw(8,26,"            ");
             switch (f) {
                 case 0: { // Frame 0
                     char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
@@ -250,12 +255,12 @@ char assignMatrix(int s, int f) {
             switch (f) {
             case 0: { // Frame 0
                 char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
-                    "B+BJBBBB+",
-                    "B+BJJJBB+",
-                    "B+BBBBBB+",
-                    "B+BIIIIB+",
-                    "B+BBBBBB+",
-                    "B+BTTTBB+",
+                    "B+BJBBBB+B",
+                    "B+BJJJBB+B",
+                    "B+BBBBBB+B",
+                    "B+BIIIIB+B",
+                    "B+BBBBBB+B",
+                    "B+BTTTBB+B",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
                 mvprintw(10,10,"Oldest ->");
@@ -263,43 +268,43 @@ char assignMatrix(int s, int f) {
             }
             case 1: { // Frame 1
                 char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
-                    "B+BJBBBB+",
-                    "B+BJJJBB+",
-                    "B+BBBBBB+",
-                    "B+BIIIIB+",
-                    "B+BBBBBB+",
-                    "B+BTTTBB+",
+                    "B+BJBBBB+B",
+                    "B+BJJJBB+B",
+                    "B+BBBBBB+B",
+                    "B+BIIIIB+B",
+                    "B+BBBBBB+B",
+                    "B+BTTTBB+B",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
                 mvprintw(10,10,"         ");
-                mvprintw(13,10,"Newest ->");
+                mvprintw(15,10,"Newest ->");
                 break;
             }
             case 2: { // Frame 2
                 char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
-                    "B+BJBBBB+",
-                    "B+BJJJBB+",
-                    "B+BBBBBB+",
-                    "B+BIIIIB+",
-                    "B+BBBBBB+",
-                    "B+BTTTBB+",
+                    "B+BJBBBB+B",
+                    "B+BJJJBB+B",
+                    "B+BBBBBB+B",
+                    "B+BIIIIB+B",
+                    "B+BBBBBB+B",
+                    "B+BTTTBB+B",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(13,10,"         ");
+                mvprintw(15,10,"         ");
                 mvprintw(8,26,"[LINE CLEAR]");
                 break;
             }
             case 3: { // Frame 3
                 char temp[SLIDE_HEIGHT][SLIDE_WIDTH] = {
-                    "B+BIIIIB+",
-                    "B+BBBBBB+",
-                    "B+BTTTBB+",
-                    "B+BBTBBB+",
-                    "B+BBBBBB+",
-                    "B+BZZBBB+",
+                    "B+BIIIIB+B",
+                    "B+BBBBBB+B",
+                    "B+BTTTBB+B",
+                    "B+BBTBBB+B",
+                    "B+BBBBBB+B",
+                    "B+BBOOBB+B",
                     };
                 memcpy(mat, temp, SLIDE_HEIGHT*SLIDE_WIDTH);
-                mvprintw(8,30,"            ");
+                mvprintw(8,26,"            ");
                 break;
             }
             default:
