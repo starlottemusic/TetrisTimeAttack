@@ -1,0 +1,4 @@
+TetrisTimeAttack: TetrisTimeAttack.o
+	gcc TetrisTimeAttack.o -o TetrisTimeAttack -lncursesw
+TetrisTimeAttack.o: Source/TetrisTimeAttack.c
+	gcc -c Source/TetrisTimeAttack.c -lncursesw
