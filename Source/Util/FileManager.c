@@ -120,10 +120,19 @@ void decryptText(char *text) {
 }
 
 FILE* openLeaderboard(char accessMode[3]) {
-    initLeaderboard();
-    FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", accessMode);
-    if (leaderboard == NULL) {
-        leaderboard = fopen("TTA_Data/LDBLOC.sav", accessMode);
+    if (isTimeAttack) {
+        initLeaderboard();
+        FILE *leaderboard = fopen("TTA_Data/TTA_TALDBGLB.sav", accessMode);
+        if (leaderboard == NULL) {
+            leaderboard = fopen("TTA_Data/TALDBLOC.sav", accessMode);
+        }
+        return leaderboard;
+    } else {
+        initLeaderboard();
+        FILE *leaderboard = fopen("TTA_Data/TTA_LDBGLB.sav", accessMode);
+        if (leaderboard == NULL) {
+            leaderboard = fopen("TTA_Data/LDBLOC.sav", accessMode);
+        }
+        return leaderboard;
     }
-    return leaderboard;
 }

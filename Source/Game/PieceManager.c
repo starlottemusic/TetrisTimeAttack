@@ -116,13 +116,11 @@ void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte b
 void attemptNewTurn(bool placePiece, bool isHold) {
     byte nextPiece;
 
-    if (isTimeAttack && placePiece) {
+    if (isTimeAttack && placePiece && !isHold) {
         extendPast();
     }
 
     settlePiece(&activePiece, activePiece.x, activePiece.y, !placePiece, GAMEBOARD_WIDTH, GAMEBOARD_HEIGHT, &gameBoard);
-
-    lineClear();
 
     if (isHold && heldPiece.tetronimoIndex != -1) {
         nextPiece = heldPiece.tetronimoIndex;
@@ -130,10 +128,12 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         nextPiece = upNext();
     }
 
-    if (isTimeAttack && placePiece) {
+    if (isTimeAttack && placePiece && !isHold) {
         taActiveChannel++;
-        if (taActiveChannel > 3)
+        if (taActiveChannel > 3) {
             taActiveChannel = 0;
+            initGameboard();
+        }
 
         redrawGame();
         usleep(100000);
@@ -147,8 +147,10 @@ void attemptNewTurn(bool placePiece, bool isHold) {
             lastPast = nextPast(i, false);
         }
 
-
+        updatePastBoard();
     }
+
+    lineClear();
 
     if (!newTurnPlayerPiece(nextPiece)) {
         if (isTimeAttack) {
@@ -170,59 +172,17 @@ void attemptNewTurn(bool placePiece, bool isHold) {
         usleep(100000);
     }
 
+    if (isTimeAttack) {
+        if (taActiveChannel == 3) {
+            init_pair(8, COLOR_RED, COLOR_WHITE);
+            init_pair(9, COLOR_RED, COLOR_BLACK);
+        } else
+            init_pair(8, COLOR_WHITE, COLOR_WHITE);
+            init_pair(9, COLOR_WHITE, COLOR_BLACK);
+    }
+
     redrawGame();
     turnCooldown = 15;
-}
-
-void dropPast(PastPiece piece) {
-    PlayerPiece dropPiece = {piece.x, 0, piece.tetronimoIndex, piece.rotation};
-    int i, j;
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 4; j++) {
-            dropPiece.tetronimo[i][j] = tetronimos[piece.tetronimoIndex][i][j];
-        }
-    }
-
-    openSpace = getOpenSpaces();
-    for (i = 0; i < 20; i++) {
-        placePiece(dropPiece);
-        if (getOpenSpaces() == openSpace) {
-            clearPiece(dropPiece);
-        }
-    }
-}
-
-PastPiece nextPast(byte fromIndex, bool shouldRemove) {
-    PastPiece nextPiece;
-
-    if (fromIndex >= past[taActiveChannel].pieceCount) {
-         nextPiece.tetronimoIndex = -1;
-        return nextPiece;
-    }
-
-    nextPiece = past[taActiveChannel].pieces[fromIndex];
-
-    if (shouldRemove) {
-        int i;
-        for (i = fromIndex; i < past[taActiveChannel].pieceCount; i++) {
-            past[taActiveChannel].pieces[i] = past[taActiveChannel].pieces[i + 1];
-        }
-        past[taActiveChannel].pieceCount--;
-        past[taActiveChannel].pieces = realloc(past[taActiveChannel].pieces,
-                                               sizeof(PastPiece) * (past[taActiveChannel].pieceCount + 1));
-    }
-
-    return nextPiece;
-}
-
-void extendPast() {
-    past[taActiveChannel].pieces = realloc(past[taActiveChannel].pieces,
-                                           sizeof(PastPiece) * (past[taActiveChannel].pieceCount));
-
-    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].tetronimoIndex = activePiece.tetronimoIndex;
-    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].rotation = activePiece.rotation;
-    past[taActiveChannel].pieces[past[taActiveChannel].pieceCount].x = activePiece.x;
-    past[taActiveChannel].pieceCount++;
 }
 
 /**
@@ -302,7 +262,6 @@ void updateNext() {
                 nextBoard[j + 3 * i + shouldOffset(nextQueue[i]) + 1][k + 2] = tetronimos[nextQueue[i]][j][k];
             }
         }
-        settlePiece(&activePiece, 2, 2, false, 15, 8, &holdBoard);
     }
 }
 
@@ -338,6 +297,10 @@ void lineClear() {
             memcpy(gameBoard[1], "x          x", 12);
 
             linesCleared++;
+
+            if (isTimeAttack) {
+                erasePast();
+            }
         }
     }
 

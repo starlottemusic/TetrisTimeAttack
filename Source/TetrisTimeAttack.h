@@ -81,7 +81,7 @@ bool wallKick(byte index, char orient, bool clockwise);
 bool safeMove();
 short getOpenSpaces();
 bool newTurnPlayerPiece(byte index);
-void rotate(char piece[4][4], byte index, bool clockwise);
+void rotate(char piece[4][4], byte index, bool clockwise, bool force);
 void lineClear();
 void redrawGame();
 int scorePow(int base, int exp);
@@ -128,7 +128,7 @@ void mainLeaderboard();
 void decryptText(char *text);
 void redrawLeaderboard(Leaderboard* leaderboard, int page, int length);
 void mainTutorial();
-void tickTutorial(byte tickCounter);
+void tickTutorial();
 void handleTutorialInput();
 char assignMatrix(int s, int f);
 void drawMatrix(int rows, int cols, int renderArray[][cols], byte x, byte y);
@@ -137,6 +137,11 @@ void initializePastChannels();
 PastPiece nextPast(byte fromIndex, bool shouldRemove);
 void dropPast(PastPiece piece);
 void drawFrame(int s, int f);
+void initGameboard();
+void erasePast();
+void updatePastBoard();
+void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth,
+                 char (*boardPtr)[boardWidth][boardHeight]);
 
 // Global Variables
 extern char tetronimos[7][4][4]; // Array of all tetronimos

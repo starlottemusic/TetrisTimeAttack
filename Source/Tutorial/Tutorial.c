@@ -18,12 +18,16 @@ void mainTutorial() {
     screenState = 'M';
 }
 
-void tickTutorial(byte tickCounter) {
+void tickTutorial() {
+    static byte tickCounter = 0;
+    tickCounter++;
+
     // Update current frame
-    if (tickCounter % 60 == 0) {
+    if (tickCounter >= 60) {
         frame++;
         if (frame > 3)
             frame = 0;
+        tickCounter = 0;
     }
 
     // Update current slide
