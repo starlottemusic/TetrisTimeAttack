@@ -4,17 +4,24 @@
  * Called once per delta time, used for any time-dependent game functionality (ie. handling piece movement)
  */
 void tickGame() {
-    int difficulty = 10;
     tickTimer++;
 
     if (tickTimer % 2 == 0)
         handleGameInput();
 
-    if (tickTimer % difficulty == 0)
+    if (tickTimer % getDifficulty() == 0)
         attemptMovement(KEY_DOWN);
 
     if (turnCooldown > 0)
         turnCooldown--;
+}
+
+int getDifficulty() {
+    int difficulty = 30;
+    float scoreMultiplier = ((float) score) / 25000.0f;
+    if (scoreMultiplier > 1) scoreMultiplier = 1;
+    difficulty -= (int) (25.0f * scoreMultiplier);
+    return difficulty;
 }
 
 /**

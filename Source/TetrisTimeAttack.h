@@ -140,6 +140,7 @@ void drawFrame(int s, int f);
 void initGameboard();
 void erasePast();
 void updatePastBoard();
+int getDifficulty();
 void settlePiece(PlayerPiece *piecePtr, byte x, byte y, bool shouldClear, byte boardHeight, byte boardWidth,
                  char (*boardPtr)[boardWidth][boardHeight]);
 
